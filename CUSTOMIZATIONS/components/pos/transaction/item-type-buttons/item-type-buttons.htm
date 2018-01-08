@@ -1,0 +1,18 @@
+<span>
+    <div class="btn-group btn-group-justified" ng-if="grouping">
+        <div class="btn-group">
+            <item-type-sale-button></item-type-sale-button>
+        </div>
+        <div class="btn-group">
+            <item-type-order-button></item-type-order-button>
+        </div>
+        <div class="btn-group">
+            <item-type-return-button></item-type-return-button>
+        </div>
+    </div>
+    <span ng-if="!grouping">
+        <item-type-sale-button></item-type-sale-button>
+        <item-type-order-button></item-type-order-button>
+        <item-type-return-button></item-type-return-button>
+    </span>
+</span>

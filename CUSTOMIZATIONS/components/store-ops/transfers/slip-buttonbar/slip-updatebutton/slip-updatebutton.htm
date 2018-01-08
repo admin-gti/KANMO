@@ -1,0 +1,5 @@
+<div class="btn-group" ng-if="(transferSlip.slip.sid)&&(transferSlip.slip.status === 3)&&(transferSlip.slip.held===0)">
+    <button ng-disabled="(!transferSlip.isEdit)||(transferSlip.Items.length===0)" class="btn btn-default" ng-click="updateSlip();executeHandler(button.handler);" event-name="updateTransferSlipBtn">
+        <span data-translate="1301">Update Only</span>
+    </button>
+</div>

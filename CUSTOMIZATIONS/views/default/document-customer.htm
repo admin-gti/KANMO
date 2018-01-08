@@ -1,0 +1,102 @@
+
+<ng-form name="customer_lookup">
+    <div class="row text-center" ng-if="!modalSearch && (preferences.themes_and_layouts_default_pos_layout==='pos-transaction-partial.htm')">
+      <span ng-if="ctype==='st'" data-translate="1377">Ship to Customer</span>
+      <span ng-if="ctype==='bt'" data-translate="1376">Bill to Customer</span>
+    </div>
+
+    <div class="row" ng-if="(!document.st_cuid&&ctype==='st')||stOverride" id="st_customer">
+        <div class="col-xs-2">
+            <rp-dropdown data-button-option="shipping"></rp-dropdown>
+        </div>
+        <div class="col-xs-8">
+            <div class="row" ng-repeat="filter in searchFields" ng-if="searchType.toLowerCase()===filter.field.toLowerCase()">
+                <div class="col-xs-12" ng-if="['full_name', 'cust_id', 'customer_id'].indexOf(filter.field.toLowerCase()) === -1">
+                  <input ng-if="filter.field.toLowerCase().indexOf('udf')===-1||udfService.customerUdfs[filter.field.toLowerCase()].options.length===0" type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('shipping')" ng-required="true" placeholder="{{ filter.name | translate }}" ng-model="form.searchFilter" class="form-control col-xs-10">
+                  <customer-udf-search ng-if="filter.field.toLowerCase().indexOf('udf')!==-1&&udfService.customerUdfs[filter.field.toLowerCase()].options.length>0"></customer-udf-search>
+                </div>
+                <div class="col-xs-12" ng-if="filter.field.toLowerCase() === 'cust_id'||filter.field.toLowerCase() === 'customer_id'">
+                    <input type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('shipping')" ng-required="true" numberonly placeholder="{{ '750' | translate }}" ng-model="form.customer_id" class="form-control">
+                </div>
+<!--                 <div ng-if="filter.field.toLowerCase() === 'full_name'">
+                    <div class="col-xs-6">
+                        <input type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('docsearch')" ng-required="checkNames()" placeholder="{{ '637' | translate }}" ng-model="form.first_name" class="form-control">
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('docsearch')" ng-required="checkNames()" placeholder="{{ '636' | translate }}" ng-model="form.last_name" class="form-control">
+                    </div>
+                </div> -->
+            </div>
+        </div>
+<!--         <div class="col-xs-2 text-right">
+            <button type="button" id="shippingCustomerLookupSearch" event-name="shippingCustomerLookupSearch" class="btn inline-block btn-info" ng-disabled="customer_lookup.$invalid" ng-click="buildQuery()"><span class="glyphicon glyphicon-search"></span></button>
+        </div> -->
+    </div>
+    <div class="row" ng-if="!document.bt_cuid&&ctype==='bt'">
+
+         <div class="col-xs-2">
+             <rp-dropdown data-button-option="normal" ng-disabled="customerLookup"></rp-dropdown>
+         </div>
+         <div class="col-xs-8">
+            <div class="row" ng-repeat="filter in searchFields" ng-if="searchType.toLowerCase()===filter.field.toLowerCase()">
+                <div class="col-xs-12" ng-if="['full_name', 'cust_id','customer_id'].indexOf(filter.field.toLowerCase()) === -1">
+                    <input ng-if="filter.field.toLowerCase().indexOf('udf')===-1||udfService.customerUdfs[filter.field.toLowerCase()].options.length===0" type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('shipping')" ng-required="true" placeholder="{{ filter.name | translate }}" ng-model="form.searchFilter" class="form-control">
+                    <customer-udf-search ng-if="filter.field.toLowerCase().indexOf('udf')!==-1&&udfService.customerUdfs[filter.field.toLowerCase()].options.length>0"></customer-udf-search>
+                </div>
+                <div class="col-xs-12" ng-if="filter.field.toLowerCase() === 'cust_id'||filter.field.toLowerCase() === 'customer_id'">
+                    <input type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('shipping')" ng-required="true" numberonly="undefined" placeholder="{{ '750' | translate }}" ng-model="form.customer_id" class="form-control">
+                </div>
+<!--                 <div ng-if="filter.field.toLowerCase() === 'full_name'">
+                    <div class="col-xs-6">
+                        <input type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('docsearch')" ng-required="checkNames()" placeholder="{{ '637' | translate }}" ng-model="form.first_name" class="form-control">
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="text" onfocus="this.select()" autocomplete="off" ng-disabled="customerLookup" ng-keydown="submitEnter($event);" ng-click="cancelSearch('docsearch')" ng-required="checkNames()" placeholder="{{ '636' | translate }}" ng-model="form.last_name" class="form-control">
+                    </div>
+                </div> -->
+
+            </div>
+         </div>
+<!--          <div class="col-xs-2 text-right">
+             <button class="btn inline-block btn-info" id="customerLookupSearch" event-name="customerLookupSearch" type="button" ng-disabled="customer_lookup.$invalid||customerLookup" ng-click="buildQuery()"><span class="glyphicon glyphicon-search"></span></button>
+         </div> -->
+     </div>
+    <div class="row" ng-if="document.bt_cuid&&ctype==='bt'">
+        <div class="col-xs-12">
+            <input type="text" onfocus="this.select()" ng-disabled="customerLookup" class="form-control" readonly="true" value="{{displayName}}">
+        </div>
+    </div>
+    <div class="row" ng-show="!modalSearch" ng-if="(document.st_first_name!==''||document.st_last_name!==''||document.st_primary_phone_no!=='')&&ctype==='st'&&!shippingCustomerLookup">
+         <div class="col-xs-9">
+             <input type="text" onfocus="this.select()" ng-disabled="customerLookup" class="form-control" readonly="true" value="{{document.st_first_name}} {{document.st_last_name}}">
+         </div>
+         <div class="col-xs-3">
+             <button event-name="posItemDetailShippingAddressLookup" tabindex="14" type="button" class="btn btn-info" id="shippingAddressLookupButton" data-permission="EditFormerPOSCustomer" data-collect-permission="undefined" data-permission-disabled="form.viewMode || item.kit_flag == 5 || shippingCustomerLookup" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4}]" ng-click="shippingAddress()"><span data-translate="1392">Shipping Address</span></button>
+         </div>
+     </div>
+    <div class="row" ng-if="!docSearch">
+        <div class="col-xs-4">
+            <label class="control-label">
+                <input type="radio" id="filterBy1" value="AND (customer_active,eq,true)" name="status" ng-model="form.customerStatus">
+                <span data-translate="586">Active</span>
+            </label>
+        </div>
+        <div class="col-xs-4">
+            <label class="control-label">
+                <input type="radio" id="filterBy2" value="AND (customer_active,eq,false)" name="status" ng-model="form.customerStatus">
+                <span data-translate="2916">Inactive</span>
+            </label>
+        </div>
+        <div class="col-xs-4">
+            <label class="control-label">
+                <input type="radio" id="filterBy3" value="undefined" name="status" ng-model="form.customerStatus">
+                <span data-translate="1143">All</span>
+            </label>
+        </div>
+    </div>
+    <div class="row" ng-if="!docSearch">
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-info" id="resetSearchButton" event-name="customerSearchResetSearchButton" ng-click="init();" type="button"><span data-translate="614">Reset</span></button>
+        </div>
+    </div>
+</ng-form>

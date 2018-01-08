@@ -1,0 +1,33 @@
+<form class="form-horizontal" ng-controller="swipeGiftCard">
+    <a onclick="document.getElementById('swiper').focus();"><div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4 data-translate="3273">Swipe Gift Card</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h4 style="font-size:48px" class="glyphicon glyphicon-transfer"></h4>
+                    <h4 style="font-size:48px" class="glyphicon glyphicon-credit-card"></h4>
+                    <input type="text" id="swiper" style="width:0px;overflow:hidden;padding:0px;border:0" focus-me="swipeField" ng-model="swiped.value" ng-keypress="logKey($event,gcType)" onblur="this.focus()">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    {{msg | translate}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info btn-large" ng-click="document.getElementById('swiper').blur();$close();" type="button">Cancel</button>
+        </div>
+    </div></a>
+</form>
+<script>
+    setTimeout(function() { 
+        document.getElementById("swiper").focus();
+    }, 10);
+</script>

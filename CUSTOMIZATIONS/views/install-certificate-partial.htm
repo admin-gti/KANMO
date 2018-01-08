@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row-fluid">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <h3 class="col-md-12">Retail Pro SSL Certificate</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-show="showCertIntsall" class="col-md-12">
+                            <p>Retail Pro Prism uses SSL for all communication to the server. This workstation is missing the Retail Pro SSL certificate.</p>
+
+                            <p>To install the certificate on this workstation click the button below.</p>
+                            <a href="/downloads/RetailProCA.crt" ng-click="showCertIntsall = !showCertIntsall" class="btn btn-default btn-lg btn-block"><span>Install</span></a>
+                        </div>
+                        <div ng-show="!showCertIntsall" class="col-md-12">
+                            <p>Thank you for installing Retail Pro SSL certificate.</p>
+
+                            <p><!--<a href="/" class="btn btn-primary btn-lg btn-block">Launch Retail Pro Prism</a>-->
+                                You need to completely close and restart the Retail Pro Prism app.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

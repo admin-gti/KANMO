@@ -1,0 +1,26 @@
+<div class="btn-group" id="rpDropdownContainer" dropdown is-open="status.isopen">
+<!--     <button ng-if="searchFieldButton('normal')" 
+            id="customerLookupSearchFieldSelect" 
+            event-name="customerLookupSearchFieldSelect" 
+            class="btn inline-block btn-info dropdown-toggle"
+            type="button"
+            ng-click="toggleDropdown($event);cancelSearch('docsearch');">
+                <span class="glyphicon glyphicon-chevron-down" align="right" placement="bottom-right" ></span>
+    </button>
+
+    <button ng-if="searchFieldButton('shipping')"
+            id="shippingCustomerLookupSearchFieldSelect"
+            event-name="shippingCustomerLookupSearchFieldSelect"
+            class="btn inline-block btn-info dropdown-toggle"
+            type="button"
+            ng-click="toggleDropdown($event);cancelSearch('shipping');"
+            align="right" placement="bottom-right">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+    </button> -->
+
+    <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="x in searchFields">
+          <a ng-click="setSearchType(x.field);close.status=true">{{x.name|translate}}</a>
+        </li>
+    </ul>
+</div>

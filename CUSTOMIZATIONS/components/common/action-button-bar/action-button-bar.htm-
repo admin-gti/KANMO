@@ -1,0 +1,43 @@
+<div class="navbar navbar-fixed-bottom navbar-default">
+  <div class="row">
+    <div class="col-xs-10">
+      <div class="btn-group btn-group-justified" id="rpButtons">
+        <action-button btn-event="btn.event" alt-event="btn.altEvent" ng-repeat="btn in actionBar.buttons" btn-click="btn.click" btn-disabled="btn.disabled" btn-transid="btn.transid" btn-text="btn.text" alt-text="btn.altText" alt-click="btn.altClick" alt-transid="btn.altTransid" alt-flag="btn.altFlag" btn-permissions="btn.permissions">
+        </action-button>
+        <div class="btn-group" ng-if="actionBar.options">
+          <button type="button" class="btn btn-default" event-name="posOptionsButton" ng-disabled="optionsButtonDisabled" ng-disabled="actionBar.options.disabled" ng-click="modal()">
+            <span data-translate="10">Options</span>
+          </button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" event-name="posWishListButton"  ng-disabled="!document.sid" ng-click="executeHandler(button.handler)">
+            <span>Shop Justice</span>
+          </button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" event-name="posInstalmentButton" ng-disabled="!document.bt_cuid && !document.st_cuid" ng-click="executeHandler(button.handler)">
+            <span>Instalment</span>
+          </button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" event-name="posEReceiptButton" ng-disabled="!document.bt_cuid && !document.st_cuid" ng-click="executeHandler(button.handler)">
+            <span>E - Receipt</span>
+          </button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" event-name="posVoucher" ng-disabled="!document.sid" ng-click="executeHandler(button.handler)">
+            <span>Voucher</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-2" ng-if="!actionBar.hideRproButton">
+      <div class="text-right">
+        <button id="mainRProButton" tabindex="1000" ng-if="vwPath" type="button" class="btn navbar-btn btn-default rp-button" bs-aside="aside" data-template="{{vwPath}}side-buttons-partial.htm" data-placement="right" data-container="body">
+          <img ng-src="/images/{{rplogo}}" height="40px" width="88px">
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,176 @@
+<link href="/styles/external/simple-layouts-inc.css" rel="stylesheet" type="text/css">
+<form novalidate="" id="transactionForm" name="transactionForm" class="form-horizontal simpleTransactionForm">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <img class="logo" ng-src="/images/{{defaultTheme.logo}}">
+            </div>
+            <div class="col-xs-6 text-right text-primary date-span">
+                <span data-translate="684">Date</span>: <span>{{document.created_datetime|cleanDate:'locale':true}}&nbsp;</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-7">
+                <div ng-include="viewPath + 'simple-transactions-partial.htm'"></div>
+            </div>
+            <div class="col-xs-4 col-xs-offset-1">
+                <div class="panel panel-primary panel-collapse height80">
+                    <div class="panel-heading no-pad">
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <label class="sr-only">
+                                    <!-- DO NOT REMOVE THIS LABEL!!! -->
+                                </label>
+                                <input tabindex="100" id="customerLookup" type="text" placeholder="{{ '517' | translate }} " class="form-control" ng-show="!document.bt_first_name && !document.bt_last_name" ng-readonly="viewMode" ng-model="searchFields.billTo" ng-disabled="buttons.customerLookup" ui-event="{ blur : 'searchWithPermission(false, false);'}" ui-keypress="{13:'searchWithPermission(false, false);'}">
+                                <input tabindex="100" id="populatedCustomerLookup" type="text" placeholder="{{ document.bt_first_name }} {{document.bt_last_name}} " class="form-control" ng-show="document.bt_first_name || document.bt_last_name" ng-readonly="viewMode" ng-model="searchFields.billTo" ng-disabled="buttons.customerLookup" ui-event="{ blur : 'searchWithPermission(false, false);'}" ui-keypress="{13:'searchWithPermission(false, false);'}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                <div class="btn-group btn-group-lg btn-group-justified">
+                                    <!-- <div class="btn-group"><button event-name="posTransactionQuickCustomer" tabindex="101" type="button" class="btn btn-info" id="customerNewButton" ng-click="quickCustomer()" ng-disabled="buttons.quickCustomerButton"><span data-translate="581">New</span></button></div> -->
+                                    <div class="btn-group"><button event-name="posTransactionCustomerDetails" tabindex="102" type="button" class="btn btn-info" id="customerDetailsButton" ng-click="customerDetails()" ng-disabled="buttons.disableCustomerDetailsButton"><span data-translate="1522">Details</span></button></div>
+                                    <!-- <div class="btn-group"><button event-name="posTransactionRemoveCustomer" tabindex="103" type="button" class="btn btn-info" id="customerRemoveButton" ng-click="removeCustomer()" ng-disabled="buttons.removeCustomerButton"><span data-translate="1523">Remove</span></button></div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body bg-primary height60">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table class="table table-condensed table-responsive table-striped col-xs-12 form-group table1">
+                                    <tbody>
+                                    <tr ng-show="document.bt_primary_phone_no">
+                                        <td>
+                                            <strong data-translate="752">Primary Phone</strong>
+                                        </td>
+                                        <td class="text-right">{{document.bt_primary_phone_no}}
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="customer.store_credit">
+                                        <td>
+                                            <strong data-translate="753">Store Credit</strong>
+                                        </td>
+                                        <td class="text-right">{{customer.store_credit|currency}}
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="customer.central_credit">
+                                      <td>
+                                        <strong data-translate="753">Store Credit</strong>
+                                      </td>
+                                      <td class="text-right">{{customer.central_credit|currency}}
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="simple-tenders">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button event-name="posTransactionTransactionDetails" tabindex="719" type="button" class="btn large-text btn-info form-control" id="TransactionDetailsButton" ng-disabled="buttons.transactionDetailsButton" ng-click="transactionDetails()">
+                                      <span data-translate="779">Transaction Details</span>
+                                    </button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button event-name="posTransactionOrderDetails" tabindex="720" type="button" class="btn btn-info form-control" id="OrderDetailsButton" ng-click="orderDetails()" ng-disabled="buttons.orderDetailsButton"><span data-translate="778">Order Details</span></button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <transaction-coupon-button></transaction-coupon-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table class="table table-condensed table-responsive col-xs-12 table-striped">
+                                    <tbody>
+                                    <tr ng-show="document.document_number">
+                                        <td>
+                                            <strong>{{document.receipt_type|receipt_type_names}} <span data-translate="2337">Receipt No</span></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            {{document.document_number}}
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="document.order_document_number">
+                                        <td>
+                                            <strong>{{document.order_type|order_type_names}} <span data-translate="2338">Order No</span></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            {{document.order_document_number}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong data-translate="622">Cashier</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            {{document.cashier_login_name}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong data-translate="781">Sub Total</strong>
+                                        </td>
+                                        <td class="text-right">{{document.transaction_subtotal|currency}}
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="document.total_discount_amt">
+                                        <td>
+                                            <strong data-translate="715">Discount Amount</strong>
+                                        </td>
+                                        <td class="text-right">{{document.total_discount_amt|currency}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong data-translate="782">Total Tax</strong>
+                                        </td>
+                                        <td class="text-right">{{document.transaction_total_tax_amt|tax}}
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="document.total_fee_amt">
+                                        <td>
+                                            <strong data-translate="783">Fees</strong>
+                                        </td>
+                                        <td class="text-right">{{document.total_fee_amt|currency}}
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="document.shipping_amt">
+                                      <td>
+                                        <strong data-translate="784">Shipping:</strong>
+                                      </td>
+                                      <td class="text-right">{{document.shipping_amt|currency}}
+                                      </td>
+                                    </tr>
+                                    <tr ng-show="document.transaction_total_amt">
+                                      <td>
+                                        <strong data-translate="2109">Transaction Total</strong>
+                                      </td>
+                                      <td class="text-right">{{document.transaction_total_amt |currency}}
+                                      </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                              <input type="text" id="documentTotal" class="text-right bg-info documentTotal text-primary" value="{{document.due_amt |currency}}">                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button event-name="posTransactionTenderTransaction" tabindex="799" type="button" id="tenderbutton" class="btn btn-success btn-block btn-large" ng-click="tenderTransaction()" ng-disabled="buttons.tenderbutton||document.so_cancel_flag">
+                                    <span data-translate="643" ng-if="!tenderbutton||itemsToProcess.length===0">Tender Transaction</span>
+                                    <span ng-if="tenderbutton&&itemsToProcess.length>0">{{'3733'|translate}}...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<button-bar button-view="nav-pos-transactionbuttons-partial-simple.htm"></button-bar>
+</form>

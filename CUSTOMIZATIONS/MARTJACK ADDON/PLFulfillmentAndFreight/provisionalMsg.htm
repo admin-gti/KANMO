@@ -1,0 +1,76 @@
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Provisional Message</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr class="panel-heading">
+                                    <th>Apply to All</th>
+                                    <th>Message</th>
+                                    <!--<th>Actions</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center"><input name="spreadMsg" id="spreadMsg" tabindex="18" type="checkbox" ng-model="checkboxValue" class="ng-pristine ng-untouched ng-valid ng-empty" ng-change="handler($event)"></td>
+                                    <td><textarea class="form-control" id="applyAllMessage" rows="3"></textarea></td>
+                                </tr>
+                            </tbody>
+                       </table>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped" width="100%" style="font-size: 11px;">
+                            <tbody>
+                            <tr ng-repeat="ship in prov">
+                                <td width="40%"> <b>{{ship.note8}} - {{ship.note10}}</b><br/>
+                                    <table width="100%" class="table table-bordered table-striped">
+                                        <thead class="panel-heading">
+                                            <tr>
+                                                <th>ALU</th>
+                                                <th>DESCRIPTION</th>
+                                                <th>QUANTITY</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="shipitem in ship.items">
+                                                <td style="background-color: white" align="center">{{shipitem.alu}}</td>
+                                                <td style="background-color: white" align="center">{{shipitem.description1}} - {{shipitem.description2}}</td>
+                                                <td style="background-color: white" align="center">{{shipitem.qty}}<input type="hidden" class="form-control" ng-model="shipitem.freight" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td width="30%"><textarea class="form-control" name="applyprovMessage" id="applyprovMessage{{$index}}" rows="3"></textarea></td>
+                            </tr>
+                            </tbody>
+                       </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img ng-click="close()" ng-src="/customizations/images/delete.png" align="center" alt="Cancel" src="/customizations/images/delete.png" height="28px" width="28px">
+                            &nbsp;&nbsp;
+                        <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update" src="/customizations/images/proceed.png" height="28px" width="28px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

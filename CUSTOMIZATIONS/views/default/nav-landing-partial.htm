@@ -1,0 +1,138 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-2">
+            <div event-name="navLandingPointOfSale" class="panel panel-default cursor-pointer" ng-click="changeTabs(0)">
+                <div class="panel-body">
+                    <img src="/images/pos/pos_64.png" class="center-block" alt="{{ '1290' | translate }}">
+                </div>
+                <div class="panel-footer center-block">
+                    <h1 class="panel-title" data-translate="500">Point of Sale</h1>
+                </div>
+            </div>
+            <img alt="" class="center-block" id="posOn" src="/images/bullet_up.png" ng-show="showPOSArea">
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+            <div event-name="navLandingCustomers" class="panel panel-default cursor-pointer" ng-click="changeTabs(1)">
+                <div class="panel-body">
+                    <img src="/images/customer/cust_64.png" class="center-block" alt="{{ '1291' | translate }}">
+                </div>
+                <div class="panel-footer center-block">
+                    <h1 class="panel-title" data-translate="515">Customers</h1>
+                </div>
+            </div>
+            <img alt="" id="customerOn" class="center-block" src="/images/bullet_up.png" ng-show="showCustomerArea">
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+            <div event-name="navLandingXZOut" class="panel panel-default cursor-pointer" ng-click="changeTabs(2)">
+                <div class="panel-body">
+                    <img src="/images/xz_64.png" class="center-block" alt="{{ '1291' | translate }}">
+                </div>
+                <div class="panel-footer center-block">
+                    <h1 class="panel-title" data-translate="2316">X/Z-Out</h1>
+                </div>
+            </div>
+            <img alt="" id="reportOn" class="center-block" src="/images/bullet_up.png" ng-show="showReportArea">
+        </div>
+    </div>
+    <div ng-show="showPOSArea" class="am-fade">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title" data-translate="500">Point of Sale</h1>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group">
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingNewTransaction" tabindex="120" translation-name="'502'" img-src="'/images/pos/pos_new_48.png'" click-handler="newTransaction" permission-name="'createpostransaction'" button-text="'New Transaction'"></img-btn>
+                    </div>
+<!--                    <div class="col-xs-3">
+						<img-btn event-name="navLandingTransactionLookup" tabindex="121" translation-name="'503'" img-src="'/images/pos/trans_lookup_48.png'" click-handler="transactionLookup" button-text="'Transaction Lookup'"></img-btn>
+                    </div>-->
+                    <div class="col-xs-3">
+						<img-btn event-name="navCustomATransactionLookup" tabindex="121" img-src="'/images/pos/trans_lookup_48.png'" button-text="'Transaction Lookup'" click-handler="executeHandler(button.handler)"></img-btn>
+                    </div>
+<!--                    <div class="col-xs-3">
+						<img-btn event-name="navLandingPendingTransactions" tabindex="122" translation-name="'504'" img-src="'/images/pos/document_pending_48.png'" click-handler="pendingTransactions" permission-name="'posaccesspendingtransactions'" button-text="'Pending Transctions'"></img-btn>
+                    </div>-->
+                    <div class="col-xs-3">
+						<img-btn event-name="navCustomUpdateOMSSubStatus" tabindex="123" img-src="'/images/pos/trans_lookup_48.png'" button-text="'Change Status'" click-handler="executeHandler(button.handler)"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navCustomAFulfillmentLookup" tabindex="124" img-src="'/images/pos/trans_lookup_48.png'" button-text="'Fulfillment Lookup'" click-handler="executeHandler(button.handler)"></img-btn>
+                    </div>
+                    <div class="col-xs-3" ng-hide="disableTouchPOS()">
+						<img-btn event-name="navLandingTouchPos" tabindex="123" translation-name="'1292'" img-src="'/images/pos/pos_new_48.png'" click-handler="newTransaction" click-param="true" permission-name="'createpostransaction'" button-text="'Touch POS'"></img-btn>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-3">
+           	          <pos-disbursements-button></pos-disbursements-button>
+                    </div>
+                    <div class="col-xs-3">
+                        <disbursement-lookup-button></disbursement-lookup-button>
+                    </div>
+                    <div class="col-xs-3">
+                        <drawer-open></drawer-open>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingChangeTillDrawer" tabindex="127" translation-name="'510'" img-src="'/images/pos/pop_drawer_48.png'" click-handler="changeDrawer" button-text="'Change Till / Drawer'"></img-btn>
+                    </div>
+                </div>
+                <div class="row row-margin">
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingCheckIn" tabindex="128" translation-name="'511'" img-src="'/images/pos/check_in_48.png'" click-handler="checkInOut" click-param="'in'" button-text="'Check In'"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingCheckOut" tabindex="129" translation-name="'512'" img-src="'/images/pos/check_out_48.png'" click-handler="checkInOut" click-param="'out'" button-text="'Check Out'"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingTimeClock" tabindex="130" translation-name="'3213'" img-src="'/images/pos/check_out_48.png'" click-handler="timeClock" click-param="'out'" button-text="'Time Clock'"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+                        <promotions-button></promotions-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="showCustomerArea" class="am-fade">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title" data-translate="501">Customer Management</h1>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+<!--                     <div class="col-xs-3">
+						<img-btn event-name="navLandingNewCustomer" tabindex="132" translation-name="516" img-src="'/images/customer/create_customer_48.png'" click-handler="newCustomer" button-text="'New Customer'"></img-btn>
+                    </div> -->
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingCustomerLookup" tabindex="133" translation-name="'517'" img-src="'/images/customer/customer_find_48.png'" click-handler="customerLookup" button-text="'Customer Lookup'"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingLoyaltyLookup" tabindex="134" translation-name="'5370'" disable="!toBoolean(preferences.pos_loyalty_enabled)" img-src="'/images/loyalty_temp.png'" click-handler="loyaltyLookup" button-text="'Loyalty Lookup'"></img-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="showReportArea" class="am-fade">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">X/Z-Out</h1>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group">
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingXOut" tabindex="135" translation-name="'506'" img-src="'/images/pos/Xout_48.png'" click-handler="goToXOut" disable="allowXout" button-text="'X-Out'"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingZOut" tabindex="136" translation-name="'507'" img-src="'/images/pos/Zout_Closed_48.png'" click-handler="goToZOut" button-text="'Z-Out'"></img-btn>
+                    </div>
+                    <div class="col-xs-3">
+						<img-btn event-name="navLandingZOutLookup" tabindex="137" translation-name="'508'" img-src="'/images/pos/former_z_out_48.png'" click-handler="zoutLookup" disable="allowFZout" button-text="'Z-Out Lookup'"></img-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button-bar button-view="blank-doc.htm"></button-bar>

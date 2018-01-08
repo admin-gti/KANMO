@@ -1,0 +1,8 @@
+<div class="btn-group" ng-if="((transferSlip.slip.sid)&&(transferSlip.slip.status === 3)&&(transferSlip.slip.held===0)) || ((transferSlip.slip.status !== 3)||(transferSlip.slip.held===1))">
+  <button ng-if="(transferSlip.slip.sid)&&(transferSlip.slip.status === 3)&&(transferSlip.slip.held===0)" ng-disabled="(!transferSlip.isEdit)||(transferSlip.saving)||(transferSlip.Items.length === 0)" class="btn btn-default" ng-click="printUpdateSlip(); executeHandler(button.handler);" event-name="updateTransferSlipBtn">
+    <span data-translate="952">Print Update</span>
+  </button>
+  <button ng-if="(transferSlip.slip.status !== 3)||(transferSlip.slip.held===1)" ng-disabled="(!transferSlip.slip.sid)||(transferSlip.Items.length < 1)" class="btn btn-default" ng-click="transferSlip.printSlip()">
+    <span data-translate="522">Print</span>
+  </button>
+</div>
