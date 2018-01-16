@@ -1,0 +1,85 @@
+<ng-form class="modal-default" name="customer_lookup">
+  <div class="modal-container">
+    <nav class="navbar navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-portrait">
+          <div class="col-xs-12 btn-group btn-group-xs btn-group-justified" ng-hide="(docSearch == true ? customerGridOptions.data : gridOptions.data).length > 0">
+            <div class="btn-group"><button event-name="posSearchCustClose" type="button" class="btn btn-default" ng-click="closeForm()"><span data-translate="907" class="ng-scope">Close</span></button></div>
+          </div>
+          <div class="col-xs-12 btn-group btn-group-xs btn-group-justified" ng-show="(docSearch == true ? customerGridOptions.data : gridOptions.data).length > 0">
+            <div class="btn-group"><button type="button" event-name="customerLookupBackCustomer" tabindex="6" id="BackCustomerButton" name="BackCustomerButton" class="btn btn-default" ng-click="clearCustResultsOnly()"><span data-translate="801" class="ng-scope">Back</span></button></div>
+            <div class="btn-group"><button type="button" event-name="customerLookupSelCustomer" tabindex="6" id="selCustomerButton" name="selCustomerButton" class="btn btn-default" ng-click="selectCustomer()" ng-disabled="!activeItem"><span data-translate="805" class="ng-scope">Select</span></button></div>
+            <!-- <div class="btn-group"><button type="button" event-name="customerLookupCreateCustomer" tabindex="7" id="createCustomerButton" name="createCustomerButton" class="btn btn-default" ng-click="newCustomerOpen()"><span data-translate="2904">Create</span></button></div> -->
+            <div class="btn-group"><button type="button" event-name="customerLookupClose" tabindex="8" id="closeSearchButton" name="closeSearchButton" class="btn btn-default" ng-click="closeForm()"><span data-translate="1.2">Cancel</span></button></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div ng-if="(docSearch == true ? customerGridOptions.data : gridOptions.data).length < 1">
+      <div class="modal-header">
+        <span data-translate="756">Customer Search</span>
+      </div>
+      <div class="modal-body height80 autoOverflow">
+        <div class="container-fluid">
+          <div class="row form-group" id="lookup">
+            <div class="col-xs-12" ng-if="defaultSearchType !== false">
+              <!--<document-customer doc-search="{{docSearch}}" customer-active="{{formData.customerStatus}}"></document-customer>-->
+              <document-customer doc-search="{{docSearch}}" customer-active="{{formData.customerStatus}}"></document-customer>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="(docSearch == true ? customerGridOptions.data : gridOptions.data).length > 0">
+      <div class="modal-header">
+        <span data-translate="790">Customer</span> <span data-translate="1563">Search Results</span>
+      </div>
+      <div class="modal-body height70">
+        <div class="container-fluid">
+          <div class="row top-margin" id="results">
+            <div class="col-xs-12">
+              <div class="panel">
+                <div class="panel-body">
+                  <div class="row height55 autoOverflow">
+                    <div class="list-group">
+                      <a name="link0" event-name="customerSearchThisCustomer" class="list-group-item ng-scope" id="searchCustomerResult0" tabindex="100" index="0" data-item-group="" ng-repeat="thisCustomer in (docSearch == true ? customerGridOptions.data : gridOptions.data) track by $index" ng-click="setCustItemPortrait(thisCustomer)" ng-dblclick="editMe($index)">
+                        <div class="row">
+                          <div class="col-xs-12 ng-binding">
+                            <span ng-hide="true">{{thisCustomer.sid}}</span>
+                            <strong data-translate="751" class="ng-scope">Customer Name</strong> {{thisCustomer.first_name}} {{thisCustomer.last_name}}
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 ng-binding">
+                            <strong data-translate="536" class="ng-scope">Address 1</strong> {{thisCustomer.primary_address_line_1}}
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 ng-binding">
+                            <strong data-translate="538" class="ng-scope">Address 2</strong> {{thisCustomer.primary_address_line_2}}
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 ng-binding">
+                            <strong data-translate="639" class="ng-scope">ID</strong> {{thisCustomer.customer_id}}
+                          </div>
+                          <div class="col-xs-6">
+                            <input type="checkbox" ng-model="thisCustomer.customer_active" disabled="disabled" class="ng-pristine ng-valid">
+                            <strong data-translate="586" class="ng-scope">Active</strong>
+                          </div>
+                        </div>
+                      </a><!-- end ngRepeat: thisCustomer in searchFields.customerList -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-form>

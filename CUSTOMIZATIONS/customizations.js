@@ -19,16 +19,18 @@
   // dependencies.push('prismPluginsSample.controller.changeMultipleOrderTypeCtrl');
 
  // CHANGE SHIPPING ADDRESS
-//  dependencies.push('prismPluginsSample.controller.changeShippingAddCtrl');
+  // dependencies.push('prismPluginsSample.controller.changeShippingAddCtrl');
 
   // RETRIEVE AND DELETE CART, WISHLIST AND GIFT REGISTRY ITEMS API
   dependencies.push('prismPluginsSample.controller.shopJusticeCtrl');
+  dependencies.push('prismPluginsSample.controller.customerListCtrl');
+  dependencies.push('prismPluginsSample.controller.giftRegistryCtrl');
 
   // INSTALMENT PLUGIN
-  dependencies.push('prismPluginsSample.controller.instalmentCtrl');
+  // dependencies.push('prismPluginsSample.controller.instalmentCtrl');
 
   // E-RECEIPT PLUGIN
-  dependencies.push('prismPluginsSample.controller.eReceiptCtrl');
+  // dependencies.push('prismPluginsSample.controller.eReceiptCtrl');
 
   // NORMAL DAMAGE PLUGIN
   dependencies.push('prismPluginsSample.controller.slipReasonCtrl'); 
@@ -38,8 +40,14 @@
 //SET ORDER TYPE MULTIPLE
 dependencies.push('prismPluginsSample.controller.changeMultipleOrderTypeCtrl');   
 
+//ADDING FULFILLMENT LOCATION
+//dependencies.push('prismPluginsSample.controller.addFulfillmentLocationCtrl');   
+
 //ADDING FREIGHT CHARGES
-dependencies.push('prismPluginsSample.controller.addAWBCtrl');   
+//dependencies.push('prismPluginsSample.controller.applyFreightCtrl');   
+
+//ADDING FREIGHT CHARGES
+//dependencies.push('prismPluginsSample.controller.addAWBCtrl');   
 
 //VOUCHER PLUGIN
 dependencies.push('prismPluginsSample.controller.voucherCtrl');
@@ -63,16 +71,16 @@ dependencies.push('prismPluginsSample.controller.fulfillmentandFreightCtrl');
 dependencies.push('prismPluginsSample.controller.customLookupCtrl');
 
 //VIEW INVENTORY
-dependencies.push('prismPluginsSample.controller.viewInventoryCtrl');   
+// dependencies.push('prismPluginsSample.controller.viewInventoryCtrl');   
 
 dependencies.push('prismPluginsSample.controller.changeShipmentStatusCtrl');   
 dependencies.push('prismPluginsSample.controller.FAandDispatchPrintOutCtrl');   
 
-//CUSTOM LOOKUP
-dependencies.push('prismPluginsSample.controller.fulfillmentLookupCtrl');
+//TRANSMARCO PLUGIN
+//dependencies.push('prismPluginsSample.controller.transmarcoCtrl');
 
-//CUSTOM LOOKUP
-dependencies.push('prismPluginsSample.controller.provisionalMsgCtrl');
+//SUMMARY REPORTS PLUGIN
+//dependencies.push('prismPluginsSample.controller.summaryReportsCtrl');
   
   /*DO NOT MODIFY BELOW THIS LINE!*/
   ng.module('prismApp.customizations', dependencies, null);

@@ -65,6 +65,7 @@
                     . "left join document c ON (a.doc_sid = c.sid) "
                     . "left join invn_sbs_item b on (a.invn_sbs_item_sid = b.sid and c.subsidiary_sid = b.sbs_sid) "
                     . "where 1=1 "
+                    . "and note8 = 'PICKUP' "
                     . "and note10 = 'DIFFERENT STORE' "
                     . "and doc_sid = '{$data['docsid']}' ";
      //        $conn->debug = TRUE;

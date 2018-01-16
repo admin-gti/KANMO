@@ -100,7 +100,7 @@
                . "'".json_encode($a)."'"
                . ")";
 //            echo $qlite;
-          $sconn->debug = true;  
+//          $sconn->debug = true;  
         $sconn->Execute($qlite);
         
         

@@ -1,0 +1,35 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">{{headerTitle}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-horizontal">
+						<div class="form-group text-center">
+							<label class="radio-inline">
+								<input type="radio" name="radios" id="normalRadio" value="NORMAL" ng-model="slipReason" />
+								NORMAL
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="radios" id="damageRadio" value="DAMAGE" ng-model="slipReason" />
+								DAMAGE
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<button type="button" class="btn btn-lg btn-default" ng-click="saveReason()" ng-disabled="!slipReason">Save</button>
+					<button type="button" class="btn btn-lg btn-default" ng-if="cancelBtn" ng-click="cancelModalDialog()">Cancel</button> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

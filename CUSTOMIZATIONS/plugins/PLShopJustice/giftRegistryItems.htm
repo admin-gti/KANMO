@@ -1,0 +1,57 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Gift Registry Items of {{customerName}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<!-- TABLE FOR GIFT REGISTRY ITEMS -->
+					<div class="col-md-12 padding-bottom-lg">
+						<table class="table table-hover {{(giftRegistryItems.length > 0) ? 'table-fixed' : ''}}" width="100%">
+							<caption class="text-bold"> {{giftRegistryItems.length}} Gift Registry Item/s found.</caption>
+							<thead class="thead-default {{(giftRegistryItems.length < 5) ? 'full-width' : 'with-scroll'}}">
+								<th class="col-xs-1"><input type="checkbox" name="checkAllGiftRegistryItems" id="checkAllGiftRegistryItems" ng-model="selectAllGiftRegistryItems" ng-click="checkAllGiftRegistryItems()" ng-disabled="giftRegistryItems.length == 0"></th>
+								<th class="col-xs-5 text-left">Item Name</th>
+								<th class="col-xs-3 text-left">SKU</th>
+								<th class="col-xs-1">Quantity</th>
+								<th class="col-xs-2">Store OH Qty</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in giftRegistryItems.result.items" ng-if="item.prism_item.item_qty > 0 && item.prism_item.item_qty_old > item.qty_fulfilled" class="{{(item.Selected) ? 'success' : ''}}">
+									<td class="text-center col-xs-1">
+										<input type="checkbox" name="checkGiftRegistryItem" id="checkGiftRegistryItem" ng-model="item.Selected" ng-disabled="item.store_oh_qty == 0">
+									</td>
+									<td class="col-xs-5">
+										{{item.product_name}}
+									</td>
+									<td class="col-xs-3">{{item.product_sku}}</td>
+									<td class="text-center col-xs-1">
+										<input type="text" class="text-center col-xs-12" name="item_qty-$index" id="item_qty-$index" ng-model="item.qty" data-qty="{{item.prism_item.item_qty}}" ng-keyup="validateItemQty(item.qty, $event, item.store_oh_qty)" ng-click="selectAllText($event)" ng-disabled="!item.Selected" ng-required="!''"/>
+									</td>
+									<td class="text-center col-xs-2">
+										{{item.store_oh_qty}}
+									</td>
+								</tr>
+								<tr ng-if="giftRegistryItems.length == 0">
+									<td colspan="5" class="text-center col-xs-12">No Gift Registry Item/s found !</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- END OF GIFT REGISTRY ITEMS TABLE -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<img src="../images/delete.png" class="btn-delete margin-right-sm" ng-click="closeModalDialog()">
+					<img src="../images/proceed.png" class="btn-proceed margin-right-sm" event-name="posSelectItemMagento"  ng-click="saveSelectedItems(); executeHandler(button.handler);">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

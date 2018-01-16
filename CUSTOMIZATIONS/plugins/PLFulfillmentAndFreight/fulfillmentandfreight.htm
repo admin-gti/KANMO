@@ -31,10 +31,11 @@ $(function() {
                         
                         <div class="row">
                                 <div class="col-md-12 padding-bottom-lg" id="tbl_fulfillment" style="display:none; overflow-y: scroll; height: 230px;">
-                                    <!--<h5><b>SELECTION FOR PICKUP - DIFFERENT STORE</b></h5>-->
-                                    <b>PICKUP - DIFFERENT STORE</b><br/>
-                                    <h5><b>CHOOSE LOCATION:</b></h5>
-                                    <select width="610px" name="fullfill_location" id="fullfill_location" ng-change="SelectLocation(fulfillLocation, $index)" class="form-control" ng-model="fulfillLocation" ng-options="a.LocationName for a in fulfillItem">
+                                    <b>PLEASE SELECT YOUR PICK-UP STORE</b><br/><br/>
+                                    <!--<b>PICKUP - NAMED STORE</b><br/>-->
+                                    Search:&nbsp;<input type="text" id="search_fulfllment" name="search_fulfllment" size="50"/>&nbsp;
+                                    <img ng-click="search()" ng-src="/customizations/images/search.png" align="center" alt="Search" height="28px" width="28px">
+<!--                                    <select width="610px" name="fullfill_location" id="fullfill_location" ng-change="SelectLocation(fulfillLocation, $index)" class="form-control" ng-model="fulfillLocation" ng-options="a.LocationName for a in fulfillItem">
                                         <option value="">SELECT LOCATION</option>
                                     </select>
                                     <input type="hidden" id="fullfill_id" name="fullfill_id" />
@@ -51,7 +52,7 @@ $(function() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="item in inventory" ng-if='inventory !== undefined'>
+                                        <tr ng-repeat="item in viewinventory" ng-if='viewinventory !== undefined'>
                                             <td>{{item.pos}}</td>
                                             <td>{{item.alu}}</td>
                                             <td>{{item.description1}} - {{item.description2}}</td>
@@ -62,8 +63,8 @@ $(function() {
                                             </td>
                                         </tr>
                                         </tbody>
-                                   </table>
-<!--                                    <table class="table table-bordered table-striped" width="100%">
+                                   </table>-->
+                                    <table class="table table-bordered table-striped" width="100%">
                                         <caption ng-if='fulfillItem !== undefined'>{{fulfillItem.length}} location/s found.</caption>
                                         <thead class="panel-heading">
                                             <tr>
@@ -82,11 +83,11 @@ $(function() {
                                             <td colspan="6" align='center'>No Common Location Found</td>
                                         </tr>
                                         </tbody>
-                                   </table>-->
+                                   </table>
                                     <br/><br/>
                                 </div>
                             <div class="col-md-12 padding-bottom-lg " id="tbl_freight" style="display:none; overflow-y: scroll; height: 220px;">
-                                    <h5><b>FREIGHT CHARGES:</b></h5>
+                                    <h5><b>PLEASE SELECT ADDRESS AND SHIPPING OPTIONS FOR HOME DELIVERY:</b></h5>
                                     <span ng-if="NoStoreHomeDelivery==''&&homedeliverydiff!=0"><b>There are {{HomeDeliveryItem.length}} stores that may deliver the items</b></span>
                                     <span ng-if="NoStoreHomeDelivery!=''&&homedeliverydiff!=0&&samestore==0"><font color="RED"><b>{{NoStoreHomeDelivery}}</b></font></span>
                                     <br/>
@@ -103,13 +104,16 @@ $(function() {
                                     <table class="table table-bordered table-striped" width="100%" style="font-size: 11px;" ng-if="NoStoreHomeDelivery==''||samestore!=0">
                                         <tbody>
                                         <tr ng-repeat="ship in shipGroup">
-                                            <td width="40%"> <b>{{ship.note8}} - {{ship.note10}}</b><br/>
+                                            <td width="40%"> <b>{{ship.note8}} - 
+                                                    <span ng-if="ship.note10=='SAME STORE'">MY STORE</span>
+                                                    <span ng-if="ship.note10=='DIFFERENT STORE'">DIFFERENT STORE</span></b><br/>
                                                 <table width="100%" class="table table-bordered table-striped">
                                                     <thead class="panel-heading">
                                                         <tr>
                                                             <th>ALU</th>
                                                             <th>DESCRIPTION</th>
                                                             <th>QUANTITY</th>
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -218,7 +222,7 @@ $(function() {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12">
-                        <img ng-click="close()" ng-click="close()" ng-src="/images/pos/delete.png" align="center" alt="Cancel" src="/images/pos/delete.png" height="28px" width="28px">
+                        <img ng-click="close()" ng-src="/customizations/images/delete.png" align="center" alt="Cancel" height="34px" width="34px">
                         &nbsp;&nbsp;
                         <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update Order and Fulfillment Type" src="/images/pos/save.png" height="28px" width="28px">
                     </div>
@@ -233,7 +237,7 @@ $(function() {
 <script>
 $(function(){
     $('.modal-body').on('focus',".mydatepicker", function(){
-        $(this).datepicker();
+        $(this).datepicker({minDate: 0});
     });
 });
 

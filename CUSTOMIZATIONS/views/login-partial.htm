@@ -1,3 +1,15 @@
+<style type="text/css">
+    @media (min-width : 1024px) and (max-width: 1824px) {
+        .login-logo-margin-top{
+            margin-top: 10% !important;
+        }
+    }
+    @media (min-width : 768px) and (max-width: 1023px) {
+        .login-logo-margin-top{
+            margin-top: 12% !important;
+        }
+    }
+</style>
 <div class="container-fluid">
     <br>
     <br>
@@ -7,14 +19,15 @@
     <div class="row-fluid">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color: #b3b3b3 !important;
+    background-image: none !important; color: #000 !important;">
                         <div class="row">
                             <h1 class="panel-title col-md-12">Retail Pro Prism</h1>
                         </div>
                     </div>
                     <div class="panel-body">
-                            <div class="col-md-5 hidden-sm hidden-xs">
-                                <img src="/images/RetailProLogo160.png" alt="{{ '2335' | translate }}">
+                            <div class="col-md-5 hidden-sm hidden-xs login-logo-margin-top">
+                                <img src="/images/logo_kg.png" style="width: 95% !important;">
                             </div>
                             <div class="col-md-7 col-xs-12">
 
@@ -30,7 +43,8 @@
                                         </div>
                                         <label class="control-label"></label>
                                         <div class="controls smallmargintop">
-                                            <button event-name="loginSubmit" type="button" id="loginButton" name="loginButton" class="btn btn-default btn-lg btn-block" ng-disabled="!credentials.username || !credentials.password" ng-click="doLogin()"><span data-translate="31">Login</span></button>
+                                            <button event-name="loginSubmit" type="button" id="loginButton" name="loginButton" class="btn btn-default btn-lg btn-block" ng-disabled="!credentials.username || !credentials.password" ng-click="doLogin()" style="background-color: #b3b3b3 !important;
+    background-image: none !important; color: #000 !important;border-color: #939393 !important;"><span data-translate="31">Login</span></button>
                                         </div>
                                     </div>
                                 </form>

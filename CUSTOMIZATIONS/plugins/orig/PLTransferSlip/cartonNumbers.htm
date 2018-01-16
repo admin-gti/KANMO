@@ -1,0 +1,70 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Update Carton Number</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<!-- TABLE FOR SLIP ITEMS -->
+					<div class="col-md-12 padding-bottom-lg">
+						<table class="table table-bordered table-stripped" width="100%">
+							<caption class="text-bold">{{slipItems.length}} Slip Item/s found.</caption>
+							<thead>
+								<th>UPC</th>
+								<th>Desc 1</th>
+								<th>Damage Reason 1</th>
+								<th>Damage Reason 2</th>
+								<th>Damage Comment</th>
+								<th>Carton #</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in slipItems">
+									<td>
+										{{item.upc}}
+									</td>
+									<td>
+										{{item.description1}}
+									</td>
+									<td>
+						        		<select id="damageReason1-{{$index}}" name="damageReason1-{{$index}}" class="form-control ng-pristine ng-valid ng-not-empty ng-touched" tabindex="1" ng-model="item.itemnote1" ng-disabled="slipComment == 'NORMAL'">
+							        	    <option value="">{{(damageReason1.length != 0) ? 'PLEASE SELECT' : 'NO RESULT FOUND'}}</option>
+							        	    <option ng-repeat="dmrsn1 in damageReason1" value="{{dmrsn1.udfoption}}">{{dmrsn1.udfoption}}</option>
+							        	</select>
+									</td>
+									<td>
+						        		<select id="damageReason2-{{$index}}" name="damageReason2-{{$index}}" class="form-control ng-pristine ng-valid ng-not-empty ng-touched" tabindex="1" ng-model="item.itemnote2" ng-disabled="slipComment == 'NORMAL'">
+							        	    <option value="">{{(damageReason2.length != 0) ? 'PLEASE SELECT' : 'NO RESULT FOUND'}}</option>
+							        	    <option ng-repeat="dmrsn2 in damageReason2" value="{{dmrsn2.udfoption}}">{{dmrsn2.udfoption}}</option>
+							        	</select>
+									</td>
+									<td>
+										<input type="text" name="damageComment" class="form-control" ng-model="item.itemnote3" ng-disabled="slipComment == 'NORMAL'"/>
+									</td>
+									<td>
+										<input type="text" name="cartonNo" class="form-control" ng-model="item.itemnote10"/>
+									</td>
+								</tr>
+								<tr ng-if="slipItems.length == 0">
+									<td colspan="6" class="text-center col-xs-12">No Slip Item/s found !</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<!-- END OF SLIP ITEMS TABLE -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-lg btn-default" ng-click="updateCartonNumber()">Update</button>
+					<button type="button" class="btn btn-lg btn-default" ng-click="closeModalDialog()" ng-disabled="btnCloseDisabled">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

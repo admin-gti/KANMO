@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row-fluid">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: #b3b3b3 !important;
+    background-image: none !important; color: #000 !important;">
+                        <div class="row">
+                            <h1 class="panel-title col-md-12">Retail Pro Prism</h1>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                            <div class="col-md-5 hidden-sm hidden-xs" style="margin-top: 8% !important;">
+                                <img src="/images/logo_kg.png" width="235px">
+                            </div>
+                            <div class="col-md-7 col-xs-12">
+
+                                <form id="loginForm" class="form-horizontal nobottommargin">
+                                    <div class="control-group">
+                                        <label class="control-label bold" data-translate="70.2">User:</label>
+                                        <div class="controls">
+                                            <input class="form-control" id="username" name="username" type="text" autocapitalize="off" autocorrect="off" delay-translate="1011" placeholder="{{ '1011' | translate }}" ng-required="true" ng-focuser="true" ng-model="credentials.username">
+                                        </div>
+                                        <label class="control-label bold smallmargintop" data-translate="70.3">Password:</label>
+                                        <div class="controls smallmargintop">
+                                            <input class="form-control" id="password" name="password" type="password" autocapitalize="off" autocorrect="off" delay-translate="70.3" placeholder="{{ '1212' | translate }}" ng-keydown="onEnterKeyPressed($event)" ng-required="true" ng-model="credentials.password">
+                                        </div>
+                                        <label class="control-label"></label>
+                                        <div class="controls smallmargintop">
+                                            <button event-name="loginSubmit" type="button" id="loginButton" name="loginButton" class="btn btn-default btn-lg btn-block" ng-disabled="!credentials.username || !credentials.password" ng-click="doLogin()" style="background-color: #b3b3b3 !important;
+    background-image: none !important; color: #000 !important;border-color: #939393 !important;"><span data-translate="31">Login</span></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <p ng-if="!remoteServer"><b data-translate="70.4">Server</b> {{serverName}}</p>
+                        <div ng-if="remoteServer">
+                          <p><b data-translate="4728">Proxy</b> {{serverName}}</p>
+                          <p><b data-translate="70.4">Server</b> {{remoteServer}}</p>
+                        </div>
+                        <p>© {{versionInfo.VerCopyright}}</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

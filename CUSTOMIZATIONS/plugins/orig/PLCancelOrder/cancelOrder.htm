@@ -1,0 +1,80 @@
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Reason for Cancellation</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="row">
+                                <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="CancelReason" class="col-sm-4">Reason: </label>
+                                            <div class="col-sm-8">
+                                                    <select tabindex="1" class="form-control" id="cancelreason" name="cancelreason" ng-disabled="" data-permission="EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:form.document.status === 4}]">
+                                                        <option value="">Select...</option>
+                                                        <option value="NDA">Order Not in Delivery Area</option>
+                                                        <option value="INA">Item Not available/Unsellelable</option>
+                                                        <option value="OPM">Order placed by mistake</option>
+                                                        <option value="DTM">Order delivery Is taking too much time</option>
+                                                        <option value="OEQ">By mistake ordered extra quantity</option>
+                                                        <option value="BFS">Bought it from somewhere else</option>
+                                                        <option value="CSA">Customer want to change the shipping address</option>
+                                                        <option value="CMP">Customer want to change the mode of payment</option>
+                                                        <option value="CHA">Product cost Is high compared to another website</option>
+                                                        <option value="SCH">Shipping charges are too high</option>
+                                                        <option value="PNR">Payment not received</option>
+                                                        <option value="ICI">Incorrect Contact information</option>
+                                                        <option value="ODM">Order less than order delivery minimum value</option>
+                                                        <option value="SLA">SLA expired in Acknowledgment</option>
+                                                        <option value="SLN">SLA expired in New Order</option>
+                                                        <option value="QMA">Order Expired due to Quantity Mismatch from Aggregator</option>
+                                                        <option value="RDA">Retailer did Not allocate items to aggregator</option>
+                                                        <option value="CPR">Cancellation as per customer request</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CancelReason" class="col-sm-4">Comment: </label>
+                                            <div class="col-sm-8">
+                                                    <textarea class="form-control" rows="5" id="cancelcomment" name="cancelcomment"></textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-lg btn-default" ng-click="update()">Update</button> 
+                        <button type="button" class="btn btn-lg btn-default" ng-click="close()">Close</button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+.datepicker{z-index:1151 !important;}
+.resultMargin{margin-bottom: -15px;}
+</style>
+
+<script>
+$(function(){
+  $('#shipping_date').datepicker({
+      autoclose: true
+  });
+});
+</script>

@@ -1,0 +1,116 @@
+<div class="container-fluid">
+
+    <div class="row">
+       <div class="col-xs-12 btn-group btn-group-justified" role="group" aria-label="...">
+         <div class="btn-group"><button type="button" id="posButton" class="btn btn-info btn-lg" data-translate="500" ng-click="changeTabs(0)">Point of Sale</button></div>
+         <div class="btn-group"><button type="button" id="customersButton" class="btn btn-info btn-lg" data-translate="515" ng-click="changeTabs(1)">Customers</button></div>
+         <div class="btn-group"><button type="button" id="reportingButton" class="btn btn-info btn-lg" data-translate="2316" ng-click="changeTabs(2)">X/Z-Out</button></div>
+       </div>
+    </div>
+
+    <div ng-show="showPOSArea" class="row top-margin" id="pos">
+      <div class="col-xs-12">
+        <div class="panel">
+          <div class="panel-heading" data-translate="500">Point of Sale</div>
+          <div class="panel-body height70">
+            <div class="row top-margin">
+              <button event-name="navLandingNewTransaction" tabindex="3" type="button" id="newTransactionButton" ng-click="newTransaction()" data-permission="CreatePOSTransaction" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/pos/pos_new_48.png" height="32" width="32">
+                <span class="text-left" data-translate="502">New Transaction</span>
+              </button>
+            </div>
+            <div class="row top-margin">
+              <button event-name="navLandingTransactionLookup" tabindex="4" type="button" id="transactionLookupButton" ng-click="transactionLookup()" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/pos/trans_lookup_48.png" height="32" width="32">
+                <span class="text-left" data-translate="503">Transaction Lookup</span>
+              </button>
+            </div>
+            <div class="row top-margin">
+              <button event-name="navLandingPendingTransactions" tabindex="5" type="button" id="pendingTransactionsButton" ng-click="pendingTransactions()" data-permission="posaccesspendingtransactions" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/pos/document_pending_48.png" height="32" width="32">
+                <span class="text-left" data-translate="504">Pending Transactions</span>
+              </button>
+            </div>
+            <div class="row top-margin">
+              <button event-name="navLandingCheckIn" ng-click="checkInOut('in')" tabindex="6" type="button" id="checkInButton" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/pos/check_in_48.png" height="32" width="32">
+                <span class="text-left" data-translate="511">Check In</span>
+              </button>
+            </div>
+            <div class="row top-margin">
+              <button event-name="navLandingCheckOut" ng-click="checkInOut('out')" tabindex="7" type="button" id="checkOutButton" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/pos/check_out_48.png" height="32" width="32">
+                <span class="text-left" data-translate="512">Check Out</span>
+              </button>
+            </div>
+            <div class="row top-margin">
+              <button event-name="navLandingTimeClock" ng-click="timeClock()" tabindex="8" type="button" id="timeClockButton" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/pos/check_out_48.png" height="32" width="32">
+                <span class="text-left" data-translate="3213">Time Clock</span>
+              </button>
+            </div>
+            <div class="row top-margin">
+			        <button event-name="navLandingExit" tabindex="9" id="exitButton" type="button" class="btn btn-primary btn-lg btn-block" ng-click="releaseSeat();">
+						      <img class="pull-left" style="margin-left: 2em" src="/images/USERLOGOUT.png" height="32" width="32">
+						      <span data-translate="32">Exit</span>
+				      </button>
+		        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="showCustomerArea" class="row top-margin" id="customers">
+      <div class="col-xs-12">
+        <div class="panel">
+          <div class="panel-heading" data-translate="515">Customers</div>
+          <div class="panel-body height70">
+<!--             <div class="row top-margin">
+              <button event-name="navLandingNewCustomer" id="newCustomerButton" tabindex="3" type="button" ng-click="newCustomer()" class="btn btn-primary btn-lg btn-block">
+                <img class="pull-left" style="margin-left: 2em" src="/images/customer/create_customer_48.png" height="32" width="32">
+                <span class="text-left" data-translate="516">New Customer</span>
+              </button>
+            </div> -->
+            <!--
+            Removed Button per DT 13150 until functionality has been implemented
+            <div class="row top-margin">-->
+              <!--<button event-name="navLandingCustomerLookup" id="customerLookupButton" tabindex="4" type="button" ng-click="customerLookup()" class="btn btn-primary btn-lg btn-block">-->
+                <!--<img class="pull-left" style="margin-left: 2em;" src="/images/customer/customer_find_48.png" height="32" width="32" />-->
+                <!--<span class="text-left" data-translate="517">Customer Lookup</span>-->
+              <!--</button>-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="showReportArea" class="row top-margin" id="Reporting">
+      <div class="col-xs-12">
+        <div class="panel">
+          <div class="panel-heading" data-translate="2316">X/Z-Out</div>
+          <div class="panel-body height70">
+              <div class="row top-margin">
+                <!--
+                Removed Button until functionality is ready to be implemented
+                <button event-name="navLandingXOut" id="xOutButton" tabindex="3" type="button" ng-click="goToXOut()" class="btn btn-primary btn-lg btn-block">
+                  <img class="pull-left" style="margin-left: 2em;" src="/images/pos/Xout_48.png" height="32" width="32" />
+                  <span class="text-left" data-translate="506">X-Out</span>
+                </button>-->
+                <button event-name="navLandingZOut" id="zOutButton" tabindex="3" type="button" ng-click="goToZOut()" class="btn btn-primary btn-lg btn-block">
+                  <img class="pull-left" style="margin-left: 2em" src="/images/pos/Zout_Closed_48.png" height="32" width="32">
+                  <span class="text-left" data-translate="507">Z-Out</span>
+                </button>
+                <!--
+                Removed Button until functionality is ready to be implemented
+                <button event-name="navLandingZOutLookup" id="zOutLookupButton" tabindex="3" type="button" ng-click="zoutLookup()" class="btn btn-primary btn-lg btn-block">
+                  <img class="pull-left" style="margin-left: 2em;" src="/images/pos/former_z_out_48.png" height="32" width="32" />
+                  <span class="text-left" data-translate="508">Z-Out Lookup</span>
+                </button>-->
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ </div> <!-- /container -->
+
+

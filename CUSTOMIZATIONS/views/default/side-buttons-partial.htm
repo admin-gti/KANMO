@@ -1,0 +1,249 @@
+<div class="aside bs-docs-aside" tabindex="-1" role="dialog">
+    <div class="aside-dialog" ng-controller="rpmenuController">
+        <div class="aside-content">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12">
+                        Prism Menu
+                    </div>
+                </div>
+            </div>
+            <div class="aside-body">
+                <div ng-controller="sideButtonsCtrl">
+                    <div ng-repeat="button in sideButtons" class="row top-margin">
+                        <div class="col-xs-12">
+                            <button event-name="sideButtonsCSBO" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="executeHandler(button.handler)">
+                                {{button.label}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row top-margin" ng-show="displayHomeButton">
+                    <div class="col-xs-12">
+                        <button event-name="sideButtonHome" type="button" id="homeButton" class="btn btn-default RPOptionButton leftalign col-xs-12 btn-image" ng-click="posHome()">
+                            <div class="btn-container">
+                                <img src="/images/Point_of_Sale.png" height="30px" width="30px">
+                                <span data-translate="500" class="btn-txt">Point of Sale</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row top-margin" ng-show="displayOpsButton">
+                    <div class="col-xs-12">
+                        <button id="storeOperationButton" event-name="storeOperationButton" class="btn btn-default RPOptionButton leftalign btn-block btn-image" ng-click="goToStoreOps()" type="button">
+                            <div class="btn-container">
+                                <img src="/images/Store_Operations.png" height="30px" width="30px">
+                                <span data-translate="3161" class="btn-txt">Store Operations</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row top-margin" ng-show="displayACButton">
+                    <div class="col-xs-12" ng-controller="acAcess">
+                        <button event-name="mainAdminConsole" id="mainAdminConsoleButton" ng-disabled="!user.isAdmin" class="btn btn-default RPOptionButton leftalign btn-block btn-image" ng-click="goToAdminConsole()" type="button">
+                            <div class="btn-container">
+                                <img src="/images/Admin_Console.png" height="30px" width="30px">
+                                <span data-translate="1264" class="btn-txt">Admin Console</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row top-margin" ng-show="displayLangugeButton">
+                    <div class="col-xs-12">
+                        <button event-name="sideButtonsLanguage" id="LanguageButton" type="button" ng-class="hideLanguages ? 'btn btn-default RPOptionButton leftalign col-xs-12' : 'btn btn-success RPOptionButton leftalign col-xs-12'" ng-click="showLanguages();">
+                            <div class="btn-container">
+                                <img src="/images/Language.png" height="30px" width="30px">
+                                <span data-translate="14" class="btn-txt">Language</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row top-margin" ng-show="displayHelpButton">
+                    <div class="col-xs-12">
+                        <button event-name="sideButtonHelp" id="HelpButton" type="button" ng-class="hideHelp ? 'btn btn-default RPOptionButton leftalign col-xs-12' : 'btn btn-success RPOptionButton leftalign col-xs-12'" ng-click="showHelp();positionPopover()">
+                            <div class="btn-container">
+                                <img src="/images/Help.png" height="30px" width="30px">
+                                <span data-translate="40" class="btn-txt">Help</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row top-margin">
+                    <div class="col-xs-12">
+                        <reset-password-menu-button logout="releaseSeat" close="$hide">
+                        </reset-password-menu-button>
+                    </div>
+                </div>
+                <div class="row top-margin" ng-show="displayLogoutButton">
+                    <div class="col-xs-12">
+                        <button event-name="sideButtonExit" id="exitButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12 btn-image" ng-click="releaseSeat()">
+                            <div class="btn-container">
+                                <img src="/images/Log_out.png" height="30px" width="30px">
+                                <span data-translate="32" class="btn-txt">Logout</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div id="HelpButtons" ng-hide="hideHelp">
+                    <div class="row top-margin">
+                        <div class="col-xs-12">
+                            <a id="helpIndexButton" href="/help/ipad/Welcome.htm" target="_blank" class="btn btn-default RPOptionButton leftalign col-xs-12">
+                                <span data-translate="42">Index</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row top-margin">
+                        <div class="col-xs-12">
+                            <button event-name="sideButtonAbout" id="helpAboutButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="helpAbout()">
+                            <span data-translate="43">About</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="LanguageButtons" class="row top-margin" ng-hide="hideLanguages">
+
+                    <div class="col-xs-12">
+                        <div class="height50 noOverflow" touch-scroll="" touch-scroll-show="true">
+
+                        <div class="row top-margin" ng-repeat="language in installedLanguages">
+                            <div class="col-xs-12">
+                                <button event-name="sideButtonInstalledLanguage" id="language{{language.value}}" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="changeLanguage(language.value)">
+                                    <span ng-bind-html="language.utrn | translate"></span>
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="aside" tabindex="-1" role="dialog">
+    <div class="aside-dialog" ng-controller="rpmenuController">
+        <div class="aside-content">
+            <accordion close-others="false">
+                <accordion-group is-open="status.quickActionsOpen">
+                    <accordion-heading style="display:block;" class="col-xs-12">
+                        Quick Actions <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.quickActionsOpen, 'glyphicon-chevron-right': !status.quickActionsOpen}"></i>
+                    </accordion-heading>
+
+
+                    <div ng-controller="sideButtonsCtrl">
+                        <div ng-repeat="button in sideButtons" class="row top-margin">
+                            <div class="col-xs-12">
+                                <button event-name="" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-show="isInSection(button.sections)" ng-click="executeHandler(button.handler)">
+                                <img ng-show="button.icon" ng-src="{{button.icon}}" />
+                                {{button.label}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </accordion-group>
+                <accordion-group is-open="status.prismActionsOpen">
+                    <accordion-heading>
+                        Prism Actions <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.prismActionsOpen, 'glyphicon-chevron-right': !status.prismActionsOpen}"></i>
+                    </accordion-heading>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="row top-margin">
+                                <div class="col-xs-12">
+                                    <button event-name="" id="LanguageButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="showLanguages();">
+                                    <img src="/images/OPTTHEME.png"/>
+                                    <span data-translate="14">Language</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row top-margin">
+                                <div class="col-xs-12">
+                                    <button event-name="" id="HelpButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="showHelp();positionPopover()">
+                                    <img src="/images/HELP.png"/>
+                                    <span data-translate="40">Help</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row top-margin" ng-show="false">
+                                <div class="col-xs-12">
+                                    <button event-name="" id="ThemesButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-hide="true" ng-click="showThemes()">
+                                    <img src="/images/OPTTHEME.png"/>
+                                    <span data-translate="13">Themes</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row top-margin">
+                                <div class="col-xs-12">
+                                    <button event-name="" id="exitButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="releaseSeat()">
+                                    <img src="/images/USERLOGOUT.png"/>
+                                    <span data-translate="32">Exit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div id="HelpButtons" ng-hide="hideHelp">
+                                <div class="row top-margin">
+                                    <div class="col-xs-12">
+                                        <a id="helpIndexButton" href="/help/ipad/Welcome.htm" target="_blank" class="btn btn-default RPOptionButton leftalign col-xs-12">
+                                            <img src="/images/HELPIDX.png"/>
+                                            <span data-translate="42">Index</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row top-margin">
+                                    <div class="col-xs-12">
+                                        <button event-name="" id="helpAboutButton" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="helpAbout()">
+                                        <img src="/images/HELPABOUT.png"/>
+                                        <span data-translate="43">About</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="LanguageButtons" ng-hide="hideLanguages" >
+                                <div class="row top-margin" ng-repeat="language in installedLanguages">
+                                    <div class="col-xs-12">
+                                        <button event-name="" id="language{{language.value}}" type="button" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="changeLanguage(language.val)">
+                                        <table border="0" cellpadding="2" cellspacing="0"><tr><td><img src="/images/OPTTHEME.png"/></td><td style="padding-left: 5px"><span ng-bind-html="language.utrn | translate"></span></td></tr></table>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="row top-margin">
+                                <div class="col-xs-12">
+                                    <button event-name="" type="button" id="homeButton" class="btn btn-default RPOptionButton leftalign col-xs-12" ng-click="posHome()">
+                                    <img src="/images/Home.png"/>
+                                    <span data-translate="0.3">Home</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="row top-margin">
+                                <div class="col-xs-12">
+                                    <button event-name="" type="button" id="exitPOSButton" class="btn btn-default RPOptionButton col-xs-12" ng-click="goToLanding()">
+                                    <img src="/images/USERLOGOUT.png"/>
+                                    <span data-translate="0.4">Landing</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="aside-footer">
+            <button event-name="" type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+        </div>
+
+    </div>
+</div> -->

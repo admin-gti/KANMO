@@ -1,0 +1,62 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">E - Receipt Details</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-horizontal">
+						<div class="form-group">
+						    <label for="customerEmail" class="col-sm-3">Customer Email: </label>
+						    <div class="col-sm-9">
+						    	<input type="email" class="form-control" name="customerEmail" id="customerEmail" ng-model="detail.customerEmail"/>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="mobilePhone" class="col-sm-3">Mobile Phone: </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="mobilePhone" id="mobilePhone" ng-model="detail.mobilePhone" maxlength="11" ng-keyup="validateMobile(detail.mobilePhone)"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="dateOfBirth" class="col-sm-3">Date Of Birth: </label>
+							<div id="datepicker" class="col-sm-9">
+							   <input type="text" class="form-control" id="dateOfBirth" ng-model="detail.dateOfBirth" ng-change="notEditableChange(detail.dateOfBirth)" ng-keydown="notAllowInput($event)"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<img src="../images/delete.png" class="btn-delete margin-right-sm" ng-click="closeModalDialog()">
+					<img src="../images/proceed.png" class="btn-proceed margin-right-sm" ng-click="saveDetails()">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.datepicker{z-index:1151 !important;}
+	.resultMargin{margin-bottom: -15px;}
+</style>
+
+<script>
+	$(function(){
+	  $('#datepicker input').datepicker({
+	      autoclose: true,
+	      format: 'mm/dd/yyyy',
+	  });
+	});
+
+	function printContent() {
+	  window.frames["preview_frame"].focus();
+	}
+
+</script>

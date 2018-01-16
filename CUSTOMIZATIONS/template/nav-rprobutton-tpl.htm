@@ -1,0 +1,15 @@
+<div class="navbar navbar-fixed-bottom navbar-default">
+    <div class="row">
+        <div class="col-xs-10">
+            <div ng-include="buttonView"></div>
+        </div>
+        <div class="col-xs-2">
+            <div class="text-right">
+                <button id="mainRProButton" tabindex="1000" ng-if="vwPath"
+                        type="button" class="btn navbar-btn btn-default rp-button" bs-aside="aside" data-template="{{vwPath}}side-buttons-partial.htm" data-placement="right" data-container="body">
+                        <img ng-src="/images/logo_kg.png" height="22px" width="90px" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

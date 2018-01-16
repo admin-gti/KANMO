@@ -72,6 +72,7 @@
                                     <span ng-if="doc.udf_string2=='FA'">Invoiced - Shipping Label Printed</span>
                                     <span ng-if="doc.udf_string2=='RJ'">Reject</span>
                                 </h6>
+                                <input type="hidden" id="omsid" ng-model="doc.notes_general" />
                                 </div>
                             </td>
                         </tr>
@@ -100,13 +101,14 @@
                                 <td align="left">
                                         <select id="changeStatus" name="changeStatus" class="form-control" tabindex="1" ng-model="changeStatus" data-collect-permission="" ng-change="handler($event)">
                                             <option value="">PLEASE SELECT</option>
-                                            <option value="PK" ng-if="shipstate!='DT'&&ref_order_sid==''">Ready for Shipment/Pickup (PK)</option>
-                                            <option value="FA" ng-if="shipstate!='DT'&&ref_order_sid!=''&&(doc.udf2_string!='DP'||doc.udf2_string!='DL')">Invoiced - Shipping Label Printing (FA)</option>
-                                            <option value="DP" ng-if="shipstate!='DT'&&ref_order_sid!=''">Order Shipped/Picked Up(DP)</option>
-                                            <option value="DL" ng-if="shipstate!='DT'&&ref_order_sid!=''">Customer-Order Delivered(DL)</option>
+                                            <option value="PK" ng-if="(shipstate=='SE'||shipstate=='')&&ref_order_sid==''">Ready for Shipment/Pickup (PK)</option>
+                                            <!--<option value="FA" ng-if="shipstate=='WP'">Invoiced - Shipping Label Printing (FA)</option>-->
+                                            <option value="FA">Invoiced - Shipping Label Printing (FA)</option>
+                                            <option value="DP" ng-if="shipstate=='FA'">Order Shipped/Picked Up(DP)</option>
+                                            <option value="DL" ng-if="shipstate=='DP'">Customer-Order Delivered(DL)</option>
                                             <option value="CC" ng-if="ref_order_sid==''&&shipstate=='DT'">Customer Order Received(OR)</option>
                                             <option value="RJ" ng-if="ref_order_sid!=''&&ref_order_sid==''">Reject (RJ)</option>
-                                            <option value="DT">Click and Collect (For Testing Only)</option>
+                                            <!--<option value="DT">Click and Collect (For Testing Only)</option>-->
                                         </select>
                                         <input type="hidden" name="orderSID"  id="orderSID" value/>
                                 </td>
@@ -114,20 +116,6 @@
                        </table>
                 </div>
                 <div class="col-md-12">&nbsp;</div>
-<!--                <div class="col-md-12">
-                    <span id="divNotFound">
-                        <table class="table table-bordered table-striped" width="100%">
-                            <caption>{{viewItem.length}} item/s found.</caption>
-                            <tr>
-                                <td>
-                                    <div class="col-md-6 resultMargin">
-                                        <span><h6><b>RECORD NOT FOUND</b></h6></span>
-                                    </div>
-                                </td>
-                            </tr>
-                       </table>
-                    </span>
-                </div>-->
             </div>
         </div>
     </div>
@@ -136,11 +124,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12">
-                    <img ng-click="view()" ng-src="/customizations/images/view.png" align="center" alt="Cancel" src="/customizations/images/view.png" height="28px" width="28px">
+                    <img ng-click="view()" ng-src="/customizations/images/view.png" align="center" alt="Cancel" height="28px" width="28px">
                     &nbsp;&nbsp;
-                    <img ng-click="close()" ng-src="/images/pos/delete.png" align="center" alt="Cancel" src="/images/pos/delete.png" height="28px" width="28px">
+                    <img ng-click="close()" ng-src="/customizations/images/delete.png" align="center" alt="Cancel" height="28px" width="28px">
                     &nbsp;&nbsp;
-                    <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update Status" src="/images/pos/save.png" height="28px" width="28px">
+                    <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update Status" height="28px" width="28px">
+                    
                 </div>
             </div>
         </div>

@@ -1,0 +1,115 @@
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Change Order Type</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr class="panel-heading">
+                                    <th>Apply to All Items</th>
+                                    <th>Order Type</th>
+                                    <th>Fulfillment Type</th>
+                                    <!--<th>Actions</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center"><input name="spreadSO" id="spreadSO" tabindex="18" type="checkbox" ng-model="checkboxValue" class="ng-pristine ng-untouched ng-valid ng-empty" ng-change="handler($event)"></td>
+                                    <td>
+                                        <select id="all_ordertype" name="all_ordertype" class="form-control" tabindex="1" ng-model="all_ordertype" data-collect-permission="" ng-change="handler($event)">
+                                            <option value="">SALE</option>
+                                            <option value="PICKUP" selected>PICKUP</option>
+                                            <option value="HOME DELIVERY">HOME DELIVERY</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="all_fulfillmentype" name="all_fulfillmentype" class="form-control" tabindex="1" ng-model="all_fulfillmentype" data-collect-permission="" ng-change="handler($event)">
+                                            <option value="">IMMEDIATE</option>
+                                            <option value="SAME STORE" selected>SAME STORE</option>
+                                            <option value="DIFFERENT STORE">DIFFERENT STORE</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                       </table>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped" width="100%">
+                            <!--<caption>{{viewItem.length}} item/s found.</caption>-->
+                            <thead>
+                                <tr class="panel-heading">
+                                    <th>Line Item</th>
+                                    <th>Desc</th>
+                                    <th>SKU</th>
+                                    <th>Order Type</th>
+                                    <th>Fulfillment Type</th>
+                                    <!--<th>Actions</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in viewItem">
+                                <td>
+                                    {{item.item_description1}}
+                                </td>
+                                <td>
+                                    {{item.item_description2}}
+                                </td>
+                                <td>
+                                    {{item.alu}}
+                                </td>
+                                <td>
+                                    <select id="item_note8_{{$index}}" name="item_note8" class="form-control" tabindex="1" ng-model="item.note8" data-collect-permission="">
+                                        <option value="">SALE</option>
+                                        <option value="PICKUP" selected>PICKUP</option>
+                                        <option value="HOME DELIVERY">HOME DELIVERY</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="item_note10_{{$index}}" name="item_note10" class="form-control" tabindex="1" ng-model="item.note10" data-collect-permission="">
+                                        <option value="">IMMEDIATE</option>
+                                        <option value="SAME STORE" selected>SAME STORE</option>
+                                        <option value="DIFFERENT STORE">DIFFERENT STORE</option>
+                                    </select>
+                                    <input type="hidden" id="items_{{$index}}" ng-model="item.alu" ng-value="'{{item.alu}}'"/>
+                                </td>
+                                <!--<td>-->
+                                    <!--<button type="button" class="btn btn-primary" ng-click="getDataOrder($index)">Update</button>-->
+                                    
+                                <!--</td>-->
+                            </tr>
+                            </tbody>
+                       </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+<!--                        <button type="button" class="btn btn-lg btn-default" ng-click="update()"><img ng-src="/images/pos/save.png" align="center" alt="Update Order and Fulfillment Type" src="/images/pos/save.png" height="28px" width="28px"></button> 
+                        <button type="button" class="btn btn-lg btn-default" ng-click="close()" event-name="navPOSUpdateMultipleOrderType" ng-click="executeHandler(button.handler)"><img ng-src="/images/pos/delete.png" align="center" alt="Cancel" src="/images/pos/delete.png" height="28px" width="28px"></button> -->
+<!--                        <img ng-click="close()" ng-click="close()" ng-src="/images/pos/delete.png" align="center" alt="Cancel" src="/images/pos/delete.png" height="28px" width="28px">
+                        &nbsp;&nbsp;
+                        <img ng-click="update()" ng-src="/customizations/images/proceed.png" event-name="navPOSUpdateMultipleOrderType" ng-click="executeHandler(button.handler)"align="center" alt="Update Status" src="/images/pos/save.png" height="28px" width="28px">-->
+                        <img ng-click="close()" ng-click="executeHandler(button.handler)"  event-name="navPOSUpdateMultipleOrderType" ng-src="/customizations/images/delete.png" align="center" alt="Cancel" src="/customizations/images/delete.png" height="28px" width="28px">
+                            &nbsp;&nbsp;
+                        <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update" src="/images/pos/proceed.png" height="28px" width="28px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

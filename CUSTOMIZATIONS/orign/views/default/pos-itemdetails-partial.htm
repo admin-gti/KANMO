@@ -1,0 +1,641 @@
+<form name="form.itemDetailsForm" id="itemDetailsForm" class="form-horizontal" autocomplete="off">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-3">
+                    <h4 data-translate="765">Item Details</h4>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <button event-name="posItemDetailPrevious" type="button" class="btn btn-primary" id="showPreviousButton" ng-disabled="showPreviousButtonDisabled" ng-click="showPrevious()">
+                        <span data-translate="840">Previous Item</span></button>
+                     
+                    <button event-name="posItemDetailNext" type="button" class="btn btn-primary" id="showNextButton" ng-disabled="showNextButtonDisabled" ng-click="showNext()">
+                        <span data-translate="839">Next Item</span></button>
+                     
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="675">Desc 1</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="form-control-static">{{item.item_description1}}</p>
+                    </div>
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="678">Attr</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">{{item.attribute}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="676">Desc 2</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="form-control-static">{{item.item_description2}}</p>
+                    </div>
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="679">Size</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">{{item.item_size}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="841">ALU</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">{{item.alu}}</p>
+                    </div>
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="677">UPC</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">{{item.scan_upc}}</p>
+                    </div>
+                    <div class="col-xs-2 text-right">
+                        <p class="form-control-static">
+                            <strong data-translate="542">Type</strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">{{item.item_type|itemTypeName | translate}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <hr>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button event-name="posItemDetailInventoryDetail" type="button" class="btn btn-info" ng-disabled="tabs.inventory" ng-click="changeTemplate('inventory')">
+                            <span data-translate="765">Inventory Details</span></button>
+                        <button event-name="posItemDetailDiscounts" type="button" class="btn btn-info" ng-disabled="tabs.discounts" ng-click="changeTemplate('discounts')">
+                            <span data-translate="713">Discounts</span></button>
+                        <button event-name="posItemDetailShipping" type="button" class="btn btn-info" ng-disabled="tabs.shipping || hasDocumentShipping" ng-click="changeTemplate('shipping')">
+                            <span data-translate="849">Shipping</span></button>
+                        <button event-name="posItemDetailAssociate" type="button" class="btn btn-info" ng-disabled="tabs.associate" ng-click="changeTemplate('associate')">
+                            <span data-translate="699">Associate</span></button>
+                        <button event-name="posItemDetailItemNotes" type="button" class="btn btn-info" ng-disabled="tabs.notes" ng-click="changeTemplate('notes')">
+                            <span data-translate="874">Item Notes</span></button>
+                        <button event-name="posItemDetailOHQty" type="button" class="btn btn-info" ng-disabled="tabs.onhand" ng-click="changeTemplate('onhand')">
+                            <span data-translate="875">OH Qty</span></button>
+                    </div>
+                </div>
+            <div class="row" ng-if="(tabs.discounts&&!isCustomerRequiredForDiscount||(isCustomerRequiredForDiscount&&tabs.discounts&&document.bt_cuid.length>0))">
+                    <div class="col-xs-8">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-xs-9 control-label" data-translate="1933">
+                                        Specify the amount of discount to apply to the item
+                                    </label>
+                                    <div class="col-xs-3">
+                                        <input type="tel" ng-if="form.discountType!=='pct'" name="discountInput" id="discountInput1" class="form-control" data-currency-formatter="" numberonly="" data-permission-disabled="disableEdit || form.editOrderItem || form.viewMode" data-collect-permission="" data-permission="GiveItemDiscount,EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4 || disableEdit}]" ng-model="form.discountInput">
+                                        <input type="tel" ng-if="form.discountType==='pct'" name="discountInput" id="discountInput2" class="form-control" data-currency-formatter="number" numberonly="" data-permission-disabled="disableEdit || form.editOrderItem || form.viewMode" data-collect-permission="" data-permission="GiveItemDiscount,EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4 || disableEdit}]" ng-model="form.discountInput">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">
+                                        Discount Type
+                                    </label>
+                                    <div class="col-xs-3">
+                                        <button event-name="posItemDetailDiscountAmount" onclick="setTimeout(function(){document.getElementById('discountInput1').focus();document.getElementById('discountInput1').select()},100)" ng-click="focusSaleInput=true" type="button" class="btn btn-info btn-block" btn-radio="'amt'" ng-model="form.discountType" ng-disabled="(form.discountType === 'amt') || form.editOrderItem || form.viewMode" data-collect-permission="" data-permission="GiveItemDiscount,EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]">
+                                            <span data-translate="715">Discount Amount</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <button event-name="posItemDetailDiscountPercent" onclick="setTimeout(function(){document.getElementById('discountInput2').focus();document.getElementById('discountInput2').select()},100)" ng-click="focusSaleInput=false" type="button" class="btn btn-info btn-block" btn-radio="'pct'" ng-model="form.discountType" ng-disabled="(form.discountType === 'pct') || form.editOrderItem || form.viewMode" data-collect-permission="" data-permission="GiveItemDiscount,EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]">
+                                            <span data-translate="714">Discount %</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <button event-name="posItemDetailPrice" onclick="setTimeout(function(){document.getElementById('discountInput1').focus();document.getElementById('discountInput1').select()},100)" ng-click="focusSaleInput=true" type="button" class="btn btn-info btn-block" btn-radio="'price'" ng-model="form.discountType" ng-disabled="(form.discountType === 'price') || form.editOrderItem || form.viewMode" data-collect-permission="" data-permission="GiveItemDiscount,EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]">
+                                            <span>Price</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3 text-right">
+                                        <p class="form-control-static">
+                                            <strong data-translate="716">Discount Reason</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <select ng-model="item.manual_disc_reason" ng-required="isDiscReasonReq" class="form-control" tabindex="14" id="discount_reason" name="discount_reason" data-permission-disabled="form.editOrderItem || form.viewMode || item.kit_flag == 5" data-collect-permission="" data-permission="GiveItemDiscount,EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-options="r.name as r.name for r in reasonList">
+                                            <option value="" style="display:none" data-translate="1358">Select...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3 col-xs-offset-9">
+                                        <button event-name="posItemSaleDiscountDetail" ng-click="showItemDiscount()" type="button" class="btn btn-info btn-block">
+                                            <span data-translate="3931">Show Discount</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-xs-6 control-label" data-translate="715">Discount Amount</label>
+                                    <div class="col-xs-6">
+                                        <p class="form-control-static">{{ item.total_discount_amount|currency }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-6 control-label" data-translate="714">Discount %</label>
+                                    <div class="col-xs-6">
+                                        <p class="form-control-static">{{ item.total_discount_percent| number }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-6 control-label" data-translate="1935">Price with Discount</label>
+                                    <div class="col-xs-6">
+                                        <p class="form-control-static">{{ item.price|price }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-6 control-label" data-translate="716">Discount Reason</label>
+                                    <div class="col-xs-6">
+                                        <p class="form-control-static">{{ item.total_discount_reason }}</p>
+                                    </div>
+                                </div>
+                                <div ng-hide="origSalePriceDisabled" ng-if="item.orig_sale_price" class="form-group">
+                                    <label class="col-xs-6 control-label" data-translate="4775">Original Sale Price</label>
+                                    <div class="col-xs-6">
+                                        <p class="form-control-static">{{ item.orig_sale_price|price }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row" ng-if="tabs.discounts&&isCustomerRequiredForDiscount&&tabs.discounts&&!document.bt_cuid.length">
+              <div class="col-xs-12">
+                <div class="well well-sm">
+                  <em data-translate="5729">A customer is required to perform manual discounts.</em>
+                </div>
+              </div>
+            </div>
+                <div class="row" ng-show="tabs.inventory">
+                    <div class="col-xs-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="quantity" data-translate="842">Doc Qty</label>
+                                    <div class="col-xs-8">
+                                        <input tabindex="6" type="text" class="form-control" id="quantity" name="quantity" data-currency-formatter="number" decimals="{{item.inventory_use_quantity_decimals}}" min="{{item.order_quantity_filled}}" ng-change="changeQty(form.itemDetailsForm,item.quantity)" numberonly="" data-permission="EditFormerPOSDetails" data-collect-permission data-permission-disabled="disableEdit || item.kit_flag === 5 || item.item_type === 5 || item.lty_type === 3" data-apply-permission-when="[{permission:'EditFormerPOSDetails',condition:document.status === 4 || disableEdit}]" ng-model="item.quantity" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="inventory_quantity_per_case" data-translate="847">Units/Case</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="11" class="form-control" id="inventory_quantity_per_case" name="inventory_quantity_per_case" data-format-decimal="0" ng-model="item.inventory_quantity_per_case" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="inventory_item_type" data-translate="848">Inventory Type</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="12" class="form-control" id="inventory_item_type" name="inventory_item_type" data-format-decimal="0" ng-model="item.inventory_item_type" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="order_type" data-translate="844">Order Item Type</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="12" class="form-control" id="order_type" name="order_type" data-format-decimal="0" ng-model="item.order_type" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="fulfillment_location" data-translate="2892">Fulfillment Location</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="12" class="form-control" id="fulfillment_location" name="fulfillment_location" ng-model="fulfillment_location" ng-readonly="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="loyalty_earned" data-translate="4642">Loyalty Earned</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="13" class="form-control" id="loyalty_earned" name="loyalty_earned" ng-model="item.lty_points_earned" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="loyalty_redemption" data-translate="4643">Loyalty Redemption</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="13" class="form-control" id="loyalty_redemption" name="loyalty_redemption" ng-model="item.lty_price_in_points" ng-readonly="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="loyalty_redemption" data-translate="5330">Loyalty Gift</label>
+                                    <div class="col-xs-8">
+                                        <input ng-if="item.lty_type === 3" type="text" tabindex="13" class="form-control" id="loyalty_gift" name="loyalty_gift" ng-value="'1.5' | translate" ng-readonly="true">
+                                        <input ng-if="item.lty_type !== 3" type="text" tabindex="13" class="form-control" id="loyalty_gift" name="loyalty_gift" ng-value="'1.6' | translate" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label" for="loyalty_pgm_name" data-translate="5331">Loyalty Program</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" tabindex="13" class="form-control" id="loyalty_pgm_name" name="loyalty_pgm_name" ng-model="item.lty_pgm_name" ng-readonly="true">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-xs-5 control-label" for="inventory_on_hand_quantity">{{document.store_name}}
+                                        <span data-translate="875">OH Qty</span></label>
+                                    <div class="col-xs-7">
+                                        <input tabindex="7" type="text" class="form-control" id="inventory_on_hand_quantity" name="inventory_on_hand_quantity" data-format-decimal="0" ng-model="item.inventory_on_hand_quantity" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-5 control-label" for="original_price" data-translate="846">Inventory Price:</label>
+                                    <div class="col-xs-7">
+                                        <input type="text" tabindex="9" class="form-control" id="original_price" name="original_price" numberonly="" data-currency-formatter="price" ng-model="item.original_price" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="isAllow">
+                                    <label class="col-xs-5 control-label" for="inventory_cost" data-translate="3296">Inventory Cost:</label>
+                                    <div class="col-xs-7">
+                                        <input type="text" tabindex="9" ng-if="isAllow" class="form-control" id="inventory_cost" name="original_price" numberonly="" data-currency-formatter="cost" ng-model="item.cost" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-5 text-right">
+                                        <p class="form-control-static">
+                                            <strong data-translate="553">Price Level</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <select class="form-control" tabindex="15" id="price_lvl_sid" name="price_lvl_sid" ng-disabled="disableEdit || permissionService.checkDeny('poschangepricelevel')" ng-focus="checkPermPriceLevelChange()" ng-model="item.price_lvl_sid" ng-options="p.sid as p.price_level_name for p in pricelevelList">
+                                            <option value="" style="display:none" data-translate="1358">Select...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="col-xs-5 control-label" for="itemSerialNumber" data-translate="2122">Serial Number</label>
+                                <div class="form-group has-feedback" ng-class="(item.serial_type > 0)&&(!item.serial_number) ? 'has-warning' : ''">
+                                    <ng-form name="serNoForm">
+                                        <div class="col-xs-5">
+                                            <input type="text" tabindex="6" class="form-control" id="itemSerialNumber" name="itemSerialNumber" ng-disabled="disableEdit || item.serial_type === 0" data-permission="EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4 || disableEdit}]" ng-model="item.serial_number" ng-blur="validateSerNo(item,serNoForm)" ng-change="serNoChanged(item)" unique="">
+                                            <i ng-if="!disableEdit && (item.serial_type !== 0)" class="glyphicon glyphicon-search form-control-feedback" ng-click="serNoLookup(item);"></i>
+                                        </div>
+                                        <div class="col-xs-2 error" ng-show="serNoForm.itemSerialNumber.$error.unique">
+                                            <span data-translate="3381">Duplicate</span>
+                                        </div>
+                                    </ng-form>
+                                </div>
+                                <label class="col-xs-5 control-label" for="itemLotNumber" data-translate="2121">Lot Number</label>
+                                <div class="form-group has-feedback" ng-class="(item.lot_type > 0)&&(!item.lot_number) ? 'has-warning' : ''">
+                                    <ng-form name="lotNoForm">
+                                        <div class="col-xs-5">
+                                            <input type="text" tabindex="11" class="form-control" id="itemLotNumber" name="itemLotNumber" ng-disabled="disableEdit || item.lot_type === 0" data-permission="EditFormerPOSDetails" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4 || disableEdit}]" ng-model="item.lot_number" ng-blur="validateLotNo(item)" ng-change="lotNoChanged(item)">
+                                            <i ng-if="!disableEdit && (item.lot_type !== 0)" class="glyphicon glyphicon-search form-control-feedback" ng-click="lotNoLookup(item);"></i>
+                                        </div>
+                                    </ng-form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row" ng-if="item.kit_flag === 1 && item.item_type === 1 && item.order_type !== 6">
+                            <div class="col-xs-12 text-right">
+                                <button event-name="posItemDetailBreakKit" type="button" id="breakKitButton" name="breakKitButton" class="btn btn-info" data-permission-disabled="disableEdit" ng-click="breakKit()" data-permission="AllowBreakingKits">Break Kit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="tabs.shipping">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span data-translate="1376">Bill To Customer</span>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="637">First Name</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{document.bt_first_name}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="636">Last Name</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{document.bt_last_name}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="536">Address 1</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{document.bt_address_line1}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="538">Address 2</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{document.bt_address_line2}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4 text-right">
+                                            <p class="form-control-static">
+                                                <strong data-translate="541">Postal Code</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{document.bt_postal_code}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-right">
+                                    <p class="pull-left form-control-static" data-translate="1377">Ship To Customer</p>
+<!--                                     <button event-name="posItemDetailCustomerLookup" ng-model="nothing" tabindex="14" type="button" class="btn btn-info" id="shippingCustomerLookupButton" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="form.viewMode || item.kit_flag == 5 || disableEdit" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4 || disableEdit}]" ng-click="shippingCustomer()">
+                                        <span data-translate="517">Customer Lookup</span></button> -->
+                                    <button event-name="posItemDetailShippingAddressLookup" ng-model="nothing" tabindex="14" type="button" class="btn btn-info" id="shippingAddressLookupButton" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="form.viewMode || item.kit_flag == 5 || !item.st_cuid" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4 || disableEdit}]" ng-click="shippingAddress()">
+                                        <span data-translate="3096">Shipping Address</span></button>
+
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="637">First Name</label>
+                                        <div class="col-xs-8">
+                                            <input readonly="readonly" tabindex="5" type="text" id="st_first_name" name="st_first_name" class="form-control" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="disableEdit || form.viewMode || item.kit_flag == 5" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4 || disableEdit}]" ng-model="item.st_first_name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="636">Last Name</label>
+                                        <div class="col-xs-8">
+                                            <input readonly="readonly" tabindex="6" type="text" class="form-control" id="st_last_name" name="st_last_name" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="disableEdit || form.viewMode || item.kit_flag == 5" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4 || disableEdit}]" ng-model="item.st_last_name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="536">Address 1</label>
+                                        <div class="col-xs-8">
+                                            <input readonly="readonly" tabindex="7" type="text" class="form-control" id="st_address_line1" name="st_address_line1" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="form.viewMode || item.kit_flag == 5" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4}]" ng-model="item.st_address_line1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="538">Address 2</label>
+                                        <div class="col-xs-8">
+                                            <input readonly="readonly" tabindex="8" type="text" class="form-control" id="st_address_line2" name="st_address_line2" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="form.viewMode || item.kit_flag == 5" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4}]" ng-model="item.st_address_line2">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label" data-translate="541">Postal Code</label>
+                                        <div class="col-xs-8">
+                                            <input readonly="readonly" tabindex="9" type="tel" class="form-control" id="st_postal_code" name="st_postal_code" data-permission="EditFormerPOSCustomer" data-collect-permission="" data-permission-disabled="form.viewMode || item.kit_flag == 5" data-apply-permission-when="[{permission:'EditFormerPOSCustomer', condition:document.status === 4}]" ng-model="item.st_postal_code">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span data-translate="1378">Shipping Details</span>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="so_number" data-translate="860">SO Number</label>
+                                        <div class="col-xs-4">
+                                            <input type="text" tabindex="10" class="form-control" id="so_number" name="so_number" ng-disabled="document.status === 4 || item.kit_flag == 5" data-format-decimal="0" ng-model="item.so_number">
+                                        </div>
+                                        <label class="col-xs-2 control-label" for="shipping_perc" data-translate="863">Shipping Amount</label>
+                                        <div class="col-xs-4">
+                                            <input tabindex="11" type="tel" class="form-control" id="shipping_perc" name="shipping_perc" data-currency-formatter="" numberonly="" ng-disabled="item.item_type === 2 && item.shipping_amt === 0" ng-model="item.shipping_amt" ng-readonly="disableEdit">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-2 text-right">
+                                            <p class="form-control-static">
+                                                <strong data-translate="861">Shipping Method</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select tabindex="12" class="form-control" id="ship_method" name="ship_method" ng-disabled="disableEdit" ng-model="item.ship_method_sid" ng-options="sm.sid as sm.method for sm in shipMethods">
+                                                <option value="" style="display:none" data-translate="1358">Select...</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-2 text-right">
+                                            <p class="form-control-static">
+                                                <strong data-translate="862">Tracking No</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <input tabindex="13" type="text" class="form-control" id="tracking_number" name="tracking_number" data-permission="EditFormerPOSTrackingNumber" data-permission-disabled="form.viewMode||item.kit_flag == 5" data-apply-permission-when="[{permission:'EditFormerPOSTrackingNumber', condition:document.status === 4}]" ng-model="item.tracking_number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="tabs.associate">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span data-translate="1379">Associate Information</span>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="employee1_sid" data-translate="700">Associate 1</label>
+                                        <div class="col-xs-2">
+                                            <select tabindex="5" class="form-control" id="employee1_sid" name="employee1_sid" data-permission-disabled="form.viewMode||(document.status === 4&&document.so_cancel_flag&&item.item_type===3)" data-permission="EditFormerPOSAssociate" data-apply-permission-when="[{permission:'EditFormerPOSAssociate', condition:document.status===4}]" ng-model="item.employee1_sid" ng-if="associateList.length" ng-change="associateChanged(true,item);detectDuplicateAssociates(item.employee1_sid, 0); updatedAssociate = true;" ng-options="x.value as x.name for x in associateList">
+                                                <option value="" style="display:none" data-translate="1358">Select...</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-xs-2 control-label" for="activity1_percent" data-translate="701">Associate 1 Act %</label>
+                                        <div class="col-xs-2">
+                                            <input tabindex="6" type="tel" class="form-control" id="activity1_percent" name="activity_percent" data-currency-formatter="number" numberonly="" ng-disabled="form.viewMode||item.employee1_sid === ''" ng-change="associateChanged(true);updateCommisionAmount('commission_amount', item.activity_percent); updatedAssociate = true;" ng-model="item.activity_percent">
+                                        </div>
+                                        <!--<label class="col-xs-2 control-label" for="commission_amount" data-translate="870">Commission Amt 1</label>-->
+                                        <!--<div class="col-xs-2">-->
+                                        <!--<input tabindex="13" type="tel" class="form-control" id="commission_amount" name="commission_amount" data-currency-formatter="" numberonly="" ng-disabled="true" ng-model="item.commission_amount">-->
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="employee2_sid" data-translate="702">Associate 2</label>
+                                        <div class="col-xs-2">
+                                            <select tabindex="7" class="form-control" id="employee2_sid" name="employee2_sid" data-permission-disabled="form.viewMode||(document.status === 4&&document.so_cancel_flag&&item.item_type===3)" data-permission="EditFormerPOSAssociate" data-apply-permission-when="[{permission:'EditFormerPOSAssociate', condition:document.status === 4}]" ng-model="item.employee2_sid" ng-change="associateChanged(true);detectDuplicateAssociates(item.employee2_sid, 1)" ng-options="x.value as x.name for x in associateList">
+                                                <option value="" style="display:none" data-translate="1358">Select...</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-xs-2 control-label" for="activity2_percent" data-translate="703">Associate 2 Act %</label>
+                                        <div class="col-xs-2">
+                                            <input tabindex="8" type="tel" class="form-control" id="activity2_percent" name="activity2_percent" data-currency-formatter="number" numberonly="" ng-disabled="form.viewMode||item.employee2_sid === ''" ng-change="associateChanged(true);updateCommisionAmount('commission2_amount', item.activity2_percent);" ng-model="item.activity2_percent">
+                                        </div>
+                                        <!--<label class="col-xs-2 control-label" for="commission2_amount" data-translate="871">Commission Amt 2</label>-->
+                                        <!--<div class="col-xs-2">-->
+                                        <!--<input tabindex="14" type="tel" class="form-control" id="commission2_amount" name="commission2_amount" data-currency-formatter="" numberonly="" ng-disabled="true" ng-model="item.commission2_amount">-->
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="employee3_sid" data-translate="704">Associate 3</label>
+                                        <div class="col-xs-2">
+                                            <select tabindex="9" class="form-control" id="employee3_sid" name="employee3_sid" data-permission-disabled="form.viewMode||(document.status === 4&&document.so_cancel_flag&&item.item_type===3)" data-permission="EditFormerPOSAssociate" data-apply-permission-when="[{permission:'EditFormerPOSAssociate', condition:document.status === 4}]" ng-model="item.employee3_sid" ng-change="associateChanged(true);detectDuplicateAssociates(item.employee3_sid, 2)" ng-options="x.value as x.name for x in associateList">
+                                                <option value="" style="display:none" data-translate="1358">Select...</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-xs-2 control-label" for="activity3_percent" data-translate="705">Associate 3 Act %</label>
+                                        <div class="col-xs-2">
+                                            <input tabindex="10" type="tel" class="form-control" id="activity3_percent" name="activity3_percent" data-currency-formatter="number" numberonly="" ng-disabled="form.viewMode||item.employee3_sid === ''" ng-change="associateChanged(true);updateCommisionAmount('commission3_amount', item.activity3_percent)" ng-model="item.activity3_percent">
+                                        </div>
+                                        <!--<label class="col-xs-2 control-label" for="commission3_amount" data-translate="2369">Commission Amt 3</label>-->
+                                        <!--<div class="col-xs-2">-->
+                                        <!--<input tabindex="14" type="tel" class="form-control" id="commission3_amount" name="commission3_amount" data-currency-formatter="" numberonly="" ng-disabled="true" ng-model="item.commission3_amount">-->
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="employee4_sid" data-translate="706">Associate 4</label>
+                                        <div class="col-xs-2">
+                                            <select tabindex="11" class="form-control" id="employee4_sid" name="employee4_sid" data-permission-disabled="form.viewMode||(document.status === 4&&document.so_cancel_flag&&item.item_type===3)" data-permission="EditFormerPOSAssociate" data-apply-permission-when="[{permission:'EditFormerPOSAssociate', condition:document.status === 4}]" ng-model="item.employee4_sid" ng-change="associateChanged(true);detectDuplicateAssociates(item.employee4_sid, 3)" ng-options="x.value as x.name for x in associateList">
+                                                <option value="" style="display:none" data-translate="1358">Select...</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-xs-2 control-label" for="activity4_percent" data-translate="707">Associate 4 Act %</label>
+                                        <div class="col-xs-2">
+                                            <input tabindex="12" type="tel" class="form-control" id="activity4_percent" name="activity4_percent" data-currency-formatter="number" numberonly="" ng-disabled="form.viewMode||item.employee4_sid === ''" ng-change="associateChanged(true);updateCommisionAmount('commission4_amount', item.activity4_percent)" ng-model="item.activity4_percent">
+                                        </div>
+                                        <!--<label class="col-xs-2 control-label" for="commission4_amount" data-translate="2367">Commission Amt 4</label>-->
+                                        <!--<div class="col-xs-2">-->
+                                        <!--<input tabindex="13" type="tel" class="form-control" id="commission4_amount" name="commission4_amount" data-currency-formatter="" numberonly="" ng-disabled="true" ng-model="item.commission4_amount">-->
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="employee5_sid" data-translate="708">Associate 5</label>
+                                        <div class="col-xs-2">
+                                            <select tabindex="14" class="form-control" id="employee5_sid" name="employee5_sid" data-permission-disabled="form.viewMode||(document.status === 4&&document.so_cancel_flag&&item.item_type===3)" data-permission="EditFormerPOSAssociate" data-apply-permission-when="[{permission:'EditFormerPOSAssociate', condition:document.status === 4}]" ng-model="item.employee5_sid" ng-change="associateChanged(true);detectDuplicateAssociates(item.employee5_sid, 3)" ng-options="x.value as x.name for x in associateList">
+                                                <option value="" style="display:none" data-translate="1358">Select...</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-xs-2 control-label" for="activity5_percent" data-translate="709">Associate 5 Act %</label>
+                                        <div class="col-xs-2">
+                                            <input tabindex="15" type="tel" class="form-control" id="activity5_percent" name="activity5_percent" data-currency-formatter="number" numberonly="" ng-disabled="form.viewMode||item.employee5_sid === ''" ng-change="associateChanged(true);updateCommisionAmount('commission5_amount', item.activity5_percent)" ng-model="item.activity5_percent">
+                                        </div>
+                                        <!--<label class="col-xs-2 control-label" for="commission5_amount" data-translate="2368">Commission Amt 5</label>-->
+                                        <!--<div class="col-xs-2">-->
+                                        <!--<input tabindex="16" type="tel" class="form-control" id="commission5_amount" name="commission5_amount" data-currency-formatter="" numberonly="" ng-disabled="true" ng-model="item.commission5_amount">-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span data-translate="1380">Commission Details</span>
+                            </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-xs-2 control-label" for="spif" data-translate="873">SPIF</label>
+                                            <div class="col-xs-2">
+                                                <input tabindex="16" type="text" class="form-control" id="spif" name="spif" data-currency-formatter="number" ng-disabled="document.status === 4 || item.kit_flag == 5" ng-model="item.spif">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row" ng-show="tabs.notes">
+                    <div class="col-xs-2">
+                        <button event-name="posItemDetailNote1" id="note1Button" tabindex="5" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==1" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note1, 1)">
+                            <span data-translate="1381">Item Note 1</span> {{hasNote1}}
+                        </button>
+                        <button event-name="posItemDetailNote2" id="note2Button" tabindex="6" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==2" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note2, 2)">
+                            <span data-translate="1382">Item Note 2</span> {{hasNote2}}
+                        </button>
+                        <button event-name="posItemDetailNote3" id="note3Button" tabindex="7" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==3" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note3, 3)">
+                            <span data-translate="1383">Item Note 3</span> {{hasNote3}}
+                        </button>
+                        <button event-name="posItemDetailNote4" id="note4Button" tabindex="8" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==4" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note4, 4)">
+                            <span data-translate="1384">Item Note 4</span> {{hasNote4}}
+                        </button>
+                        <button event-name="posItemDetailNote5" id="note5Button" tabindex="9" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==5" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note5, 5)">
+                            <span data-translate="1385">Item Note 5</span> {{hasNote5}}
+                        </button>
+                        <button event-name="posItemDetailNote6" id="note6Button" tabindex="10" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==6" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note6, 6)">
+                            <span data-translate="1386">Item Note 6</span> {{hasNote6}}
+                        </button>
+                        <button event-name="posItemDetailNote7" id="note7Button" tabindex="11" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==7" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note7, 7)">
+                            <span data-translate="1387">Item Note 7</span> {{hasNote7}}
+                        </button>
+                        <button event-name="posItemDetailNote8" id="note8Button" tabindex="12" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==8" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note8, 8)">
+                            <span data-translate="1388">Item Note 8</span> {{hasNote8}}
+                        </button>
+                        <button event-name="posItemDetailNote9" id="note9Button" tabindex="13" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==9" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note9, 9)">
+                            <span data-translate="1389">Item Note 9</span> {{hasNote9}}
+                        </button>
+                        <button event-name="posItemDetailNote10" id="note10Button" tabindex="14" class="btn btn-info btn-block" type="button" data-permission="EditFormerPOSDetails" data-permission-disabled="editNoteDisabled==10" data-apply-permission-when="[{permission:'EditFormerPOSDetails', condition:document.status === 4}]" ng-click="editThisNote(item.note10, 10)">
+                            <span data-translate="1390">Item Note 10</span> {{hasNote10}}
+                        </button>
+                    </div>
+                    <div class="col-xs-10">
+                        <textarea tabindex="15" id="itemNoteEditor" name="itemNoteEditor" rows="18" class="form-control" ui-event="{ blur : 'saveThisNote();'}" ng-disabled="noteEditorDisabled||form.viewMode" ng-model="form.notedetails"></textarea>
+                    </div>
+                </div>
+                <div ng-show="tabs.onhand">
+                        <div class="panel-heading">
+                            <span data-translate="3118">Inventory Item Store Quantities</span>
+                            <!--<button event-name="posItemDetailItemLookup" id="itemLookupButton" type="button" class="btn btn-primary" ng-click="isItemAtOtherStores()"><span data-translate="876">Lookup</span></button>-->
+                        </div>
+                        <div ng-if="itemOHQtyGrid">
+                            <div class="height30" id="itemOHQtyGrid" ui-grid="itemOHQtyGrid" class="grid"></div>
+                        </div>
+                        <div class="loader" ng-if="!itemOHQtyGrid">
+                            <img src="images/three-dots-loader.svg" alt="{{ '5028' | translate }}">
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div class="modal-footer">
+            <div class="content-fluid">
+                <div class="row">
+                    <button event-name="posItemDetailOk" type="button" tabindex="50" id="okButton" class="btn btn-lg btn-default" ng-disabled="form.saving || form.viewMode || (form.itemDetailsForm.$dirty && form.itemDetailsForm.$invalid)" ng-mousedown="saveDetails(true)">
+                        <span data-translate="1.1">OK</span></button>
+                    <button event-name="posItemDetailApply" type="button" tabindex="51" id="applyButton" class="btn btn-lg btn-default" ng-disabled="form.saving || form.viewMode || (form.itemDetailsForm.$dirty && form.itemDetailsForm.$invalid)" ng-mousedown="saveDetails(false)">
+                        <span data-translate="1.3">Apply</span></button>
+                    <button event-name="posItemDetailCancel" type="button" tabindex="52" id="itemDetailsCancelButton" class="btn btn-lg btn-default" ng-mousedown="cancel()">
+                        <span data-translate="1.2">Cancel</span></button>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</form>

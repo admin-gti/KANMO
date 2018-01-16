@@ -1,0 +1,31 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Voucher Redemption</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label for="voucherCode" class="col-sm-4">Voucher Code: </label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="voucherCode" id="voucherCode" ng-model="voucherCode" placeholder="Enter voucher code here..." focus-me="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<img src="../images/delete.png" class="btn-delete margin-right-sm" ng-click="cancelModalDialog()">
+					<img src="../images/proceed.png" class="btn-proceed margin-right-sm" ng-click="redeemVoucher()" ng-disabled="!voucherCode">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

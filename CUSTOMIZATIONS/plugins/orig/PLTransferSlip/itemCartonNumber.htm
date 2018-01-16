@@ -1,0 +1,54 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Add Carton Number</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label for="dmgReason1" class="col-sm-4">Damage Reason 1: </label>
+							<div class="col-sm-8">
+				        		<select id="dmgReason1" name="dmgReason1" class="form-control ng-pristine ng-valid ng-not-empty ng-touched" tabindex="1" ng-model="dmgReason1" ng-disabled="slipComment == 'NORMAL'">
+					        	    <option value="">{{(damageReason2.length != 0) ? 'PLEASE SELECT' : 'NO RESULT FOUND'}}</option>
+					        	    <option ng-repeat="dmrsn1 in damageReason1" value="{{dmrsn1.udfoption}}">{{dmrsn1.udfoption}}</option>
+					        	</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="dmgReason2" class="col-sm-4">Damage Reason 2: </label>
+							<div class="col-sm-8">
+				        		<select id="dmgReason2" name="dmgReason2" class="form-control ng-pristine ng-valid ng-not-empty ng-touched" tabindex="1" ng-model="dmgReason2" ng-disabled="slipComment == 'NORMAL'">
+					        	    <option value="">{{(damageReason2.length != 0) ? 'PLEASE SELECT' : 'NO RESULT FOUND'}}</option>
+					        	    <option ng-repeat="dmrsn2 in damageReason2" value="{{dmrsn2.udfoption}}">{{dmrsn2.udfoption}}</option>
+					        	</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="dmgComment" class="col-sm-4">Damage Comment: </label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="dmgComment" id="dmgComment" ng-model="dmgComment" ng-disabled="slipComment == 'NORMAL'"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="crtnNumber" class="col-sm-4">Carton Number: </label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="crtnNumber" id="crtnNumber" ng-model="crtnNumber" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-lg btn-default" ng-click="saveItemCartonNumber(activeItemSid)">Save Details</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

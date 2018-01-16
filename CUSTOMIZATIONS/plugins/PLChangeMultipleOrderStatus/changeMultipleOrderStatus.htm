@@ -3,7 +3,7 @@
         <div class="modal-header">
             <div class="row">
                 <div class="col-xs-12">
-                    <h4>Change Order Type</h4>
+                    <h4>Omnichannel Order</h4>
                 </div>
             </div>
         </div>
@@ -25,17 +25,17 @@
                                 <tr>
                                     <td align="center"><input name="spreadSO" id="spreadSO" tabindex="18" type="checkbox" ng-model="checkboxValue" class="ng-pristine ng-untouched ng-valid ng-empty" ng-change="handler($event)"></td>
                                     <td>
-                                        <select id="all_ordertype" name="all_ordertype" class="form-control" tabindex="1" ng-model="all_ordertype" data-collect-permission="" ng-change="handler($event)">
+                                        <select id="all_ordertype" name="all_ordertype" class="form-control" tabindex="1" ng-model="all_ordertype" data-collect-permission="" ng-change="handler($event,1)">
                                             <option value="">SALE</option>
                                             <option value="PICKUP" selected>PICKUP</option>
                                             <option value="HOME DELIVERY">HOME DELIVERY</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select id="all_fulfillmentype" name="all_fulfillmentype" class="form-control" tabindex="1" ng-model="all_fulfillmentype" data-collect-permission="" ng-change="handler($event)">
+                                        <select id="all_fulfillmentype" name="all_fulfillmentype" class="form-control" tabindex="1" ng-model="all_fulfillmentype" data-collect-permission="" ng-change="handler($event,2)">
                                             <option value="">IMMEDIATE</option>
-                                            <option value="SAME STORE" selected>SAME STORE</option>
-                                            <option value="DIFFERENT STORE">DIFFERENT STORE</option>
+                                            <option value="SAME STORE" selected>MY STORE</option>
+                                            <option value="DIFFERENT STORE">NAMED STORE</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -50,9 +50,9 @@
                             <!--<caption>{{viewItem.length}} item/s found.</caption>-->
                             <thead>
                                 <tr class="panel-heading">
-                                    <th>Line Item</th>
-                                    <th>Desc</th>
                                     <th>SKU</th>
+                                    <th>Desc</th>
+                                    <th>Qty</th>
                                     <th>Order Type</th>
                                     <th>Fulfillment Type</th>
                                     <!--<th>Actions</th>-->
@@ -61,28 +61,30 @@
                             <tbody>
                             <tr ng-repeat="item in viewItem">
                                 <td>
-                                    {{item.item_description1}}
-                                </td>
-                                <td>
-                                    {{item.item_description2}}
-                                </td>
-                                <td>
                                     {{item.alu}}
                                 </td>
                                 <td>
-                                    <select id="item_note8_{{$index}}" name="item_note8" class="form-control" tabindex="1" ng-model="item.note8" data-collect-permission="">
+                                    {{item.item_description1}}
+                                </td>
+                                <td>
+                                    {{item.quantity}}
+                                </td>
+                                <td>
+                                    <select id="item_note8_{{$index}}" name="item_note8" class="form-control" tabindex="1" ng-model="item.note8" data-collect-permission="" ng-change="selectOrderType($index)">
                                         <option value="">SALE</option>
                                         <option value="PICKUP" selected>PICKUP</option>
                                         <option value="HOME DELIVERY">HOME DELIVERY</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select id="item_note10_{{$index}}" name="item_note10" class="form-control" tabindex="1" ng-model="item.note10" data-collect-permission="">
-                                        <option value="">IMMEDIATE</option>
-                                        <option value="SAME STORE" selected>SAME STORE</option>
-                                        <option value="DIFFERENT STORE">DIFFERENT STORE</option>
+                                    <select name="item_note10" id="item_note10_{{$index}}" class="form-control" ng-model="item.note10" ng-change="selectFulfillmentType($index,item.note10)">
+                                    <!--<select name="item_note10" id="item_note10_{{$index}}" class="form-control" ng-model="item.note10" ng-options="c.name for c in arrfullfillmenttype" ng-change="selectFulfillmentType($index,item.note10)">-->
+                                        <!--<option value="">PLEASE SELECT</option>-->
+                                        <option ng-if="item.note8=='SALE'" value="">IMMEDIATE</option>
+                                        <option ng-if="item.note8!='SALE'" value="SAME STORE">MY STORE</option>
+                                        <option ng-if="item.note8!='SALE'" value="DIFFERENT STORE">NAMED STORE</option>
                                     </select>
-                                    <input type="hidden" id="items_{{$index}}" ng-model="item.alu" ng-value="'{{item.alu}}'"/>
+                                    <input type="hidden" id="note10{{$index}}" name="address1" />
                                 </td>
                                 <!--<td>-->
                                     <!--<button type="button" class="btn btn-primary" ng-click="getDataOrder($index)">Update</button>-->
@@ -105,9 +107,9 @@
 <!--                        <img ng-click="close()" ng-click="close()" ng-src="/images/pos/delete.png" align="center" alt="Cancel" src="/images/pos/delete.png" height="28px" width="28px">
                         &nbsp;&nbsp;
                         <img ng-click="update()" ng-src="/customizations/images/proceed.png" event-name="navPOSUpdateMultipleOrderType" ng-click="executeHandler(button.handler)"align="center" alt="Update Status" src="/images/pos/save.png" height="28px" width="28px">-->
-                        <img ng-click="close()" ng-src="/customizations/images/delete.png" align="center" alt="Cancel" src="/customizations/images/delete.png" height="28px" width="28px">
+                        <img ng-click="close()" ng-src="/customizations/images/delete.png" align="center" alt="Cancel" height="34px" width="34px">
                             &nbsp;&nbsp;
-                        <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update" src="/customizations/images/proceed.png" height="28px" width="28px">
+                        <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update" height="28px" width="28px">
                     </div>
                 </div>
             </div>

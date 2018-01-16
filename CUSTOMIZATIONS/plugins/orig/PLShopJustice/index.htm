@@ -1,0 +1,157 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Online Shop Justice Items</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+
+					<!-- TABLE FOR CART ITEMS -->
+					<div class="col-md-12 padding-bottom-lg">
+						<table class="table table-hover {{(cartItems.length > 0) ? 'table-fixed' : ''}}" width="100%">
+							<caption class="text-bold">{{cartItems.length}} Cart Item/s found.</caption>
+							<thead class="thead-default {{(cartItems.length <= 5) ? 'full-width' : 'with-scroll'}}">
+								<th class="col-xs-1"><input type="checkbox" name="selectAll" id="selectAllCartItems" ng-model="selectAllCartItems" ng-click="checkAllCartItems()" ng-disabled="cartItems.length == 0"></th>
+								<th class="col-xs-5 text-left">Item Name</th>
+								<th class="col-xs-3 text-left">SKU</th>
+								<th class="col-xs-1">Quantity</th>
+								<th class="col-xs-2">Store OH Qty</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in cartItems.result.items" class="{{(item.Selected) ? 'success' : ''}}">
+									<td class="text-center col-xs-1">
+										<input type="checkbox" name="checkCartItem" id="checkCartItem" ng-model="item.Selected" ng-disabled="item.store_oh_qty == 0">
+									</td>
+									<td class="col-xs-5">
+										{{item.name}}
+									</td>
+									<td class="col-xs-3">
+										{{item.sku}}
+									</td>
+									<td class="text-center col-xs-1">
+										{{item.qty}}
+									</td>
+									<td class="text-center col-xs-2">
+										{{item.store_oh_qty}}
+									</td>
+								</tr>
+								<tr ng-if="cartItems.length == 0">
+									<td colspan="5" class="text-center col-xs-12">No Cart Item/s found !</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr style="border-top: 1px solid #999 !important;">
+					</div>
+					<!-- END OF CART ITEMS TABLE -->
+
+					<!-- TABLE FOR WISHLIST ITEMS -->
+					<div class="col-md-12 padding-bottom-lg">
+						<table class="table table-hover {{(wishListItems.length > 0) ? 'table-fixed' : ''}}" width="100%">
+							<caption class="text-bold"> {{wishListItems.length}} Wish List Item/s found.</caption>
+							<thead class="thead-default {{(wishListItems.length < 5) ? 'full-width' : 'with-scroll'}}">
+								<th class="col-xs-1"><input type="checkbox" name="checkAllWishListItems" id="checkAllWishListItems" ng-model="selectAllWishListItems" ng-click="checkAllWishListItems()" ng-disabled="wishListItems.length == 0"></th>
+								<th class="col-xs-5 text-left">Item Name</th>
+								<th class="col-xs-3 text-left">SKU</th>
+								<th class="col-xs-1">Quantity</th>
+								<th class="col-xs-2">Store OH Qty</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in wishListItems.result.items" class="{{(item.Selected) ? 'success' : ''}}">
+									<td class="text-center col-xs-1">
+										<input type="checkbox" name="checkWishListItem" id="checkWishListItem" ng-model="item.Selected" ng-disabled="item.store_oh_qty == 0">
+									</td>
+									<td class="col-xs-5">
+										{{item.product.name}}
+									</td>
+									<td class="col-xs-3">
+										{{item.product.sku}}
+									</td>
+									<td class="text-center col-xs-1">
+										<input type="text" class="text-center col-xs-12" name="item_qty-$index" id="item_qty-$index" ng-model="item.qty" data-qty="{{item.prism_item.item_qty}}" ng-keyup="validateItemQty(item.qty, $event, item.store_oh_qty)" ng-click="selectAllText($event)" ng-disabled="!item.Selected" ng-required="!''" />
+									</td>
+									<td class="text-center col-xs-2">
+										{{item.store_oh_qty}}
+									</td>
+								</tr>
+								<tr ng-if="wishListItems.length == 0">
+									<td colspan="5" class="text-center col-xs-12">No Wish List Item/s found !</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr style="border-top: 1px solid #999 !important;">
+					</div>
+					<!-- END OF WISHLIST ITEMS TABLE -->
+
+					<!-- TABLE FOR GIFT REGISTRY ITEMS -->
+					<div class="col-md-12 padding-bottom-lg">
+						<table class="table table-hover {{(giftRegistryItems.length > 0) ? 'table-fixed' : ''}}" width="100%">
+							<caption class="text-bold"> {{giftRegistryItems.length}} Gift Registry Item/s found.</caption>
+							<thead class="thead-default {{(giftRegistryItems.length < 5) ? 'full-width' : 'with-scroll'}}">
+								<th class="col-xs-1"><input type="checkbox" name="checkAllGiftRegistryItems" id="checkAllGiftRegistryItems" ng-model="selectAllGiftRegistryItems" ng-click="checkAllGiftRegistryItems()" ng-disabled="giftRegistryItems.length == 0"></th>
+								<th class="col-xs-5 text-left">Item Name</th>
+								<th class="col-xs-3 text-left">SKU</th>
+								<th class="col-xs-1">Quantity</th>
+								<th class="col-xs-2">Store OH Qty</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in giftRegistryItems.result.items" ng-if="item.prism_item.item_qty > 0 && item.prism_item.item_qty_old > item.qty_fulfilled" class="{{(item.Selected) ? 'success' : ''}}">
+									<td class="text-center col-xs-1">
+										<input type="checkbox" name="checkGiftRegistryItem" id="checkGiftRegistryItem" ng-model="item.Selected" ng-disabled="item.store_oh_qty == 0">
+									</td>
+									<td class="col-xs-5">
+										{{item.product_name}}
+									</td>
+									<td class="col-xs-3">{{item.product_sku}}</td>
+									<td class="text-center col-xs-1">
+										<input type="text" class="text-center col-xs-12" name="item_qty-$index" id="item_qty-$index" ng-model="item.qty" data-qty="{{item.prism_item.item_qty}}" ng-keyup="validateItemQty(item.qty, $event, item.store_oh_qty)" ng-click="selectAllText($event)" ng-disabled="!item.Selected" ng-required="!''"/>
+									</td>
+									<td class="text-center col-xs-2">
+										{{item.store_oh_qty}}
+									</td>
+								</tr>
+								<tr ng-if="giftRegistryItems.length == 0">
+									<td colspan="5" class="text-center col-xs-12">No Gift Registry Item/s found !</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr style="border-top: 1px solid #999 !important;">
+					</div>
+					<!-- END OF GIFT REGISTRY ITEMS TABLE -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-lg btn-default" ng-click="closeModalDialog()">
+						<img src="../images/delete.png" width="20px">
+					</button> 
+					<button type="button" class="btn btn-lg btn-default" event-name="posSelectItemMagento"  ng-click="saveSelectedItems(); executeHandler(button.handler);">
+						<img src="../images/proceed.png" width="20px">
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.datepicker{z-index:1151 !important;}
+.resultMargin{margin-bottom: -15px;}
+</style>
+
+<script>
+$(function(){
+  $('#datepicker input').datepicker({
+      autoclose: true
+  });
+});
+
+function printContent() {
+  window.frames["preview_frame"].focus();
+}
+
+</script>

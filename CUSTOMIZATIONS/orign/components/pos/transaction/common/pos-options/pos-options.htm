@@ -1,0 +1,77 @@
+<form name="transactionOptionsForm" id="transactionOptionsForm" class="form-horizontal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 data-translate="3282">Transaction Options</h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+<!--        <div class="row">
+          <label class="sr-only">
+             DO NOT REMOVE THIS LABEL!!! 
+          </label>
+          <div class="col-xs-12">
+            <button event-name="posOptionsTransactionLookup" type="button" tabindex="907" class="btn btn-info btn-block" id="transactionLookupButton" ng-disabled="transactionLookupButton" ng-click="transactionLookup2()">
+              <span data-translate="503">Transaction Lookup</span>
+            </button>
+          </div>
+        </div>-->
+        <div class="row">
+          <label class="sr-only">
+            <!-- DO NOT REMOVE THIS LABEL!!! -->
+          </label>
+          <div class="col-xs-12">
+            <button ng-click="executeHandler(button.handler)" event-name="navCustomATransactionLookup" type="button" tabindex="907" class="btn btn-info btn-block" id="transactionLookupButton" ng-disabled="transactionLookupButton" click-handler="executeHandler(button.handler);">
+              <span data-translate="503">Transaction Lookup</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button event-name="posOptionsPendingTransactions" tabindex="121" class="btn btn-info btn-block" type="button" ng-click="pendingTransactions()" data-permission="posaccesspendingtransactions" data-permission-disabled="transactionLookupButton">
+              <span data-translate="504">Pending Transactions</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button event-name="posOptionsCustomerLookup" tabindex="120" class="btn btn-info btn-block" type="button" ng-click="customerLookup()" ng-disabled="transactionLookupButton">
+              <span data-translate="517">Customer Lookup</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin" ng-show="form.showGiftCard">
+          <div class="col-xs-12">
+            <button event-name="posOptionsGiftCardBalance" type="button" tabindex="2" id="posGiftCardBalance" class="btn btn-info btn-block" ng-click="giftModal('eft')">
+              <span data-translate="3281">Gift Card Balance</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin" ng-show="form.showCentralGiftCard">
+          <div class="col-xs-12">
+            <button event-name="posOptionsCentralGiftCardBalance" type="button" tabindex="2" id="posCentralGiftCardBalance" class="btn btn-info btn-block" ng-click="giftCardBalance('central')" ng-disabled="!sessionInfo.permissions.checkcentralgiftcardbal">
+              <span data-translate="5941">Central Gift Card Details</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <promo-apply-manually-button document-sid="document.sid" callback="cancel" layout="1"></promo-apply-manually-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <button event-name="posTransactionOptionsCancel" id="cancelTransactionOptionsButton" type="button" tabindex="6" class="btn btn-lg btn-default" ng-click="cancel()"><span data-translate="1.2">Cancel</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

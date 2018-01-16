@@ -3,7 +3,7 @@
     session_start();
     require_once('../../config/gticonfig.php');
     
-//    $conn->debug = true;
+    $conn->debug = true;
     
     if (TRUE == $conn){
         $flds[] = "a.order_doc_no";
@@ -47,6 +47,7 @@
         $flds[] = "b.disc_amt";
         $flds[] = "b.note8";
         $flds[] = "b.note10";
+        $flds[] = "b.note2";
         $flds[] = "b.qty";
         $flds[] = "a.sbs_no";
         $flds[] = "a.store_no";
@@ -60,6 +61,7 @@
         $flds[] = "b.sid item_sid";
         $flds[] = "f.detax";
         $flds[] = "b.lty_pgm_name";
+        $flds[] = "a.doc_no";
 
 
         $fields = implode(", ", $flds);
@@ -141,6 +143,8 @@
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['tender_name']       = $rsResult->fields['tender_name'];
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['sid']               = $rsResult->fields['sid_'];
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['detax']             = $rsResult->fields['detax'];
+            $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['note2']             = $rsResult->fields['note2'];
+            $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['doc_no']            = $rsResult->fields['doc_no'];
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['items'][$ctr]['item_sid']               = $rsResult->fields['item_sid'];
 //            if($rsResult->fields['note8'] == 'PICKUP'){
                 $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['orderstatus']   = 'Authorized';
@@ -196,6 +200,7 @@
         $flds[] = "b.disc_amt";
         $flds[] = "b.note8";
         $flds[] = "b.note10";
+        $flds[] = "b.note2";
         $flds[] = "b.qty";
         $flds[] = "a.sbs_no";
         $flds[] = "a.store_no";
@@ -209,7 +214,7 @@
         $flds[] = "b.sid item_sid";
         $flds[] = "f.detax";
         $flds[] = "b.lty_pgm_name";
-
+        $flds[] = "a.doc_no";
 
         $fields = implode(", ", $flds);
 
@@ -292,6 +297,8 @@
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['sid']               = $rsResult->fields['sid_'];
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['items'][$ctr]['item_sid'] = $rsResult->fields['item_sid'];
             $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['detax']             = $rsResult->fields['detax'];
+            $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['note2']             = $rsResult->fields['note2'];
+            $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['doc_no']            = $rsResult->fields['doc_no'];
 //            if($rsResult->fields['note8'] == 'PICKUP'){
                 $arr[$rsResult->fields['note8']][$rsResult->fields['note10']]['orderstatus']   = 'Authorized';
 //            } else if($rsResult->fields['note8'] == 'HOME DELIVERY'){
@@ -307,14 +314,14 @@
     }
     
 //    echo "<pre>";
-//    print_r($_REQUEST);
+//    print_r($arr);
 //    echo "</pre>";
 //    exit;
-    
     $sql = "SELECT * FROM prism_sequence WHERE workstation_sid = '{$_REQUEST['ws']}' AND doc_seq_type = 0";
     $rsResult = $conn->Execute($sql);
     if(!$rsResult->EOF){
-        $sequence = ($rsResult->fields['previous_value']+1);
+        $sequence = ($rsResult->fields['previous_value']);
+//        $sequence = ($rsResult->fields['previous_value']+1);
     }
     
     $a = array();
@@ -325,6 +332,10 @@
         $sequence = $sequence;
         
         foreach ($value as $keyA => $valueA) {
+            
+//            echo "<pre>";
+//            print_r($valueA);
+//            echo "</pre>";
             
             $totalamt = 0;
             $shipping_total = 0;
@@ -402,10 +413,20 @@
 //                    $conn->debug = true;
                     $conn->Execute($sql);
                 } else {
-                   $sql = "UPDATE "
+                    $notesorder['referenceNo'] = $reference_no;
+                    $notesorder['status']      = 'SE';
+                    $notesorder['interSubRef'] = '';
+                    $notesorder['origSONo']    = '';
+                    $notesorder['origInvcNo']  = '';
+                    $notesorder['batchNo']     = '';
+                    $notesorder['omsID']       = '';
+                    
+                    $concatheader = json_encode($notesorder, JSON_UNESCAPED_SLASHES); 
+                    
+                    $sql = "UPDATE "
                             . "document SET "
-                            . "notes_order = '".$reference_no."', "
-                            . "udf2_string = 'SE' "
+                            . "notes_general = '".$concatheader."'"
+//                            . "udf2_string = 'SE' "
                             . "WHERE sid='".$valueA['sid']."'";
 //                    $conn->debug = true;
                     $conn->Execute($sql); 
@@ -534,7 +555,7 @@
             $a['billlandline'] = empty($valueA['bt_phoneno']) ? '' : $valueA['bt_phoneno'];
             $a['billmobile'] = empty($valueA['bt_mobile']) ? '' : $valueA['bt_mobile'];
             $a['billemail'] = empty($valueA['bt_email']) ? '' : $valueA['bt_email'];
-            $a['giftmsg'] = '';
+            $a['giftmsg'] = empty($valueA['note2']) ? '' : $valueA['note2'];//note2
             $a['shippingmode'] = '';
             $a['deliveredon'] = empty($valueA['lty_pgm_name']) ? '' : date('m/d/Y', strtotime($valueA['lty_pgm_name']));
             
@@ -668,10 +689,23 @@
             $customHeaderfield10['name'] = "SourceStore";
             $customHeaderfield10['value'] = $valueA['original_store'];
             
+            //DETAX
             $customHeaderfield11['orderrefno']   =  $reference_no;    
             $customHeaderfield11['id'] = "0";
             $customHeaderfield11['name'] = "OrderDeTax";
             $customHeaderfield11['value'] = $valueA['detax'];
+            
+            //INVOICE NO/DEPOSIT NO
+            $customHeaderfield12['orderrefno']   =  $reference_no;    
+            $customHeaderfield12['id'] = "0";
+            $customHeaderfield12['name'] = "DepositInvcNo";
+            $customHeaderfield12['value'] = $valueA['doc_no'];
+            
+            //CUSTOMER ORDER NO
+            $customHeaderfield13['orderrefno']   =  $reference_no;    
+            $customHeaderfield13['id'] = "0";
+            $customHeaderfield13['name'] = "SONo";
+            $customHeaderfield13['value'] = $valueA['order_doc_no'];
             
             $g = array();
             $g[] = $customHeaderfield1;
@@ -685,6 +719,8 @@
             $g[] = $customHeaderfield9;
             $g[] = $customHeaderfield10;
             $g[] = $customHeaderfield11;
+            $g[] = $customHeaderfield12;
+            $g[] = $customHeaderfield13;
             
             $a['customfields']['customfield'] = $g;
             unset($g);
@@ -1998,6 +2034,8 @@
                 
                 $curl = curl_init();
                 $var = "";
+                curl_setopt ($curl, CURLOPT_CAINFO, dirname(__FILE__)."/customizations/plugins/PLOrderRequest/cacert.pem");
+                
                 curl_setopt_array($curl, array(
                  CURLOPT_URL => "https://".$_SERVER['SERVER_NAME']."/v1/rest/document",
                   CURLOPT_RETURNTRANSFER => true,
@@ -2021,12 +2059,12 @@
                 $header = curl_getinfo($curl);
                 $responseA = curl_exec($curl);
                 
-//                if ($err) {
-//                  echo $responseA = "cURL Error #:" . $err;
-//                } else {
-//                  echo $responseA;
-//                }
-//                echo "<br/>";
+                if ($err) {
+                  echo $responseA = "cURL Error #:" . $err;
+                } else {
+                  echo $responseA;
+                }
+                echo "<br/>";
 
 //                curl_close($curl);
 
@@ -2070,11 +2108,12 @@
 
 //                curl_close($curlA);
 
-//                if ($err) {
-//                  echo $responseB = "cURL Error #:" . $err;
-//                } else {
-//                  echo $responseB;
-//                }
+                if ($err) {
+                  echo $responseB = "cURL Error #:" . $err;
+                } else {
+                  echo $responseB;
+                }
+                echo "<br/>";
                 
                 $DeptAmtTaken = json_decode($responseB, true);
                 
@@ -2108,11 +2147,12 @@
 
 //                curl_close($curlB);
 
-//                if ($err) {
-//                  echo $responseC = "cURL Error #:" . $err;
-//                } else {
-//                  echo $responseC;
-//                }
+                if ($err) {
+                  echo $responseC = "cURL Error #:" . $err;
+                } else {
+                  echo $responseC;
+                }
+                echo "<br/>";
                 
                 $OrdBalDue = json_decode($responseC, true);
                 
@@ -2146,11 +2186,12 @@
 
 //                curl_close($curlC);
 
-//                if ($err) {
-//                  echo $responseD = "cURL Error #:" . $err;
-//                } else {
-//                  echo $responseD;
-//                }
+                if ($err) {
+                  echo $responseD = "cURL Error #:" . $err;
+                } else {
+                  echo $responseD;
+                }
+                echo "<br/>";
                 
                 $DueAmt = json_decode($responseD, true);
                 
@@ -2184,11 +2225,13 @@
 
 //                curl_close($curlD);
 
-//                if ($err) {
-//                  echo $responseE = "cURL Error #:" . $err;
-//                } else {
-//                  echo $responseE;
-//                }
+                if ($err) {
+                  echo $responseE = "cURL Error #:" . $err;
+                } else {
+                  echo $responseE;
+                }
+                echo "<br/>";
+                
                 $finalStat = json_decode($responseE, true);
                 
                 $v['total_deposit_taken'] = '0';
@@ -2222,11 +2265,12 @@
 
                 curl_close($curl);
 
-//                if ($err) {
-//                  echo $responseF = "cURL Error #:" . $err;
-//                } else {
-//                  echo $responseF;
-//                }
+                if ($err) {
+                  echo $responseF = "cURL Error #:" . $err;
+                } else {
+                  echo $responseF;
+                }
+                echo "<br/>";
                 
                 
                 

@@ -38,6 +38,11 @@
         
         header( 'Content-Type: application/json' );
         print json_encode(doValidateSO($_REQUEST,$jsonVal));
+    
+    } else if($_REQUEST['type'] == 7){
+        
+        header( 'Content-Type: application/json' );
+        print json_encode(doSearchByReferenceNo($_REQUEST, $conn));
     }
     
     function doGetHistory($data = null){
@@ -132,7 +137,6 @@
                     . "WHERE alu = '".$value['SKU']."' "
                     . "and doc_sid = '".$req['sid']."'";
             $conn->Execute($sql);
-            
         }
     }
     
@@ -381,6 +385,45 @@
             $response['isref'] = '0';
         }
         return $response;
+        
+    }
+    
+    function doSearchByReferenceNo($data = NULL, &$conn){
+        
+        if($data['ref']!=''){
+            $sFilter .= " AND notes_general like '%".$data['ref']."%' ";
+        }
+
+        $sql = "SELECT "
+            . "* "
+            . "FROM "
+            . "document a "
+            . "LEFT JOIN document_item c ON (a.sid = c.doc_sid) "
+            . "WHERE 1=1 ".html_entity_decode($sFilter)." ";
+        $rsResult = $conn->Execute($sql);
+        $a = 0;
+        while(!$rsResult->EOF){
+            $arr[$a]['sid'] = $rsResult->fields['sid'];
+            $decode = json_decode($rsResult->fields['notes_general'],TRUE);
+            
+            $arr[$a]['notes_order']           = $rsResult->fields['notes_order'];
+            $arr[$a]['ordered_date']          = $rsResult->fields['ordered_date'];
+            $arr[$a]['notes_order']           = $decode['referenceNo'];
+            $arr[$a]['document_number']       = $rsResult->fields['doc_no'];
+            $arr[$a]['bt_first_name']         = $rsResult->fields['bt_first_name'];
+            $arr[$a]['bt_last_name']          = $rsResult->fields['bt_last_name'];
+            $arr[$a]['order_document_number'] = $rsResult->fields['order_doc_no'];
+            $arr[$a]['notes_general']         = $data['oid'];
+            $arr[$a]['store_number']          = $rsResult->fields['store_no'];
+            $arr[$a]['store_code']            = $rsResult->fields['store_code'];
+            $arr[$a]['transaction_total_amt'] = $rsResult->fields['transaction_total_amt'];
+            $arr[$a]['original_store_code']   = $rsResult->fields['orig_store_code'];
+            $arr[$a]['udf_string2']           = $decode['status'];
+            $arr[$a]['invoice_posted_date']   = $rsResult->fields['post_date'];
+            $rsResult->MoveNext();
+            $a++;
+        }
+        return $arr;
         
     }
     

@@ -4,7 +4,7 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
     var nDate = new Date();
     a.tDate = $filter('date')(nDate,'MM/dd/yyyy');
     a.Date = $filter('date')(nDate.setDate(nDate.getDate()+7),'MM/dd/yyyy');
-    
+
     /*----------------------------MAIN----------------------------------------*/
     //GENERATE SIGNATURE
     var vURL               = MARTJACK.URL;
@@ -36,6 +36,7 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
         ,type: "GET"
         ,data: {type:4,sid:$stateParams.document_sid}
         ,success: function(val1){
+//            console.log(val1);
             if(val1.homedelivery > 0 || val1.diffstore > 0){
                 if(val1.homedelivery > 0){
                     $("#tbl_freight").fadeIn('fast');
@@ -52,84 +53,94 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
                     }else {
                         $("#tbl_fulfillment").fadeIn('fast');
                     }
-                } 
+                }
                 a.samestore = val1.homesame;
                 a.homedeliverydiff = val1.homedeliverydiff;
                 a.type = val1;
-                $.ajax({
-                    url: "/plugins/PLFulfillmentAndFreight/fulfillmentLocation.php"
-                    ,type: "GET"
-                    ,data: {docsid:$stateParams.document_sid,su:c.get().subsidiarysid,type:1}
-                    ,success: function(msg){
-                        a.quantities = msg;
-                        
+                if(val1.pickupdiff>0) {
+                    $.ajax({
+                        url: "/plugins/PLFulfillmentAndFreight/fulfillmentLocation.php"
+                        ,type: "GET"
+                        ,data: {docsid:$stateParams.document_sid,su:c.get().subsidiarysid,type:1}
+                        ,success: function(msg){
+                            a.quantities = msg;
 
-                        /*---FOR TESTING PURPOSE ONLY-------------------------------------*/
-            //            var infoData = "MerchantID="+MARTJACK.MERCHANTID+"&InputFormat=application/json&InputData={";
-            //                infoData += "\"Latitude\":\"\",";
-            //                infoData += "\"Longitude\":\"\",";
-            //                infoData += "\"Products\":";
-            //                infoData += "[";
-            //                infoData += "{";
-            //                infoData += "\"ProductId\":\"12341734\",";
-            //                infoData += "\"VariantProductId\":\"0\",";
-            //                infoData += "\"Quantity\":\"5\"";
-            //                infoData += "}";
-            //                infoData += "]";
-            //                infoData += "}";
-                        /*----------------------------------------------------------------*/    
-                        var infoData = "MerchantID="+MARTJACK.MERCHANTID+"&InputFormat=application/json&InputData=";
-                            infoData += a.quantities;
 
-                        var reqfulfill = {
-                            method: 'POST',
-                            url: url+"?oauth_consumer_key="+consumer_key+"&oauth_nonce="+auth_nonce+"&oauth_signature="+encodedSignature+"&oauth_signature_method=HMAC-SHA1&oauth_timestamp="+auth_timestamp+"&oauth_version=1.0",
-                            headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded',
-                              "accept": "application/json"
-                            },
-                            data: infoData
-                        }
-                        
-                        b(reqfulfill).then(function(g){
+                            /*---FOR TESTING PURPOSE ONLY-------------------------------------*/
+                //            var infoData = "MerchantID="+MARTJACK.MERCHANTID+"&InputFormat=application/json&InputData={";
+                //                infoData += "\"Latitude\":\"\",";
+                //                infoData += "\"Longitude\":\"\",";
+                //                infoData += "\"Products\":";
+                //                infoData += "[";
+                //                infoData += "{";
+                //                infoData += "\"ProductId\":\"12341734\",";
+                //                infoData += "\"VariantProductId\":\"0\",";
+                //                infoData += "\"Quantity\":\"5\"";
+                //                infoData += "}";
+                //                infoData += "]";
+                //                infoData += "}";
+                            /*----------------------------------------------------------------*/    
+                            var infoData = "MerchantID="+MARTJACK.MERCHANTID+"&InputFormat=application/json&InputData=";
+                                infoData += a.quantities;
 
-                            $("[name=fullfill_location]").removeAttr("checked");
-                            if (typeof g.data.Locations == "undefined") {
-                                a.NoStore = g.data.Message;
-                            } else {
-                                a.fulfillItem = g.data.Locations;
+                            var reqfulfill = {
+                                method: 'POST',
+                                url: url+"?oauth_consumer_key="+consumer_key+"&oauth_nonce="+auth_nonce+"&oauth_signature="+encodedSignature+"&oauth_signature_method=HMAC-SHA1&oauth_timestamp="+auth_timestamp+"&oauth_version=1.0",
+                                headers: {
+                                  'Content-Type': 'application/x-www-form-urlencoded',
+                                  "accept": "application/json"
+                                },
+                                data: infoData
                             }
-                            ms.get('Store',{cols:'sid,store_code',filter:'(subsidiary_sid,eq,' + c.get().subsidiarysid + ')AND(sid,eq,'+c.get().storesid+')AND(active,eq,true)&sort=store_code,asc'}).then(function(sto){
 
-                              a.currentStore = sto[0].store_code;
-//                              a.currentStore = 'PIJ';
+                            b(reqfulfill).then(function(g){
+                                $("[name=fullfill_location]").removeAttr("checked");
+                                if (typeof g.data.Locations == "undefined") {
+                                    a.NoStore = g.data.Message;
+                                    if(val1.pickupdiff > 0){
+                                        localStorage.removeItem('isfullfilllocation');
+                                        localStorage.setItem('isfullfilllocation', 1);
+                                    } else {
+                                        localStorage.removeItem('isfullfilllocation');
+                                        localStorage.setItem('isfullfilllocation', 0);
+                                    }
+                                } else {
+                                    a.fulfillItem = g.data.Locations;
+                                    localStorage.removeItem('isfullfilllocation');
+                                    localStorage.setItem('isfullfilllocation', 0);
+                                }
+                                ms.get('Store',{cols:'sid,store_code',filter:'(subsidiary_sid,eq,' + c.get().subsidiarysid + ')AND(sid,eq,'+c.get().storesid+')AND(active,eq,true)&sort=store_code,asc'}).then(function(sto){
+
+                                  a.currentStore = sto[0].store_code;
+    //                              a.currentStore = 'PIJ';
+                                });
+
+                                i.Enable = !1;
+                                deferred.resolve();
+                            }, function(error) {
+                                NotificationService.showError( 'Error!', 'Connection timeout to Martjack');
+                                i.Enable = !1;
+                                e.dismiss('cancel');
+                                m.go(m.current, {}, {reload: true});
                             });
-                            
-                            i.Enable = !1;
-                            deferred.resolve();
-                        }, function(error) {
-                            NotificationService.showError( 'Error!', 'Connection timeout to Martjack');
-                            i.Enable = !1;
-                            e.dismiss('cancel');
-                            m.go(m.current, {}, {reload: true});
-                        });
-                    }
-                });
+                        }
+                    });
+                }
                 /*---END------------------------------------------------------------------*/
 
                 /*---FREIGHT CHARGES------------------------------------------------------*/
-                i.Enable = 1;
-                $.ajax({
-                    url: "/plugins/PLFulfillmentAndFreight/viewInventory.php"
-                    ,type: "GET"
-                    ,data: {type:1,sid:$stateParams.document_sid,sto:localStorage.getItem('locationID')}
-                    ,success: function(rest){
-                        a.inventory = rest;
-                        i.Enable = !1;
-                        deferred.resolve();
-
-                    }
-                });
+//                i.Enable = 1;
+//                $.ajax({
+//                    url: "/plugins/PLFulfillmentAndFreight/viewInventory.php"
+//                    ,type: "GET"
+//                    ,data: {type:1,sid:$stateParams.document_sid,sto:localStorage.getItem('locationID')}
+//                    ,success: function(rest){
+//                        a.inventory = rest;
+//                        i.Enable = !1;
+//                        deferred.resolve();
+//
+//                    }
+//                });
                 
                 i.Enable = 1;
                 $.ajax({
@@ -163,13 +174,22 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
                         if (rest.Message == "No Common Location Found" || rest.messageCode == '1000') {
                             a.NoStoreHomeDelivery = "NOTE: NO STOCK AT ALL STORES";
                             a.HomeDeliveryItem = "";
+                            if(val1.homedeliverydiff>0){
+                                localStorage.removeItem('deliverydiffstore');
+                                localStorage.setItem('deliverydiffstore', 1);
+                            } else {
+                                localStorage.removeItem('deliverydiffstore');
+                                localStorage.setItem('deliverydiffstore', 0);
+                            }
                             i.Enable = !1;
                         } else {
                             a.NoStoreHomeDelivery = "";
                             a.HomeDeliveryItem = rest.Locations;
+                            localStorage.removeItem('deliverydiffstore');
+                            localStorage.setItem('deliverydiffstore', 0);
                             i.Enable = !1;
                         }
-                        
+                        console.log(localStorage.getItem('deliverydiffstore')+'homedeliverydiff');
                         deferred.resolve();
                     }
                 });
@@ -178,6 +198,7 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
 
                     b.get("/plugins/PLFulfillmentAndFreight/getGroup.php?sid="+$stateParams.document_sid+"&ssid="+c.get().storesid).then(function(data, status) {
                             a.shipGroup = data.data;    
+//                            console.log(a.shipGroup);
                         i.Enable = !1;     
                         deferred.resolve();
                     });
@@ -198,11 +219,40 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
         }
     });
     
-    
+    a.search = function(){
+        var searchfulfill = '/'+$("#search_fulfllment").val()+'.*/';
+        angular.forEach(a.fulfillItem,function(value,key){
+            locations = value.LocationName;
+//            console.log(locations.indexOf($("#search_fulfllment").val()));
+//            console.log($("#search_fulfllment").val());
+            if(locations.indexOf($("#search_fulfllment").val()) != -1){
+//                console.log(value.LocationName);
+                delete anArray[index];
+            }
+        });
+    }
     
     a.update = function(){
         
-        var fulfill = $('#fullfill_id').val();
+        var pickupdiff = localStorage.getItem('isfullfilllocation');
+        var homedeldiff = localStorage.getItem('deliverydiffstore');
+        
+        console.log(localStorage.getItem('isfullfilllocation'));
+//        console.log(homedeldiff);
+        if(pickupdiff>0){
+            NotificationService.showWarning( 'Warning', 'No fulfillment location selected for pickup.');
+//            deferred.reject();
+            return false;
+        }
+        if(homedeldiff>0){
+            NotificationService.showWarning( 'Warning', 'No store to fulfill for home delivery item/s.');
+//            deferred.reject();
+            return false;
+        }
+        
+        var fulfill = $('input[name=fullfill_location]:checked').val();
+//        var fulfill = $('#fullfill_id').val();
+//        console.log(fulfill);
         var multipleRequest = o.when();
         var fulfillmentLocation = "";
         var freightMessage = "";
@@ -257,49 +307,57 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
             fulfillmentLocation = "Fulfillment location successfully added";
         
         }
+        console.log(a.shipGroup);
         if(typeof a.shipGroup !== undefined) {
+            console.log(a.shipGroup);
             multipleRequest = o.when();
             angular.forEach(a.shipGroup,function(fr,keys){
                 
                 angular.forEach(fr.items,function(fre, key){
                     
                     var freighttotal = parseInt($("#freight_total"+keys).val())/parseInt(fr.items.length);
-                    multipleRequest = multipleRequest.then(function(){
+                    if($("#freight_total"+keys).val() == ''){
+                        localStorage.removeItem('freightamt');
+                        localStorage.setItem('freightamt', 1);
+                    } else {
                         
-                        var infoData = "[{";
-                            infoData += "\"quantity\":\"" + fre.qty + "\",";
-                            if($("#customer_city"+keys).val() != ''){
-                                infoData += "\"st_address_line1\":\"" + $("#address1"+keys).val() + "\",";
-                                infoData += "\"st_address_line2\":\"" + $("#address2"+keys).val() + "\",";
-                                infoData += "\"st_address_line3\":\"" + $("#address3"+keys).val() + "\",";
-                                infoData += "\"st_address_line4\":\"" + $("#address4"+keys).val() + "\",";
-                                infoData += "\"st_address_line5\":\"" + $("#address5"+keys).val() + "\",";
-                                infoData += "\"st_address_line6\":\"" + $("#address6"+keys).val() + "\",";
-                                infoData += "\"st_postal_code\":\"" + $("#postal_code"+keys).val() + "\",";
-                                infoData += "\"st_country\":\"" + $("#country"+keys).val() + "\",";
-                            } else {
-                                infoData += "\"st_address_line1\":\"" + $("#custom_address1"+keys).val() + "\",";
-                                infoData += "\"st_address_line2\":\"" + $("#custom_address2"+keys).val() + "\",";
-                                infoData += "\"st_address_line3\":\"" + $("#custom_city_"+keys).val() + "\",";
-                                infoData += "\"st_address_line4\":\"" + $("#custom_region_"+keys).val() + "\",";
-                                infoData += "\"st_address_line5\":\"" + $("#custom_district_"+keys).val() + "\",";
-                                infoData += "\"st_address_line6\":\"" + $("#custom_address6"+keys).val() + "\",";
-                                infoData += "\"st_postal_code\":\"" + $("#custom_zipcode"+keys).val() + "\",";
-                                infoData += "\"st_country\":\"" + $("#custom_country_"+keys).val() + "\",";
-                            }
-                            infoData += "\"shipping_amt\":\"" + freighttotal + "\"";
-                            infoData += "\"lty_pgm_name\":\"" + $("#ETADate"+keys).val() + "\"";
-//                            infoData += "\"shipping_amt\":\"" + fre.freight + "\"";
-                            infoData += "}]";
-                            
-                        var rowv = parseInt(fre.row_version);
+                        multipleRequest = multipleRequest.then(function(){
 
-                        return b.put('/v1/rest/document/'+fre.doc_sid+'/item/'+fre.sid+'?filter=row_version,eq,'+rowv,infoData, {headers: {"Auth-Session": sessionStorage.getItem("PRISMAUTH")}}).then(function(transRes){
-//                            deferred.resolve();
-                            promises.push(deferred.resolve());
+                            var infoData = "[{";
+                                infoData += "\"quantity\":\"" + fre.qty + "\",";
+                                if($("#customer_city"+keys).val() != ''){
+                                    infoData += "\"st_address_line1\":\"" + $("#address1"+keys).val() + "\",";
+                                    infoData += "\"st_address_line2\":\"" + $("#address2"+keys).val() + "\",";
+                                    infoData += "\"st_address_line3\":\"" + $("#address3"+keys).val() + "\",";
+                                    infoData += "\"st_address_line4\":\"" + $("#address4"+keys).val() + "\",";
+                                    infoData += "\"st_address_line5\":\"" + $("#address5"+keys).val() + "\",";
+                                    infoData += "\"st_address_line6\":\"" + $("#address6"+keys).val() + "\",";
+                                    infoData += "\"st_postal_code\":\"" + $("#postal_code"+keys).val() + "\",";
+                                    infoData += "\"st_country\":\"" + $("#country"+keys).val() + "\",";
+                                } else {
+                                    infoData += "\"st_address_line1\":\"" + $("#custom_address1"+keys).val() + "\",";
+                                    infoData += "\"st_address_line2\":\"" + $("#custom_address2"+keys).val() + "\",";
+                                    infoData += "\"st_address_line3\":\"" + $("#custom_city_"+keys).val() + "\",";
+                                    infoData += "\"st_address_line4\":\"" + $("#custom_region_"+keys).val() + "\",";
+                                    infoData += "\"st_address_line5\":\"" + $("#custom_district_"+keys).val() + "\",";
+                                    infoData += "\"st_address_line6\":\"" + $("#custom_address6"+keys).val() + "\",";
+                                    infoData += "\"st_postal_code\":\"" + $("#custom_zipcode"+keys).val() + "\",";
+                                    infoData += "\"st_country\":\"" + $("#custom_country_"+keys).val() + "\",";
+                                }
+                                infoData += "\"shipping_amt\":\"" + freighttotal + "\"";
+                                infoData += "\"lty_pgm_name\":\"" + $("#ETADate"+keys).val() + "\"";
+    //                            infoData += "\"shipping_amt\":\"" + fre.freight + "\"";
+                                infoData += "}]";
+
+                            var rowv = parseInt(fre.row_version);
+
+                            return b.put('/v1/rest/document/'+fre.doc_sid+'/item/'+fre.sid+'?filter=row_version,eq,'+rowv,infoData, {headers: {"Auth-Session": sessionStorage.getItem("PRISMAUTH")}}).then(function(transRes){
+    //                            deferred.resolve();
+                                promises.push(deferred.resolve());
+                            });
+
                         });
-
-                    });
+                    }
 
                 });
 
@@ -307,32 +365,50 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
 //            return false;
             var freightMessage = "Freight Charges Added";
         }
-//        return false;
-        if(fulfillmentLocation != ""){
-            message = fulfillmentLocation;
-        }
-        if(freightMessage != ""){
-            message += " and "+freightMessage;
-        }
-        
-        o.all(promises).then(function(){
-            setTimeout(function(){
-                m.go(m.current, {}, {reload: true}).then(function(){
-                    NotificationService.showSuccessfulMessage( 'Updated!', message);
-                    var confirm = nt.addConfirm('Would you like to add provisional message/s?', 'Add Provisional Message');
-                    $modalStack.dismissAll();
-                    confirm.then(function(confirmation){
-                        if(!confirmation){
-                            deferred.reject();
-                        }
-                        else{
-                            f.open(modalOptions);
-                            deferred.resolve();
-                        }
+//        alert(localStorage.getItem('freightamt'));
+        if(parseInt(localStorage.getItem('freightamt'))>0){
+            NotificationService.showWarning( 'Warning', 'Shipment rate is required');
+            return false;
+        } else{
+    //        return false;
+            if(fulfillmentLocation != ""){
+                message = fulfillmentLocation;
+            }
+            if(freightMessage != ""){
+                message += " and "+freightMessage;
+            }
+
+            o.all(promises).then(function(){
+                setTimeout(function(){
+                    m.go(m.current, {}, {reload: true}).then(function(){
+                        NotificationService.showSuccessfulMessage( 'Updated!', message);
+                        $.ajax({
+                            url: "/plugins/PLOverallValidation/validation.php"
+                            ,type: "GET"
+                            ,data: {type:4,sid:$stateParams.document_sid}
+                            ,success: function(val1){
+                                if(val1.homedelivery > 0){
+                                    var confirm = nt.addConfirm('Would you like to add provisional message/s?', 'Add Provisional Message');
+                                    $modalStack.dismissAll();
+                                    confirm.then(function(confirmation){
+                                        if(!confirmation){
+                                            deferred.reject();
+                                        }
+                                        else{
+                                            f.open(modalOptions);
+                                            deferred.resolve();
+                                        }
+                                    });
+                                } else {
+                                    $modalStack.dismissAll();
+                                    deferred.resolve();
+                                }
+                            }
+                        });
                     });
-                });
-            }, 1000);
-        });
+                }, 1000);
+            });
+        }
     }
     
     a.close = function(a){
@@ -363,7 +439,7 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
         $("#other_shipping"+arr).fadeIn('fast');
         $("#freight_total"+arr).val('');
 //        i.Enable = 1;
-        console.log(index);
+//        console.log(index);
         if(custype == 1){
             $("#address1"+arr).val(index.address_1);
             $("#address2"+arr).val(index.address_2);
@@ -390,10 +466,11 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
         }
        
         var selectedCity = index.city;
+        var selectedProvince = index.address_4;
         
         var ShipmentRates = function(){
             
-            b.get("/plugins/PLFulfillmentAndFreight/getGroup.php?sid="+$stateParams.document_sid+"&ssid="+c.get().storesid+"&selc="+selectedCity).then(function(res, status) { 
+            b.get("/plugins/PLFulfillmentAndFreight/getGroup.php?sid="+$stateParams.document_sid+"&ssid="+c.get().storesid+"&selc="+selectedCity+"&prov="+selectedProvince).then(function(res, status) { 
                 
                 a.ShippingRates = res.data[0].freight.value.shippingRates;
                 
@@ -412,7 +489,7 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
     }
     
     a.SelectShippingOption = function(index,rec){
-        console.log(index);
+//        console.log(index);
         var days = index.etd;
         var d = new Date(Date.now() + days*24*60*60*1000);
         var curr_date = d.getDate();
@@ -469,19 +546,29 @@ var fulfillmentandFreightCtrl = ["$scope", "$http", "prismSessionInfo", "$locati
     }
     
     a.SelectLocation = function(get, arr){
-        $.ajax({
-            url: "/plugins/PLFulfillmentAndFreight/viewInventory.php"
-            ,type: "GET"
-            ,data: {type:1,sid:$stateParams.document_sid,sto:get.LocationId}
-            ,success: function(rest){
-                a.inventory = rest;
-                $("#fullfill_id").val(get.LocationId);
-                $(".viewInventory").fadeIn('fast');
-                deferred.resolve();
-            }
+//        $.ajax({
+//            url: "/plugins/PLFulfillmentAndFreight/viewInventory.php"
+//            ,type: "GET"
+//            ,data: {type:1,sid:$stateParams.document_sid,sto:get.LocationId}
+//            ,success: function(rest){
+//                a.inventory = rest;
+//                $("#fullfill_id").val(get.LocationId);
+//                $(".viewInventory").fadeIn('fast');
+//                deferred.resolve();
+//            }
+//        });
+        a.viewinventory = [];
+        b.get("/plugins/PLFulfillmentAndFreight/viewInventory.php?type=1&sid="+$stateParams.document_sid+"&sto="+get.LocationId).success(function(rest) {
+//            a.inventory = data;
+            $(".viewInventory").fadeOut('fast');
+//            console.log(rest);
+            a.viewinventory = rest;
+            $("#fullfill_id").val(get.LocationId);
+            $(".viewInventory").fadeIn('fast');
+            i.Enable = !1;     
+            deferred.resolve();
         });
     }
-    
     /*------------------------------------------------------------------------*/
     return deferred.promise;
     

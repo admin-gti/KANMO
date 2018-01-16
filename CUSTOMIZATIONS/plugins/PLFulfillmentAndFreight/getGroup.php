@@ -96,10 +96,11 @@
         }
         unset($sql);
         unset($rsResult);
-        $sql = "SELECT address2 FROM store WHERE sid = '".$_GET['ssid']."'";
+        $sql = "SELECT address2, address4 FROM store WHERE sid = '".$_GET['ssid']."'";
         $rsResult = $conn->Execute($sql);
         if(!$rsResult->EOF){
-            $store = $rsResult->fields['address2'];
+            $storeProvince = $rsResult->fields['address4'];
+            $storeCity = $rsResult->fields['address2'];
         }
     } else {
         
@@ -153,10 +154,11 @@
         }
         unset($sql);
         unset($rsResult);
-        $sql = "SELECT address2 FROM rps.store WHERE sid = '".$_GET['ssid']."'";
+        $sql = "SELECT address2, address4 FROM rps.store WHERE sid = '".$_GET['ssid']."'";
         $rsResult = $conn->Execute($sql);
         if(!$rsResult->EOF){
-            $store = $rsResult->fields['address2'];
+            $storeProvince = $rsResult->fields['address4'];
+            $storeCity = $rsResult->fields['address2'];
         }
     }
     
@@ -185,8 +187,13 @@
             }
 
             $json = "{"; 
-            $json .= "\"shipFrom\": \"".$store."\","; 
-            $json .= "\"shipTo\": \"".$_REQUEST['selc']."\",";
+            $json .= "\"shipFromProvince\": \"".$storeProvince."\","; 
+            $json .= "\"shipFromCity\": \"".$storeCity."\",";
+            $json .= "\"shipToProvince\": \"".$_REQUEST['selc']."\","; 
+            $json .= "\"shipToCity\": \"".$_REQUEST['prov']."\","; 
+            
+//            $json .= "\"shipFrom\": \"".$store."\","; 
+//            $json .= "\"shipTo\": \"".$_REQUEST['selc']."\",";
             $json .= "\"itemDimension\": {";
             $json .= "\"width\": \"".$width."\","; 
             $json .= "\"height\": \"".$height."\","; 
@@ -273,7 +280,9 @@
         }
         
     }
-    
+//    echo "<pre>";
+//    print_r($ary);
+//    echo "</pre>";
     header( 'Content-Type: application/json' );
     echo json_encode($ary);
 ?>

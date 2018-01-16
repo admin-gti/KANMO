@@ -1,0 +1,45 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Gift Card Option</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-horizontal">
+						<div class="form-group text-center">
+							<label class="radio-inline">
+								<input type="radio" name="radios" id="normalRadio" value="SINGLE" ng-model="gcType" />
+								SINGLE
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="radios" id="damageRadio" value="MULTIPLE" ng-model="gcType" />
+								MULTIPLE
+							</label>
+						</div>
+						<div class="form-group" ng-show="gcType != 'SINGLE'">
+							<label for="gcCount" class="col-sm-4">Enter number of cards: </label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="gcCount" id="gcCount" ng-model="gcCount" numberonly="" focus-me="true" placeholder="Enter number of card to be reloaded..." />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-lg btn-default" ng-click="closeModalDialog()">
+						<img src="../images/delete.png" width="20px">
+					</button>
+					<button type="button" class="btn btn-lg btn-default" ng-click="saveGCType()" ng-disabled="!gcType">
+						<img src="../images/proceed.png" width="20px">
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

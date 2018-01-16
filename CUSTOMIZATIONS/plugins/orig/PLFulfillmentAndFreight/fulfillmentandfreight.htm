@@ -1,0 +1,216 @@
+
+
+<style>
+.datepicker{z-index:1151 !important;}
+.resultMargin{margin-bottom: -15px;}
+</style>
+
+<script>
+$(function() {
+    $("input[id$='ETADate0']").datepicker({
+            dateFormat: "yy-mm-dd"
+    });  
+    $( "#datepicker" ).datepicker();
+  });
+  
+</script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Fulfillment Location and Freight Charges</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="row">
+                                <div class="col-md-12 padding-bottom-lg" id="tbl_fulfillment" style="display:none;">
+                                    <!--<h5><b>SELECTION FOR PICKUP - DIFFERENT STORE</b></h5>-->
+                                    <h5><b>CHOOSE LOCATION:</b></h5>
+                                    
+                                    <table class="table table-bordered table-striped" width="100%">
+                                        <caption ng-if='fulfillItem !== undefined'>{{fulfillItem.length}} location/s found.</caption>
+                                        <thead class="panel-heading">
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>LOCATION</th>
+                                                <th>VIEW QTY</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in fulfillItem" ng-if='fulfillItem !== undefined'>
+                                            <td ng-if="currentStore!=item.LocationCode"><input type="radio" name="fullfill_location" id="fullfill_location" ng-model="item.LocationId" ng-value="item.LocationId"/></td>
+                                            <td ng-if="currentStore!=item.LocationCode">{{item.LocationName}}</td>
+                                            <td ng-if="currentStore!=item.LocationCode" align="center"><img ng-src="/customizations/images/trans_lookup_48.png" ng-click="viewInventory(item.LocationId, item.LocationName)" align="center" alt="View Inventory" src="/images/pos/trans_lookup_48.png" height="16px" width="16px"></td>
+                                        </tr>
+                                        <tr ng-if='fulfillItem === undefined'>
+                                            <td colspan="6" align='center'>No Common Location Found</td>
+                                        </tr>
+                                        </tbody>
+                                   </table>
+                                    <br/><br/>
+                                </div>
+                            <div class="col-md-12 padding-bottom-lg " id="tbl_freight" style="display:none;">
+                                    <h5><b>FREIGHT CHARGES:</b></h5>
+                                    <span ng-if="NoStoreHomeDelivery==''&&homedeliverydiff!=0"><b>There are {{HomeDeliveryItem.length}} stores that may deliver the items</b></span>
+                                    <span ng-if="NoStoreHomeDelivery!=''&&homedeliverydiff!=0&&samestore==0"><font color="RED"><b>{{NoStoreHomeDelivery}}</b></font></span>
+                                    <br/>
+<!--                                    <table class="table table-bordered table-striped" width="100%" style="font-size: 11px;" ng-if="NoStoreHomeDelivery==''">
+                                        <thead class="panel-heading">
+                                            <tr>
+                                                <th>LOCATION/S</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="stores in HomeDeliveryItem" ng-if='HomeDeliveryItem !== undefined'>
+                                            <td>{{stores.LocationName}}</td>
+                                        </tr>
+                                    </table>-->
+                                    <table class="table table-bordered table-striped" width="100%" style="font-size: 11px;" ng-if="NoStoreHomeDelivery==''||samestore!=0">
+                                        <!--<caption ng-if='shipGroup !== undefined'>No Record to add freight.</caption>-->
+                                        <tbody>
+                                        <tr ng-repeat="ship in shipGroup">
+                                            <td width="40%">
+                                                <table width="100%" class="table table-bordered table-striped">
+                                                    <thead class="panel-heading">
+                                                        <tr>
+                                                            <th>ALU</th>
+                                                            <th>DESCRIPTION</th>
+                                                            <th>QUANTITY</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="shipitem in ship.items">
+                                                            <td style="background-color: white" align="center">{{shipitem.alu}}</td>
+                                                            <td style="background-color: white" align="center">{{shipitem.description1}} - {{shipitem.description2}}</td>
+                                                            <td style="background-color: white" align="center">{{shipitem.qty}}<input type="hidden" class="form-control" ng-model="shipitem.freight" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td width="30%">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="radio" name="custAddress" id="custAddress{{$index}}" ng-Click="SelectAddress(1)" value="1"/>
+                                                            <b>Customer Address:</b>
+                                                            <span id="defaultadd" style="display:none;">
+                                                                <select name="custaddress" id="custaddress{{$index}}" ng-change="SelectCity(custaddress, 1, $index)" class="form-control" ng-model="custaddress" ng-options="c.completeaddess for c in customer_address">
+                                                                    <option value="">PLEASE SELECT</option>
+                                                                </select>
+                                                                <input type="hidden" id="address1{{$index}}" name="address1" />
+                                                                <input type="hidden" id="address2{{$index}}" name="address2" />
+                                                                <input type="hidden" id="address3{{$index}}" name="address3" />
+                                                                <input type="hidden" id="address4{{$index}}" name="address4" />
+                                                                <input type="hidden" id="address5{{$index}}" name="address5" />
+                                                                <input type="hidden" id="address6{{$index}}" name="address6" />
+                                                                <input type="hidden" id="customer_city{{$index}}" name="customer_city" />
+                                                                <input type="hidden" id="country{{$index}}" name="country" />
+                                                                <input type="hidden" id="postal_code{{$index}}" name="postal_code" />
+                                                                <input type="hidden" id="state{{$index}}" name="state" />
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="radio" name="custAddress" id="custAddress{{$index}}" ng-Click="SelectAddress(2)" value="2"/>
+                                                            <b>Other Address:</b>
+                                                            <br/>
+                                                            <br/>
+                                                            <span id="customadd" style="display:none;">
+                                                                <b>Delivered To</b>
+                                                                <input type="text" id="custom_address6{{$index}}" name="address6" class="form-control ng-pristine ng-valid ng-isolate-scope ng-empty ng-touched" tabindex="15" placeholder="Shipping Name">
+                                                                <b>Address 1</b>
+                                                                <input type="text" id="custom_address1{{$index}}" name="address1" class="form-control ng-pristine ng-valid ng-isolate-scope ng-empty ng-touched" tabindex="16" placeholder="Address 1">
+                                                                <b>Address 2</b>
+                                                                <input type="text" id="custom_address2{{$index}}" name="address2" class="form-control ng-pristine ng-valid ng-isolate-scope ng-empty ng-touched" tabindex="17" placeholder="Address 2">
+                                                                <b>Province</b>
+                                                                <select name="custom_region" id="custom_region{{$index}}" ng-change="SelectRegion(custom_region,$index)" class="form-control" ng-model="custom_region" ng-options="rr.region for rr in regions">
+                                                                    <option value="">PLEASE SELECT</option>
+                                                                </select>
+                                                                <input type="hidden" id="custom_region_{{$index}}" name="address3" ng-model="selectedRegion" />
+                                                                <b>City</b>
+                                                                <select name="custom_city" id="custom_city{{$index}}" ng-change="SelectCity(custom_city,'',$index)" class="form-control" ng-model="custom_city" ng-options="rr.city for rr in cities">
+                                                                    <option value="">PLEASE SELECT</option>
+                                                                </select>
+                                                                <input type="hidden" id="custom_city_{{$index}}" name="address3" ng-model="SelectedCity" />
+                                                                <b>District</b>
+                                                                <select name="custom_district" id="custom_district{{$index}}" ng-change="SelectDistrict(custom_district,$index)" class="form-control" ng-model="custom_district" ng-options="rr.district for rr in districts">
+                                                                    <option value="">PLEASE SELECT</option>
+                                                                </select>
+                                                                <input type="hidden" id="custom_district_{{$index}}" name="address3" ng-model="selectedRegion" />
+                                                                <b>Country</b>
+                                                                <select name="custom_country{{$index}}" id="country{{$index}}" class="form-control" ng-model="country">
+                                                                    <option value="" >SELECT COUNTRY</option>
+                                                                    <option value="" >INDONESIA</option>
+                                                                </select>
+                                                                <input type="hidden" id="custom_country_{{$index}}" name="address3" ng-model="selectedRegion" value="INDONESIA" />
+                                                                <b>Zip Code</b>
+                                                                <input type="text" id="custom_zipcode{{$index}}" name="zipcode" class="form-control ng-pristine ng-valid ng-isolate-scope ng-empty ng-touched" tabindex="18" placeholder="Zip Code">
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td id="datepicker">
+                                                <div id="other_shipping" style="display:none;">
+                                                    <b>Shipping Options:</b> 
+                                                    <select name="custaddress" id="shipping_option{{$index}}" ng-change="SelectShippingOption(shipping_option, $index)" class="form-control" ng-model="shipping_option" ng-options="y.shippingType for y in ShippingRates">
+                                                        <option value="">PLEASE SELECT</option>
+                                                    </select>
+                                                    <br/>
+                                                    <b>ETA Date:</b>
+                                                     <input type="text" id="ETADate{{$index}}" class="form-control" ng-model="toDate">
+                                                    <div id="datepicker"></div>
+                                                    <br/>
+                                                    <br/>
+                                                    <b>Freight Charges:</b> 
+                                                    <input type="text" id="freight_total{{$index}}" name="freight_total" class="form-control ng-pristine ng-valid ng-isolate-scope ng-empty ng-touched" tabindex="13" ng-model="ship.freight_total"> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if='shipGroup === undefined'>
+                                            <td colspan="6" align='center'>No Record to Add on Freight.</td>
+                                        </tr>
+                                        </tbody>
+                                   </table>
+                                    
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img ng-click="close()" ng-click="close()" ng-src="/images/pos/delete.png" align="center" alt="Cancel" src="/images/pos/delete.png" height="28px" width="28px">
+                        &nbsp;&nbsp;
+                        <img ng-click="update()" ng-src="/customizations/images/proceed.png" align="center" alt="Update Order and Fulfillment Type" src="/images/pos/save.png" height="28px" width="28px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+.datepicker{z-index:1151 !important;}
+.resultMargin{margin-bottom: -15px;}
+</style>
+
+<script>
+$(function() {
+    $("input[id$='ETADate0']").datepicker({
+            dateFormat: "yy-mm-dd"
+    });  
+    $( "#datepicker" ).datepicker();
+  });
+  
+</script>

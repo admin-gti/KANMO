@@ -1,0 +1,29 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Gift Card Amounts</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-group col-xs-12">
+						<div class="col-xs-4" ng-repeat="item in gcItems">
+							<button type="button" class="btn btn-lg btn-info cashBtnSm" ng-click="addGCAmount(item.active_price, item.alu)"><span>{{item.active_price | currency}} </span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-lg btn-default" ng-click="closeModalDialog()">
+						<img src="../images/delete.png" width="20px">
+					</button> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

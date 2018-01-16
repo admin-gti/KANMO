@@ -1,0 +1,65 @@
+<form novalidate="" id="customerShippingAddressForm" name="customerShippingAddressForm" class="form-horizontal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 class="modal-title"><span data-translate="3095">Customer Shipping Address</span></h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div id="customerShippingAddresses" class="panel-body height65 autoOverflow">
+          <div class="list-group">
+            <a name="addresslink{{$index}}" event-name="customerShippingSelectAddress" id="searchShippingAddressResult{{$index}}" class="list-group-item" tabindex="11{{$index}}" index="{{$index}}" data-item-group="" ng-repeat="thisAddress in customer.addresses" ng-click="selectShippingAddress($index)">
+              <div class="row">
+                <div class="col-xs-12">
+                  <strong data-translate="536">Address 1</strong> {{thisAddress.address_line_1}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <strong data-translate="538">Address 2</strong> {{thisAddress.address_line_2}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <strong data-translate="540">Address 3</strong> {{thisAddress.address_line_3}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <strong data-translate="541">Postal Code</strong> {{thisAddress.postal_code}}
+                </div>
+                <div class="col-xs-6">
+                  <strong data-translate="542">Type</strong> {{thisAddress.type_name}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <input disabled="disabled" type="checkbox" ng-model="thisAddress.primary_flag">
+                  <strong class="checkbox_label" data-translate="537">Primary</strong>
+                </div>
+                <div class="col-xs-6">
+                  <input disabled="disabled" type="checkbox" ng-model="thisAddress.address_privacy_opt_out">
+                  <strong class="checkbox_label" data-translate="539">Contact</strong>
+                </div>
+              </div>
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <!-- <button type="submit" id="customerShippingAddAddresButton" event-name="customerShippingAddAddress" name="customerShippingAddAddressButton" class="btn btn-lg btn-default" ng-click="addressAction('New')"><span data-translate="1.8">Add</span></button> -->
+            <!-- <button type="submit" id="customerShippingDeleteAddressButton" event-name="customerShippingDeleteAddress" name="customerShippingDeleteAddressButton" class="btn btn-lg btn-danger" ng-disabled="selectedAddressIndex === -1" ng-click="addressAction('Delete')"><span data-translate="544">Delete</span></button> -->
+            <button type="button" id="customerShippingSelectAddressButton" event-name="customerShippingSelectAddress" name="customerShippingSelectAddressButton" ng-click="selectAddress(form.type)" class="btn btn-lg btn-default"><span data-translate="805">Select</span></button>
+            <button type="button" id="customerShippingCancelButton" event-name="customerShippingCancel" name="customerShippingCancelButton" class="btn btn-lg btn-default" ng-click="cancel()"><span data-translate="1.2">Cancel</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></form>

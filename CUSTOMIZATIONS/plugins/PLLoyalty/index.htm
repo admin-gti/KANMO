@@ -1,0 +1,39 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Loyalty Details</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="form-horizontal">
+						<div class="form-group" ng-show="!loyaltyCode">
+							<label for="pointsValue" class="col-sm-3">Points Value: </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="pointsValue" id="pointsValue" ng-model="pointsValue" numberonly="" placeholder="Enter points value..." focus-me="true"/>
+							</div>
+						</div>
+
+						<div class="form-group" ng-show="loyaltyCode">
+							<label for="validationCode" class="col-sm-3">Validation Code: </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="validationCode" id="validationCode" ng-model="validationCode" placeholder="Enter validation code..." focus-me="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<img src="../images/delete.png" class="btn-delete margin-right-sm" ng-click="closeModalDialog()">
+					<img src="../images/proceed.png" ng-show="!loyaltyCode" class="btn-proceed" ng-click="applyLoyalty()" ng-disabled="!pointsValue">
+					<img src="../images/proceed.png" ng-show="loyaltyCode" class="btn-proceed margin-right-sm" ng-click="validateLoyaltyCode()" ng-disabled="!validationCode">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

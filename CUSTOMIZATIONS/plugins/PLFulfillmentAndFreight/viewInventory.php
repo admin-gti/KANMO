@@ -37,6 +37,7 @@
 
                         where a.sid = '".$data['sid']."' 
                         and b.note8 = 'PICKUP'
+                        and b.note10 = 'DIFFERENT STORE'
                         and c.udf1_string = '".$data['sto']."'";
      //        $conn->debug = TRUE;
              $arr = array();

@@ -4,17 +4,23 @@ var viewInventoryCtrl = ["$scope", "$http", "prismSessionInfo", "$location", "$m
     
     
     
-    $.ajax({
-        url: "/plugins/PLFulfillmentAndFreight/viewInventory.php"
-        ,type: "GET"
-        ,data: {type:1,sid:$stateParams.document_sid,sto:localStorage.getItem('locationID')}
-        ,success: function(rest){
-            a.inventory = rest;
-            a.storeName = localStorage.getItem('StoreName');
-            deferred.resolve();
-            
-        }
+//    $.ajax({
+//        url: "/plugins/PLFulfillmentAndFreight/viewInventory.php"
+//        ,type: "GET"
+//        ,data: {type:1,sid:$stateParams.document_sid,sto:localStorage.getItem('locationID')}
+//        ,success: function(rest){
+//            a.inventory = rest;
+//            a.storeName = localStorage.getItem('StoreName');
+//            deferred.resolve();
+//            
+//        }
+//    });
+    b.get("/plugins/PLFulfillmentAndFreight/viewInventory.php?type=1&sid="+$stateParams.document_sid+"&sto="+localStorage.getItem('locationID')).then(function(res) {      
+        a.inventory = res.data;
+        a.storeName = localStorage.getItem('StoreName');
+        deferred.resolve();
     });
+    
     a.close = function(){
         $modalInstance.dismiss();
         m.go(m.current, {}, {reload: true});

@@ -1,0 +1,30 @@
+<div class="row form-group" ng-if="contentReady">
+    <div class="col-xs-4">
+        <img-btn event-name="newVoucher" tabindex="123" translation-name="'3786'" img-src="'/images/pos/pos_new_48.png'" click-handler="newReceiving" permission-name="'voucherscreate'" button-text="'New Voucher'"></img-btn>
+    </div>
+    <div class="col-xs-4">
+        <img-btn event-name="voucherLookup" tabindex="123" translation-name="'3641.1'" img-src="'/images/pos/trans_lookup_48.png'" click-handler="receivingVoucherLookup" permission-name="'accessreceivingarea'" button-text="'Voucher Lookup'"></img-btn>
+    </div>
+    <div class="col-xs-4">
+        <img-btn event-name="pendingVouchers" tabindex="123" translation-name="'3939'" img-src="'/images/pos/document_pending_48.png'" click-handler="receivingPendingVouchersLookup" permission-name="'voucherscreate'" button-text="'Pending Vouchers'"></img-btn>
+    </div>
+</div>
+<div class="row form-group" ng-if="contentReady">
+    <div class="col-xs-4">
+        <new-asn-button></new-asn-button>
+    </div>
+    <div class="col-xs-4">
+        <asn-lookup-button></asn-lookup-button>
+    </div>
+    <div class="col-xs-4">
+        <pending-asn-lookup-button></pending-asn-lookup-button>
+    </div>
+</div>
+<div class="row form-group" ng-if="contentReady">
+<!--     <div class="col-xs-4">
+        <batch-receiving-button></batch-receiving-button>
+    </div> -->
+    <div class="col-xs-4">
+        <vendor-invoice-button layout="0"></vendor-invoice-button>
+    </div>
+</div>

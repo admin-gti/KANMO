@@ -1,0 +1,106 @@
+<form name="tenderTypesDialog" id="tenderTypesDialog" class="form-horizontal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4 data-translate="1490">Change Tender Type</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row" ng-if="tenderInformationReady">
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.cashButtonDisabled">
+                                <button event-name="posTenderTypesCash" type="button" id="CashButton" class="btn btn-lg btn-info btn-block btn-image" ng-click="setTender('Cash')">
+                                    <div class="btn-container">
+                                        <img src="/images/money.png" height="30px" width="30px" >
+                                        <span data-translate="571" class="btn-txt">Cash</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.centralGiftCardDisabled">
+                                <button event-name="posTenderTypesCheck" type="button" id="CentralGiftCardButton" class="btn btn-lg btn-info btn-block" ng-click="setTender('Central Gift Card')"><span data-translate="1028">Central Gift Card</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.checkButtonDisabled">
+                                <button event-name="posTenderTypesCheck" type="button" id="CheckButton" class="btn btn-lg btn-info btn-block btn-image" ng-click="setTender('Check')">
+                                    <div class="btn-container">
+                                        <img src="/images/Check.png" height="30px" width="30px" >
+                                        <span class="btn-txt">Cheque</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.creditButtonDisabled">
+                                <button event-name="posTenderTypesCredit" type="button" id="CreditButton" class="btn btn-lg btn-info btn-block btn-image" ng-click="setTender('CreditCard')">
+                                    <div class="btn-container">
+                                        <img src="/images/Credit.png" height="30px" width="30px" >
+                                        <span data-translate="573" class="btn-txt">Credit</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.debitButtonDisabled">
+                                <button event-name="posTenderTypesDebit" type="button" id="DebitCardButton" class="btn btn-lg btn-info btn-block btn-image" ng-click="setTender('Debit Card')">
+                                    <div class="btn-container">
+                                        <img src="/images/Debit.png" height="30px" width="30px" >
+                                        <span data-translate="574" class="btn-txt">Debit</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.codButtonDisabled">
+                                <button event-name="posTenderTypesCOD" type="button" id="CodButton" class="btn btn-lg btn-info btn-block" ng-click="setTender('COD')"><span>{{codName}}</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.chargeButtonDisabled">
+                                <button event-name="posTenderTypesCharge" type="button" id="ChargeButton" class="btn btn-lg btn-info btn-block" ng-click="setTender('Charge')"><span data-translate="1089">Charge</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.depositButtonDisabled&&!noDeposit">
+                                <button event-name="posTenderTypesDeposit" type="button" id="DepositButton" class="btn btn-lg btn-info btn-block" ng-click="setTender('Deposit')"><span data-translate="578">Deposit</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.foreignCurrencyButtonDisabled">
+                                <button event-name="posTenderTypesForeignCurrency" type="button" id="ForeignCurrencyButton" class="btn btn-lg btn-info btn-block minusPadding" ng-click="setTender('Foreign Currency')"><span data-translate="579">Foreign Currency</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.giftCardButtonDisabled">
+                                <button event-name="posTenderTypesGiftCard" type="button" id="GiftCardButton" class="btn btn-lg btn-info btn-block btn-image" ng-click="setTender('Gift Card')">
+                                    <div class="btn-container">
+                                        <img src="/images/giftcard.png" height="30px" width="30px">
+                                        <span data-translate="575" class="btn-txt">Gift Card</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="!AvailableTenders.giftCertButtonDisabled">
+                                <button event-name="posTenderTypesGiftCert" type="button" id="GiftCertButton" class="btn btn-lg btn-info btn-block btn-image" ng-click="setTender('Gift Certificate')">
+                                    <div class="btn-container">
+                                        <img src="/images/coupon.png" height="30px" width="30px">
+                                        <span data-translate="576" class="btn-txt">Gift Certificate</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="(!centralCreditEnabled) && (!AvailableTenders.storeCreditButtonDisabled)">
+                                <button event-name="posTenderTypesStoreCredit" ng-disabled="!checkCreditBalance()" type="button" id="StoreCreditButton" class="btn btn-lg btn-info btn-block minusPadding" ng-click="setTender('Store Credit')"><span data-translate="577">Store Credit</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="centralCreditEnabled && (!AvailableTenders.storeCreditButtonDisabled)">
+                                <button event-name="posTenderTypesCentralCredit" ng-disabled="!checkCreditBalance()" type="button" id="CentralCreditButton" class="btn btn-lg btn-info btn-block minusPadding" ng-click="setTender('Central Credit')"><span data-translate="577">Store Credit</span></button>
+                            </div>
+                            <div class="col-xs-4 panel-body" ng-if="otherTendersButtonEnabled && (document.transaction_total_amt<0)">
+                              <button event-name="posTenderTypesOtherTenders" data-permission="AllowOtherTendersForReturns" type="button" id="OtherTendersButton" class="btn btn-lg btn-info btn-block minusPadding" ng-click="allowOtherTenders()">
+                                <span data-translate="5562">Other Tenders</span></button>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="!tenderInformationReady">
+                            <span data-translate="3748">loading tender types</span>...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <button event-name="posTenderTypesCancel" id="cancelTenderChangeButton" type="button" class="btn btn-lg btn-default" ng-click="cancel()">
+                        <img src="/images/cancel.png" height="30px" width="30px">
+                    </button> 
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

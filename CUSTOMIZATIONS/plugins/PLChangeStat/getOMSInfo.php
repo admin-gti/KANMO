@@ -113,20 +113,36 @@
     
     function doSaveOMSInfo($data = NULL, $req = null, &$conn = null){
         
-//        $conn->debug = TRUE;
+//        echo "<pre>";
+//        print_r($data);
+//        echo "</pre>";
+        
+//        $conn->debug = TRUE;/
         if($req['sid'] > 0){
-            $sql = "SELECT ref_order_sid from document where sid = '".$req['sid']."'";
+            $sql = "SELECT ref_order_sid, notes_general from document where sid = '".$req['sid']."'";
             $rsResult = $conn->Execute($sql);
         } else {
-            $sql = "SELECT sid ref_order_sid from document where notes_order = '".$req['ref']."'";
+            $sql = "SELECT sid ref_order_sid, notes_general from document where notes_general LIKE '%".$req['ref']."%'";
             $rsResult = $conn->Execute($sql);
         }
 //        
         if(!$rsResult->EOF){
-        
+            
+            $concatFields = json_decode($rsResult->fields['notes_general'], TRUE);
+            
+            $newConcat['referenceNo'] = $concatFields['referenceNo'];
+            $newConcat['status'] = $concatFields['status'];
+            $newConcat['interSubRef'] = $concatFields['interSubRef'];
+            $newConcat['origSONo'] = $concatFields['origSONo'];
+            $newConcat['origInvcNo'] = $concatFields['origInvcNo'];
+            $newConcat['batchNo'] = $concatFields['batchNo'];
+            $newConcat['omsID'] = $req['oid'];
+            
+            $concatheader = json_encode($newConcat, JSON_UNESCAPED_SLASHES); 
+            
             $sql = "UPDATE "
                     . "document SET "
-                    . "notes_general = '".$data['Orders'][0]['OrderId']."' ";
+                    . "notes_general = '".$concatheader."' ";
             if($req['isview'] != '1'){
                 if($req['stat'] == ''){
                     $sql .= ",udf2_string = 'SE' ";
@@ -138,7 +154,7 @@
             
 //            $conn->debug = TRUE;
             if($req['sid'] == 0) {
-                $sql .= "and notes_order = '".$req['ref']."'";
+                $sql .= "and notes_general LIKE '%".$req['ref']."%'";
                 $conn->Execute($sql);
             } else {
                 $sql .= "and sid = '".$req['sid']."'";

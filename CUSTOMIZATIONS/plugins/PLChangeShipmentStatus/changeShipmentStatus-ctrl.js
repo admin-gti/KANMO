@@ -43,7 +43,7 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
             ,success: function(scs1){
 //                            
                 a.shipstate = scs1.Orders[0].SubStatus;
-//                console.log(a.shipstate);
+
                 if(scs1.Message == 'Successful'){
                     i.Enable = !1;
                     var httpMethod = 'GET',
@@ -63,11 +63,11 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
                         ,type: "GET"
                         ,data: {sid:0,an:auth_nonce,at:auth_timestamp,s:oauthSignatureGetInfo,type:2,oid:scs1.Orders[0].OrderId,ref:reference_no,isview:1}
                         ,success: function(scs2){
-                            
-                            b.get('v1/rest/document?cols=*'+"&filter=(notes_order,eq,"+reference_no+")AND(notes_general,NN)",
-                            {headers: {"Auth-Session": sessionStorage.getItem("PRISMAUTH")}}).then(function(res){
+                            console.log(scs1);
+                            console.log(scs2);
+                            b.get('/plugins/PLChangeShipmentStatus/changeShipmentStatus.php?ref='+reference_no+'&type=7&oid='+scs1.Orders[0].OrderId).then(function(res){
                                     a.doc = res.data[0];
-                                    if(res.data.length > 0) {                    
+                                    if(res.data != "") {                    
 
                                         $("#displaydetails").fadeIn('fast');
                                         $("#displaystatusdetails").fadeIn('fast');
@@ -99,32 +99,6 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
 
             }
         });
-        
-        
-        b.get('v1/rest/document?cols=*'+"&filter=(notes_order,eq,"+reference_no+")AND(notes_general,NN)",
-        {headers: {"Auth-Session": sessionStorage.getItem("PRISMAUTH")}}).then(function(res){
-                a.doc = res.data[0];
-                $("#orderSID").val(res.data[0].sid);
-                if(res.data.length > 0) {               
-                    $("#displaydetails").fadeIn('fast');
-                    $("#displaystatusdetails").fadeIn('fast');
-                    $("#displayNoRecord").fadeOut('fast');
-                } else {
-                    $("#displaydetails").fadeOut('fast');
-                    $("#displaystatusdetails").fadeOut('fast');
-                    $("#displayNoRecord").fadeIn('fast');
-                }
-                
-                b.get('v1/rest/document?cols=*'+"&filter=(ref_order_sid,eq,"+a.doc.sid+")",
-                {headers: {"Auth-Session": sessionStorage.getItem("PRISMAUTH")}}).then(function(document){
-                    
-                    if(document.data.length > 0) {
-                        a.ref_order_sid = 1;
-                    } else {
-                        a.ref_order_sid = '';
-                    }
-                });
-        });
        
    }
    
@@ -132,12 +106,17 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
         
         var status = $("#changeStatus").val();
         var promises = [];
-//        console.log(status);
+        var modalOptions = {
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            templateUrl: '/plugins/PLChangeShipmentStatus/printOut.htm',
+            controller: 'FAandDispatchPrintOutCtrl'
+        };
         data = a.doc;
-//        console.log(status);
-//        console.log(a.doc);
+//        console.log(data.notes_general);
+        localStorage.setItem('omsID', data.notes_general);
         
-//        if(status == 'PK'){
             var httpMethod = 'POST',
                 url = vURL+urlUChangeSubStatus+merchantID+'/'+data.notes_general,
                 parameters = {
@@ -149,7 +128,7 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
             },
             consumerSecret = consumer_secretkey,
             encodedSignaturegetSubStatus = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, '');
-//            console.log(url);
+
              $.ajax({
                 url: "/plugins/PLChangeShipmentStatus/changeOrder.php"
                 ,type: "GET"
@@ -160,7 +139,7 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
                     deferred.resolve();
                 }
             });
-            
+
             if(status == 'DP' || status == 'DL'){
                 var httpMethod = 'GET',
                     url = vURL+'Order/'+merchantID+'/'+data.notes_general+'/Shipments',
@@ -173,7 +152,6 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
                 },
                 consumerSecret = consumer_secretkey,
                 encodedSignaturegetShipment = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, '');
-
                 $.ajax({
                     url: "/plugins/PLChangeShipmentStatus/changeOrder.php"
                     ,type: "GET"
@@ -215,19 +193,21 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i,Notificatio
                     });
                 }, 1000);
             });
-            if(status == 'FA' || status == 'DP'){
-                    var modalOptions = {
-                        backdrop: 'static',
-                        keyboard: false,
-                        size: 'lg',
-                        templateUrl: '/plugins/PLChangeShipmentStatus/printOut.htm',
-                        controller: 'FAandDispatchPrintOutCtrl'
-                    };
-                    
-//                    localStorage.removeItem('headerforPrintout');
-                    
+            
+            if(status == 'FA'){
+                
+//                    localStorage.setItem('omsID', $("#omsid").val());
+                    localStorage.setItem('Shipmenttype', '1');
                     localStorage.setItem('headerforPrintout', 'Print Out Label');
                     f.open(modalOptions);
+                    
+            } else if(status == 'DP'){
+                
+//                        localStorage.setItem('omsID', $("#omsid").val());
+                        localStorage.setItem('Shipmenttype', '2');
+                        localStorage.setItem('headerforPrintout', 'Dispatch Note');
+                        f.open(modalOptions);
+                        
             }
 //            NotificationService.showSuccessfulMessage( 'Updated!', 'Status has been Updated!');
 //                promises.push(deferred.resolve());

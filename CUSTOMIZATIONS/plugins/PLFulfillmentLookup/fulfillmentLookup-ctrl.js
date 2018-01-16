@@ -57,49 +57,47 @@ function(a, b, c, d, e, f, k, m, n, o, ps, pu, ms, $filter,$window,i) {
         var dbDate = new Date(a.search.toDate);
         var to_date = $filter('date')(dbDate.setDate(dbDate.getDate()+1),'yyyy-MM-dd');
         
-        var sFilter = ""; //(invoice_posted_date,ge,2017-10-31T16:00:00.926Z)AND(invoice_posted_date,le,2017-11-29T15:59:59.926Z)
-        
-        sFilter += "(notes_order,NE,SOURCE)";
-        
+        var sFilter = "";
+
+//        sFilter += "(document_number,NN)";
         if(a.search.notes_order){
-            sFilter += "AND(notes_order,eq," + a.search.notes_order + ")";
+            sFilter += "notes_general=" + a.search.notes_order;
         }
         if(!a.search.notes_order){
-            sFilter += "AND("+$("#dateList").val()+",ge," + from_date + "T00:00:00.000+08:00)"; //(invoice_posted_date,ge,2017-10-31T16:00:00.926Z)AND(invoice_posted_date,le,2017-11-29T15:59:59.926Z)
-            sFilter += "AND("+$("#dateList").val()+",le," + to_date + "T23:59:00.000+08:00)";
+            sFilter += "category="+$("#dateList").val();
         }
+        if(!a.search.notes_order){
+            sFilter += "&datefrom=" + from_date;
+            sFilter += "&dateto=" + to_date;
+        }
+        
         if(a.search.storeList){
-            sFilter += "AND(store_uid,eq," + a.search.storeList.sid + ")";
+            sFilter += "&store_uid=" + a.search.storeList.sid;
         }
         if(a.search.workstationList){
-            sFilter += "AND(workstation_uid,eq," + a.search.workstationList.workstation_name + ")";
+            sFilter += "&workstation_uid=" + a.search.workstationList.workstation_name;
         }
         if(a.search.notes_general){
-            sFilter += "AND(notes_general,eq," + a.search.notes_general + ")";
+            sFilter += "&notes_general=" + a.search.notes_general;
         }
         if(a.search.so_order){
-            sFilter += "AND(order_document_number,eq," + a.search.so_order + ")";
+            sFilter += "&order_doc_no=" + a.search.so_order;
         }
         if(a.search.last_name){
-            sFilter += "AND(bt_last_name,eq," + a.search.last_name + ")";
+            sFilter += "&bt_last_name=" + a.search.last_name;
         }
-//        sFilter += "AND((status,eq,4)OR(status,eq,3))";
+//        sFilter += "&((status=4)OR(status=3))";
 //        console.log(sFilter);
-        var searchFilter = {
-            cols:'*',
-            filter: sFilter,
-            sort:"order_document_number,desc"
-        };
            
            i.Enable = 1;
         a.documents = '';
-          ms.get('Document',searchFilter).then(function(res){
-    //          console.log(res);
-            i.Enable = !1;
-            a.documents = res;
-          });
-        
-        
+        b.get("/plugins/PLFulfillmentLookup/fulfillmentLookup.php?"+sFilter+"&type=1").then(function(data, status) {
+//                a.shipGroup = data.data;    
+//                            console.log(a.shipGroup);
+            a.documents = data.data;
+            i.Enable = !1;     
+            deferred.resolve();
+        });
         deferred.resolve();
     }
     

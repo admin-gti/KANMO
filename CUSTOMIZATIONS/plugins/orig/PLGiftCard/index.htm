@@ -1,0 +1,110 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">Gift Card Details</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				<div class="row" ng-if="totalCardItems > 0" ng-repeat="card in cards" ng-show="gcType == 'SINGLE'">
+					<div class="form-vertical" ng-model="cardList" id="card{{$index}}" ng-show="$first">
+						<div class="form-group col-sm-6">
+							<label for="cardNumber" class="col-sm-12">Card Number: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardNumber" id="cardNumber{{$index}}" ng-model="card.cardNumber" placeholder="Enter card number..." />
+							</div>
+						</div>
+						<div class="form-group col-sm-5">
+							<label for="cardAmount" class="col-sm-12">Amount: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardAmount" id="cardAmount{{$index}}" ng-model="card.cardAmount" placeholder="Enter amount..." numberonly="" data-currency-formatter=""/> 
+							</div>
+						</div>
+						<div class="col-sm-1" style="padding-top: 1.7em !important;">
+							<button type="button" class="btn btn-default text-right" ng-click="validateCard($index)">
+								<span class="glyphicon glyphicon-check"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="form-vertical" ng-model="cardList" id="card{{$index}}" ng-show="!$first">
+						<div class="form-group col-sm-5">
+							<label for="cardNumber" class="col-sm-12">Card Number: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardNumber" id="cardNumber{{$index}}" ng-model="card.cardNumber" placeholder="Enter card number..." />
+							</div>
+						</div>
+						<div class="form-group col-sm-5">
+							<label for="cardAmount" class="col-sm-12">Amount: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardAmount" id="cardAmount{{$index}}" ng-model="card.cardAmount" placeholder="Enter amount..." numberonly="" data-currency-formatter=""/> 
+							</div>
+						</div>
+						<div class="col-sm-2" style="padding-top: 1.7em !important;">
+							<button type="button" class="btn btn-default text-right" ng-click="validateCard($index)">
+								<span class="glyphicon glyphicon-check"></span>
+							</button>
+							<button type="button" class="btn btn-default text-right" ng-click="removeCard($index)">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" ng-repeat="card in cards" ng-show="gcType == 'MULTIPLE'">
+					<div class="form-vertical" ng-model="cardList" id="card{{$index}}" ng-show="$first">
+						<div class="form-group col-sm-6">
+							<label for="cardNumber" class="col-sm-12">Card Number: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardNumber" id="cardNumber{{$index}}" ng-model="card.cardNumber" placeholder="Enter card number..." />
+							</div>
+						</div>
+						<div class="form-group col-sm-5">
+							<label for="cardAmount" class="col-sm-12">Amount: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardAmount" id="cardAmount{{$index}}" ng-model="card.cardAmount" placeholder="Enter amount..." numberonly="" data-currency-formatter="" ng-disabled="true"/> 
+							</div>
+						</div>
+						<div class="col-sm-1" style="padding-top: 1.7em !important;">
+							<button type="button" class="btn btn-default text-right" ng-click="validateCard($index)">
+								<span class="glyphicon glyphicon-check"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="form-vertical" ng-model="cardList" id="card{{$index}}" ng-show="!$first">
+						<div class="form-group col-sm-5">
+							<label for="cardNumber" class="col-sm-12">Card Number: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardNumber" id="cardNumber{{$index}}" ng-model="card.cardNumber" placeholder="Enter card number..." />
+							</div>
+						</div>
+						<div class="form-group col-sm-5">
+							<label for="cardAmount" class="col-sm-12">Amount: </label>
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="cardAmount" id="cardAmount{{$index}}" ng-model="card.cardAmount" placeholder="Enter amount..." numberonly="" data-currency-formatter="" ng-disabled="true"/> 
+							</div>
+						</div>
+						<div class="col-sm-2" style="padding-top: 1.7em !important;">
+							<button type="button" class="btn btn-default text-right" ng-click="validateCard($index)">
+								<span class="glyphicon glyphicon-check"></span>
+							</button>
+							<button type="button" class="btn btn-default text-right" ng-disabled="true" ng-click="removeCard($index)">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-lg btn-default" ng-disabled="gcType == 'MULTIPLE'" ng-click="addCard()">Add Card</button> 
+					<button type="button" class="btn btn-lg btn-default" ng-click="closeModalDialog()">Close</button> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

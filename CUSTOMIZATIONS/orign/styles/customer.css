@@ -1,0 +1,444 @@
+ /*Store custom CSS in this file to prevent overwriting changes with software updates */
+/* Body Bockground Image */
+body
+{
+	background: url(/images/kanmo/justice_grandbg.png) no-repeat;
+	font-size-adjust: .50;
+}
+/* Panels */
+.panel-primary,
+.panel-default
+{
+	/*background-color: #ed008c;*/
+	background-color: rgba(255, 255, 255, .3) !important;
+	border-color: #939393 !important;
+	border: 1px solid;
+	color: #000 !important;
+}
+.panel-body
+{
+	background-color: rgba(255, 255, 255, .3) !important;
+	border-color: #939393 !important;
+	border: none;
+	color: #000 !important;
+}
+.panel-default > .panel-heading,
+.panel-heading,
+.modal-header,
+.blue-bar, 
+.mobile-screen-title
+{
+	color: #000 !important;
+	background-color: #b3b3b3 !important;
+	background-image: none !important;
+}
+.modal-content
+{
+	background-color: rgba(255, 255, 255, 1) !important;
+}
+/* BOTTOM NAVIGATION BAR */
+.navbar-default
+{
+	background-color: #b3b3b3 !important;	
+	color: #000 !important;
+}
+/* PANEL FOOTERS */
+.panel-footer
+{
+	background-color: #b3b3b3 !important;	
+	color: #000 !important;
+}
+/* Transaction Items Window*/
+#transactionItems
+{
+	margin-top: -1px !important;
+	/*background: -webkit-linear-gradient(top, #ed008c , #ff91d2,)!important; /* For Safari 5.1 to 6.0 */
+	background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* RPro Button */
+
+.rp-button
+{
+	/*background-image: url('/images/Online_Basket.png') no-repeat !important; /* For browsers that do not support gradients */*/
+	background-color: #b3b3b3 !important;
+	border-color: #939393 !important;
+	border: 1px solid;
+	color: #000 !important;
+}
+
+.btn-primary
+{
+	background: #b3b3b3 !important;/* For browsers that do not support gradients */ 
+	border-color: #939393 !important;
+	border: 1px solid;
+	color: #000 !important;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary 
+  {
+    background: #ffffff !important;/* For browsers that do not support gradients */
+	border-color: #939393 !important;
+	border: 1px solid;
+  }
+.btn-default
+{
+	background: #b3b3b3 !important; /* For browsers that do not support gradients */
+	border-color: #939393 !important;
+	background-image: none;
+	border: 1px solid;
+	color: #000 !important;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default 
+  {
+    background: #ffffff !important; /* For browsers that do not support gradients */
+	border-color: #939393 !important;
+	background-image: none;
+	border: 1px solid;
+	color: #000 !important;
+  }
+.btn-info
+{
+	background: #b3b3b3 !important; /* For browsers that do not support gradients */
+	border-color: #939393 !important;
+	border: 1px solid;
+	color: #000 !important;
+}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.open .dropdown-toggle.btn-info 
+ {
+    background: #ffffff !important; /* For browsers that do not support gradients */
+	border-color: #939393 !important;
+	border: 1px solid;
+	color: #000 !important;
+}
+/* Disabled Buttons */
+.btn-info.disabled,
+.btn-info[disabled],
+fieldset[disabled] .btn-info,
+.btn-info.disabled:hover,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info:hover,
+.btn-info.disabled:focus,
+.btn-info[disabled]:focus,
+fieldset[disabled] .btn-info:focus,
+.btn-info.disabled:active,
+.btn-info[disabled]:active,
+fieldset[disabled] .btn-info:active,
+.btn-info.disabled.active,
+.btn-info[disabled].active,
+fieldset[disabled] .btn-info.active,
+.img-btn.disabled,
+.img-btn[disabled],
+fieldset[disabled] .img-btn,
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-lg.disabled,
+.btn-lg[disabled],
+fieldset[disabled] .btn-lg
+ {
+    background-color:#4d4d4d !important;
+    text-shadow:0 -1px 0 rgba(0,0,0,0.25);
+    background-color: none !important;
+    border-color: transparent !important;
+    background-image: none !important;
+    cursor: not-allowed;
+	border: none;
+    pointer-events: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    filter: alpha(opacity=65); /* internet explorer */
+    -khtml-opacity: 0.65;      /* khtml, old safari */
+    -moz-opacity: 0.65;       /* mozilla, netscape */
+    opacity: 0.65;           /* fx, safari, opera */
+}
+/* TENDER BUTTON */
+#tenderbutton
+{
+	background: #b3b3b3 !important; /* For browsers that do not support gradients */
+	border-color: #000000 !important;
+	border: none;
+}
+#tenderbutton:hover,
+#tenderbutton:focus,
+#tenderbutton:active,
+#tenderbutton.active,
+.open .dropdown-toggle
+{
+    background: #ffffff !important; /* For browsers that do not support gradients */
+	color : #000000!important;
+	border-color: #939393 !important;
+	border: 1px solid;
+}
+/* TAKE BUTTON & LOGIN BUTTON */
+#takeButton,
+#loginButton
+{
+	background: #b3b3b3 !important; /* For browsers that do not support gradients */
+	border-color: #939393 !important;
+	background-image: none !important;
+	border: 1px solid;
+}
+#takeButton:hover,
+#takeButton:focus,
+#takeButton:active,
+#takeButton.active,
+#loginButton:hover,
+#loginButton:focus,
+#loginButton:active,
+#loginButton.active,
+.open .dropdown-toggle
+{
+    background: #ffffff !important; /* For browsers that do not support gradients */
+	color : #000000 !important;
+	border-color: #939393 !important;
+	background-image: none !important;
+	border: 1px solid;
+}
+.btn-group  .btn.active 
+{
+	color : #000000 !important;
+	border : none !important;
+}
+
+/* Connection Manager Tabs */
+#ac_form > div.container-fluid > div.row.height80.autoOverflow > div.col-sm-9.ng-scope > div > div:nth-child(1) > ul
+{
+	background: #b3b3b3; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(top, #b3b3b3 , #ff91d2)!important; /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(top, #b3b3b3 , #ff91d2)!important; /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(top, #b3b3b3 , #ff91d2)!important; /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom, #b3b3b3 , #ff91d2)!important; /* Standard syntax */
+	border-color: #000000 !important
+	border: none;
+}
+
+/* Transaction Window Logo */
+.logo
+{
+	display: block;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background: url(/images/kanmo/logo.png) no-repeat;
+	width: 46px;
+	height: 46px;
+	padding-left: 500px;
+}
+
+/*========== Custom Spacer ===========*/
+.padding-xs { padding: .25em; }
+.padding-sm { padding: .5em; }
+.padding-md { padding: 1em; }
+.padding-lg { padding: 1.5em; }
+.padding-xl { padding: 3em; }
+
+.padding-x-xs { padding: .25em 0; }
+.padding-x-sm { padding: .5em 0; }
+.padding-x-md { padding: 1em 0; }
+.padding-x-lg { padding: 1.5em 0; }
+.padding-x-xl { padding: 3em 0; }
+
+.padding-y-xs { padding: 0 .25em; }
+.padding-y-sm { padding: 0 .5em; }
+.padding-y-md { padding: 0 1em; }
+.padding-y-lg { padding: 0 1.5em; }
+.padding-y-xl { padding: 0 3em; }
+
+.padding-top-xs { padding-top: .25em; }
+.padding-top-sm { padding-top: .5em; }
+.padding-top-md { padding-top: 1em; }
+.padding-top-lg { padding-top: 1.5em; }
+.padding-top-xl { padding-top: 3em; }
+
+.padding-right-xs { padding-right: .25em; }
+.padding-right-sm { padding-right: .5em; }
+.padding-right-md { padding-right: 1em; }
+.padding-right-lg { padding-right: 1.5em; }
+.padding-right-xl { padding-right: 3em; }
+
+.padding-bottom-xs { padding-bottom: .25em; }
+.padding-bottom-sm { padding-bottom: .5em; }
+.padding-bottom-md { padding-bottom: 1em; }
+.padding-bottom-lg { padding-bottom: 1.5em; }
+.padding-bottom-xl { padding-bottom: 3em; }
+
+.padding-left-xs { padding-left: .25em; }
+.padding-left-sm { padding-left: .5em; }
+.padding-left-md { padding-left: 1em; }
+.padding-left-lg { padding-left: 1.5em; }
+.padding-left-xl { padding-left: 3em; }
+
+.margin-xs { margin: .25em; }
+.margin-sm { margin: .5em; }
+.margin-md { margin: 1em; }
+.margin-lg { margin: 1.5em; }
+.margin-xl { margin: 3em; }
+
+.margin-x-xs { margin: .25em 0; }
+.margin-x-sm { margin: .5em 0; }
+.margin-x-md { margin: 1em 0; }
+.margin-x-lg { margin: 1.5em 0; }
+.margin-x-xl { margin: 3em 0; }
+
+.margin-y-xs { margin: 0 .25em; }
+.margin-y-sm { margin: 0 .5em; }
+.margin-y-md { margin: 0 1em; }
+.margin-y-lg { margin: 0 1.5em; }
+.margin-y-xl { margin: 0 3em; }
+
+.margin-top-xs { margin-top: .25em; }
+.margin-top-sm { margin-top: .5em; }
+.margin-top-md { margin-top: 1em; }
+.margin-top-lg { margin-top: 1.5em; }
+.margin-top-xl { margin-top: 3em; }
+
+.margin-right-xs { margin-right: .25em; }
+.margin-right-sm { margin-right: .5em; }
+.margin-right-md { margin-right: 1em; }
+.margin-right-lg { margin-right: 1.5em; }
+.margin-right-xl { margin-right: 3em; }
+
+.margin-bottom-xs { margin-bottom: .25em; }
+.margin-bottom-sm { margin-bottom: .5em; }
+.margin-bottom-md { margin-bottom: 1em; }
+.margin-bottom-lg { margin-bottom: 1.5em; }
+.margin-bottom-xl { margin-bottom: 3em; }
+
+.margin-left-xs { margin-left: .25em; }
+.margin-left-sm { margin-left: .5em; }
+.margin-left-md { margin-left: 1em; }
+.margin-left-lg { margin-left: 1.5em; }
+.margin-left-xl { margin-left: 3em; }
+
+/*========== End of Custom Spacer ===========*/
+
+.table-fixed tbody {
+    display:block;
+    height: 167px;
+    overflow:auto;
+}
+.table-fixed thead, .table-fixed tbody tr {
+	width: 100%;
+    display:table;
+    table-layout:fixed;
+}
+.table-fixed thead.with-scroll {
+    width: calc( 100% - 1em );
+}
+.thead-default th{
+	background-color: #f9f9f9;
+}
+.text-bold{font-weight: bold;}
+
+/*.modal-footer {
+    padding: 10px;
+    text-align: left;
+    border-top: 1px solid #e5e5e5;
+}*/
+.btn-lg, 
+.btn-group-lg,
+.btn 
+{
+    padding: 7px 11px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 6px;
+	background-image: none;
+}
+/* RESULTS */
+.list-group-item
+{
+	background-color: #ffffff;
+	color: #000000;
+}
+a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus
+{
+	background-color: #000000;
+	color: #ffffff;
+}
+/* HIDDEN ELEMENTS */
+
+/*Save*/
+/*#rpButtons > div:nth-child(2),*/
+/*Copy*/
+/*#rpButtons > div:nth-child(4),*/
+/*Print*/
+/*#rpButtons > div:nth-child(6),*/
+
+
+
+
+
+/* currency */
+#oneDollarButton,
+#fiveDollarButton,
+#tenDollarButton,
+#twentyDollarButton,
+#fiftyDollarButton,
+#hundredDollarButton,
+
+/* Tender */
+
+
+/*#transactionForm > div.container-fluid > div:nth-child(2) > div.col-xs-4.col-xs-offset-1 > div > div.panel-body.bg-primary.height60 > div.row.form-group > div > table > tbody,*/
+/*#FillItemQuantityButton,*/
+/*#FillItemDueButton,*/
+#updateButton
+/*body > div.ng-scope > div.container-fluid.ng-scope > div:nth-child(2) > div > div.panel-body > div:nth-child(2) > div:nth-child(4),*/
+/*body > div.ng-scope > div.container-fluid.ng-scope > div:nth-child(2) > div > div.panel-body > div.row.row-margin > div:nth-child(1),*/
+/*body > div.ng-scope > div.container-fluid.ng-scope > div:nth-child(2) > div > div.panel-body > div.row.row-margin > div:nth-child(2),*/
+/*body > div.ng-scope > div.container-fluid.ng-scope > div:nth-child(2) > div > div.panel-body > div.row.row-margin > div:nth-child(4),*/
+/* Receiving */
+/*body > div.ng-scope > div > ui-view > store-ops > div > div:nth-child(2) > div > div > div.panel-body > div.ng-scope > div:nth-child(3) > div:nth-child(1),*/
+
+/* Items */
+/*body > div.ng-scope > div > div > div > div.container-fluid.ng-scope > div > div > div.row.row-container.no-padding.transparent > div.col-xs-12.col-sm-12.col-md-5.col-lg-5.no-padding.split-ui-left-container > div > div > div.row.row-container.split-ui-tab-content.single-tab > div:nth-child(1) > div > div:nth-child(1) > div > div.col-xs-3,
+body > div.ng-scope > div > div > div > div.container-fluid.ng-scope > div > div > div.row.row-container.no-padding.transparent > div.col-xs-12.col-sm-12.col-md-5.col-lg-5.no-padding.split-ui-left-container > div > div > div.row.row-container.split-ui-tab-content.single-tab > div:nth-child(1) > div > div:nth-child(2) > div > div.col-xs-3
+*/
+{
+	display: none !important;
+}
+
+/*== Tim Updates ==*/
+.full-width{width: 100% !important;}
+.auto-width{width: auto !important;}
+
+#TransactionDetailsButton{padding: 0px !important;}
+
+/*Set Button Text color to Black*/
+button.btn-info.active-item-type,
+button.btn-primary.active-item-type,
+button.btn-default.active-item-type
+{color: #000 !important;}
+
+/*Style for button with image*/
+.btn-image {
+  position: relative;
+  text-align: center;
+}
+.btn-container img {
+    margin-right: 5px !important;    
+    vertical-align: middle !important;
+}
+.btn-txt {
+    vertical-align: middle !important;
+}
+
+.logo-transaction{
+	height: 40px !important;
+	padding: 10px 0px 5px 0px !important;
+	width: 100px !important;
+}
+
+/*== End of Tim Updates ==

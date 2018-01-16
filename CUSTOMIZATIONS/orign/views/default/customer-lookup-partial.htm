@@ -1,0 +1,44 @@
+<div>
+    <div class="modal-content" id="customerLookupModal">
+        <div class="modal-header">
+            <h4 class="modal-title" data-translate="756">Customer Search</h4>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="control-label" data-translate="632">
+                                    Lookup Customer By
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-12" ng-if="defaultSearchType !== false">
+                                <document-customer is-shipping="{{isShipping}}" customer-active="{{formData.customerStatus}}"></document-customer>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8" ui-i18n="{{lang}}">
+                        <div id="grid1" ui-grid-resize-columns ui-grid-selection ng-if="showGrid" ui-grid="gridOptions" class="grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-xs-2 text-left">
+                <div ng-if="gridOptions.data"><span data-translate="3901">Total Records (approximately):</span> {{totalRecords}}</div>
+                <div ng-if="gridOptions.data.length===0"><span data-translate="2894">No records found.</span></div>
+            </div>
+            <div class="col-xs-4">
+                <paging-control ng-if="gridOptions.data.length>0&&!useCentrals" total-records="totalRecords" results-per-page="pageSize" call-back="getPage"></paging-control>
+            </div>
+            <div class="col-xs-6 text-right">
+                <button type="button" event-name="customerLookupEditCustomer" tabindex="6" id="editCustomerButton" name="editCustomerButton" class="btn btn-lg btn-default" ng-click="selectCustomer()" ng-disabled="!activeItem"><span data-translate="631" class="ng-scope">Select Customer</span></button>
+                <!-- <button type="button" event-name="customerLookupCreateCustomer" tabindex="7" id="createCustomerButton" name="createCustomerButton" class="btn btn-lg btn-default" ng-click="newCustomerOpen()"><span data-translate="628">Create Customer</span></button> -->
+                <button type="button" event-name="customerLookupClose" tabindex="8" id="closeSearchButton" name="closeSearchButton" class="btn btn-lg btn-default" ng-click="closeForm();"><span data-translate="1.2">Cancel</span></button>
+            </div>
+        </div>
+    </div>
+</div>

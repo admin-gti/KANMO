@@ -1,4 +1,4 @@
-ButtonHooksManager.addHandler(['before_navPosTenderUpdateOnly', 'before_navPosTenderPrintUpdate'],
+ButtonHooksManager.addHandler(['after_navPosTenderUpdateOnly', 'after_navPosTenderPrintUpdate'],
     function($q, DocumentPersistedData, NotificationService, $modal, Templates, ModelService, $rootScope, HookEvent, $stateParams, base64, $http, prismSessionInfo) {
         
         var deferred = $q.defer();    
